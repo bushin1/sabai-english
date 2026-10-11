@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Sabai">
-<meta name="theme-color" content="#14122E">
+<meta name="theme-color" content="#0F1012">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-512.png">
 <link rel="icon" href="icon-512.png">
@@ -16,255 +16,188 @@
 <body>
 <title>Sabai English</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
-/* Layout: phone game app — level bar on top, one big gradient "session" card, chunky 3D buttons, 4-tab bar at the thumb. Dark-first "Bangkok night market": indigo ground, coral/teal/mango accents. */
+/* Layout: phone app, dark graphite "recording studio". Header with day + streak, one scrolling column of flat cards, 4-tab bar at the thumb. Sora for text, JetBrains Mono for labels and numbers, amber for the one action that matters. */
 :root{
-  --bg:#14122E; --bg2:#1B1840; --card:#232052; --card2:#2D2966; --line:#3B3781; --fg:#F7F5FF; --muted:#ABA7D8; --ink:#1A1033;
-  --coral:#FF6B4A; --coral-d:#C24A2F; --teal:#2EE6C5; --teal-d:#17A88E; --sun:#FFD166; --sun-d:#C9982F; --pink:#FF3D81; --violet:#8B5CFF;
-  --good:#3DDC97; --good-d:#1F9A66; --good-soft:#1C3E33; --bad:#FF5C7A; --bad-d:#B23A55; --bad-soft:#4A2238;
-  --display:'Fredoka','Avenir Next Rounded','Arial Rounded MT Bold',Arial,sans-serif;
-  --body:'Nunito',-apple-system,'Segoe UI',Roboto,sans-serif;
+  --bg:#0F1012; --card:#17181B; --card2:#1F2024; --line:#26272B; --fg:#F2F2F0; --muted:#8E9097; --dim:#6E7076; --ink:#0F1012;
+  --amber:#F0B35B; --amber-d:#C58F3E; --amber-soft:#2A2318; --green:#5CC08C; --green-soft:#16281E; --red:#E5636E; --red-soft:#2E1A1D;
+  --display:'Sora',-apple-system,'Segoe UI',Roboto,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
   color-scheme:dark;
 }
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
-    --bg:#F3F1FF; --bg2:#ECE9FF; --card:#FFFFFF; --card2:#EEEBFF; --line:#D9D4F5; --fg:#1E1A3C; --muted:#6B668F; --ink:#1A1033;
-    --good-soft:#DDF6EA; --bad-soft:#FFE1E8; --line:#D9D4F5;
+    --bg:#F4F4F2; --card:#FFFFFF; --card2:#EEEEEA; --line:#E0E0DB; --fg:#151515; --muted:#67696F; --dim:#8A8C92; --ink:#0F1012;
+    --amber:#D99A3C; --amber-d:#B57C26; --amber-soft:#FBF0DC; --green:#2E8B5A; --green-soft:#E1F3E8; --red:#C84B57; --red-soft:#F9E3E5;
     color-scheme:light;
   }
 }
 :root[data-theme="light"]{
-  --bg:#F3F1FF; --bg2:#ECE9FF; --card:#FFFFFF; --card2:#EEEBFF; --line:#D9D4F5; --fg:#1E1A3C; --muted:#6B668F; --ink:#1A1033;
-  --good-soft:#DDF6EA; --bad-soft:#FFE1E8;
+  --bg:#F4F4F2; --card:#FFFFFF; --card2:#EEEEEA; --line:#E0E0DB; --fg:#151515; --muted:#67696F; --dim:#8A8C92; --ink:#0F1012;
+  --amber:#D99A3C; --amber-d:#B57C26; --amber-soft:#FBF0DC; --green:#2E8B5A; --green-soft:#E1F3E8; --red:#C84B57; --red-soft:#F9E3E5;
   color-scheme:light;
 }
 html,body{height:100%}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;overflow:hidden}
+body{background:var(--bg);color:var(--fg);font-family:var(--display);font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;overflow:hidden}
 *{box-sizing:border-box}
-button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
-button:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
-h1,h2,h3{margin:0;text-wrap:balance;font-family:var(--display);font-weight:600}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation}
+button:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:600}
 p{margin:0}
-
 #app{height:100%;display:flex;flex-direction:column;max-width:560px;margin:0 auto}
-.top{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 6px;gap:10px}
-.lvl{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
-.lvlbadge{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--sun),var(--coral));color:var(--ink);font-family:var(--display);font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 3px 0 var(--coral-d)}
-.lvltxt{min-width:0;flex:1}
-.lvltxt b{display:block;font-family:var(--display);font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.xpbar{height:8px;border-radius:4px;background:var(--card2);overflow:hidden;margin-top:4px}
-.xpbar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--teal),var(--sun));transition:width .6s cubic-bezier(.2,.8,.2,1)}
-.top-right{display:flex;align-items:center;gap:6px;flex:none}
-.chip{display:inline-flex;align-items:center;gap:5px;height:36px;padding:0 11px;border-radius:999px;background:var(--card2);font-family:var(--display);font-weight:600;font-size:15px;font-variant-numeric:tabular-nums}
-.chip.lit{background:var(--coral);color:#fff}
-.iconbtn{width:38px;height:38px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted)}
-.iconbtn svg{width:22px;height:22px}
-
-main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 16px 28px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:10px 20px 8px;gap:10px}
+.top .l{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mono{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.brand{font-size:20px;font-weight:600;letter-spacing:-.01em}
+.streak{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;border-radius:8px;background:var(--card);border:1px solid var(--line);font-family:var(--mono);font-size:13px;font-weight:600;color:var(--muted)}
+.streak i{width:8px;height:8px;border-radius:50%;background:var(--dim);display:inline-block}
+.streak.on{color:var(--amber)}.streak.on i{background:var(--amber)}
+.iconbtn{width:36px;height:36px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);border:1px solid var(--line);background:var(--card)}
+.iconbtn svg{width:20px;height:20px}
+main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 20px 28px}
 main > *{min-width:0}
-
-.tabs{display:flex;border-top:1px solid var(--line);background:var(--bg2);padding:6px 6px calc(8px + env(safe-area-inset-bottom,0px))}
-.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;border-radius:14px;color:var(--muted);font-family:var(--display);font-size:11.5px;font-weight:500;min-height:54px;justify-content:center}
-.tab svg{width:24px;height:24px}
-.tab.active{color:var(--teal);background:var(--card)}
-
-.stack{display:flex;flex-direction:column;gap:14px}
-.card{background:var(--card);border-radius:22px;padding:20px 18px;display:flex;flex-direction:column;gap:14px;border:1px solid var(--line)}
-.eyebrow{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:8px}
-.eyebrow b{color:var(--teal)}
-.combo{background:var(--coral);color:#fff;border-radius:999px;padding:3px 10px;font-size:12px;animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
-@keyframes pop{0%{transform:scale(.4)}100%{transform:scale(1)}}
-.prompt{font-size:16px;color:var(--muted)}
-.en{font-size:25px;line-height:1.3;font-weight:800;letter-spacing:-.005em;text-wrap:balance}
-.en .gapword{display:inline-block;min-width:3.2em;border-bottom:3px solid var(--sun);color:transparent;line-height:1}
-.en .hit{background:var(--sun);color:var(--ink);border-radius:8px;padding:0 6px}
-.fr{font-size:17px;color:var(--muted)}
-.say{font-size:15px;background:var(--card2);border-radius:14px;padding:10px 12px}
-.say .lbl,.tip .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:3px}
-.tip{font-size:15px;border-left:3px solid var(--sun);padding:4px 0 4px 12px}
-.note{font-size:14px;color:var(--muted)}
-.lead{font-size:17px;line-height:1.5}
-
-.btn{--sh:var(--line);display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:0 18px;border-radius:18px;font-family:var(--display);font-weight:600;font-size:17px;width:100%;box-shadow:0 5px 0 var(--sh);transition:transform .06s,box-shadow .06s;background:var(--card2);color:var(--fg)}
-.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--sh)}
-.btn.sun{background:var(--sun);color:var(--ink);--sh:var(--sun-d)}
-.btn.coral{background:var(--coral);color:#fff;--sh:var(--coral-d)}
-.btn.teal{background:var(--teal);color:var(--ink);--sh:var(--teal-d)}
-.btn.good{background:var(--good);color:var(--ink);--sh:var(--good-d)}
-.btn.bad{background:var(--bad);color:#fff;--sh:var(--bad-d)}
-.btn.ghost{background:var(--card2);color:var(--fg);--sh:var(--line)}
-.btn.line{background:transparent;border:2px solid var(--line);box-shadow:none}
-.btn.line:active{transform:scale(.97)}
-.btn.small{min-height:42px;font-size:14px;width:auto;padding:0 14px;box-shadow:0 3px 0 var(--sh)}
-.btn.small:active{transform:translateY(2px);box-shadow:0 1px 0 var(--sh)}
+.tabs{display:flex;border-top:1px solid var(--line);background:var(--bg);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0;border-radius:10px;color:var(--muted);font-size:11px;font-weight:500;min-height:52px;justify-content:center}
+.tab svg{width:22px;height:22px}
+.tab.active{color:var(--amber)}
+.stack{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.card.soft{background:var(--card2)}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.head .mono.acc{color:var(--amber)}
+.h1{font-size:24px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.h2{font-size:17px;font-weight:600}
+.lead{font-size:19px;line-height:1.35;font-weight:500}
+.en{font-size:23px;line-height:1.3;font-weight:600;letter-spacing:-.005em;text-wrap:balance}
+.en .gapword{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--amber);color:transparent;line-height:1}
+.en .hit{background:var(--amber-soft);color:var(--amber);border-radius:6px;padding:0 5px}
+.fr{font-size:16px;color:var(--muted)}
+.note{font-size:13.5px;color:var(--muted);line-height:1.5}
+.say{font-size:14.5px;background:var(--card2);border-radius:12px;padding:10px 12px}
+.say .lbl,.tip .lbl{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:4px}
+.tip{font-size:14.5px;border-left:2px solid var(--amber);padding:2px 0 2px 12px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 18px;border-radius:12px;font-weight:600;font-size:16px;width:100%;background:var(--card2);color:var(--fg);border:1px solid var(--line);transition:transform .06s,opacity .1s}
+.btn:active{transform:scale(.985);opacity:.9}
+.btn.amber{background:var(--amber);color:var(--ink);border-color:transparent}
+.btn.green{background:var(--green-soft);color:var(--green);border-color:transparent}
+.btn.red{background:var(--red-soft);color:var(--red);border-color:transparent}
+.btn.line{background:transparent}
+.btn.small{min-height:40px;font-size:14px;width:auto;padding:0 14px;font-weight:500}
 .btn[disabled]{opacity:.45;pointer-events:none}
 .btn svg{width:20px;height:20px;flex:none}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
-.playrow{display:flex;flex-direction:column;align-items:center;gap:12px;padding:6px 0}
-.play{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--coral),var(--pink));color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 0 var(--coral-d),0 14px 30px -10px var(--pink);transition:transform .06s,box-shadow .06s}
-.play:active{transform:translateY(5px);box-shadow:0 1px 0 var(--coral-d)}
-.play svg{width:36px;height:36px;margin-left:4px}
-.bars{display:none;align-items:flex-end;gap:3px;height:30px}
-.bars i{display:block;width:6px;background:currentColor;border-radius:3px;animation:bar .9s ease-in-out infinite}
+.playrow{display:flex;align-items:center;gap:10px}
+.play{width:56px;height:56px;border-radius:50%;background:var(--amber);color:var(--ink);display:flex;align-items:center;justify-content:center;flex:none}
+.play svg{width:24px;height:24px;margin-left:3px}
+.bars{display:none;align-items:flex-end;gap:3px;height:22px}
+.bars i{display:block;width:4px;background:currentColor;border-radius:2px;animation:bar .9s ease-in-out infinite}
 .bars i:nth-child(2){animation-delay:.15s}.bars i:nth-child(3){animation-delay:.3s}.bars i:nth-child(4){animation-delay:.45s}
 .play.playing .bars{display:flex}.play.playing .tri{display:none}
-@keyframes bar{0%,100%{height:8px}50%{height:28px}}
-@media (prefers-reduced-motion:reduce){.bars i{animation:none;height:16px}.combo{animation:none}}
-.speedrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.speedrow .btn{width:auto;min-height:40px;font-size:14px;padding:0 14px;box-shadow:0 3px 0 var(--sh)}
-.speedrow .btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--sh)}
-
-.opts{display:flex;flex-direction:column;gap:10px}
-.opt{min-height:56px;border-radius:16px;font-family:var(--display);font-size:19px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:8px 14px;background:var(--card2);box-shadow:0 4px 0 var(--line);transition:transform .06s,box-shadow .06s;text-align:center;line-height:1.25}
-.opt:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
-.opt.right{background:var(--good);color:var(--ink);box-shadow:0 4px 0 var(--good-d)}
-.opt.wrong{background:var(--bad);color:#fff;box-shadow:0 4px 0 var(--bad-d)}
+@keyframes bar{0%,100%{height:6px}50%{height:20px}}
+@media (prefers-reduced-motion:reduce){.bars i{animation:none;height:12px}}
+.speedrow{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.speedrow .btn{width:auto;min-height:40px;font-size:13.5px;padding:0 12px;font-weight:500;flex:1}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{min-height:52px;border-radius:12px;font-size:18px;font-weight:500;display:flex;align-items:center;justify-content:center;padding:8px 14px;background:var(--card2);border:1px solid var(--line);text-align:center;line-height:1.25}
+.opt.right{background:var(--green-soft);color:var(--green);border-color:var(--green)}
+.opt.wrong{background:var(--red-soft);color:var(--red);border-color:var(--red)}
 .opt[disabled]{opacity:.45;pointer-events:none}
 .opt.right[disabled],.opt.wrong[disabled]{opacity:1}
-.opts.grid{display:grid;grid-template-columns:1fr 1fr}
-.opts.grid .opt{font-size:16px;min-height:64px}
-
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chipw{min-height:44px;padding:0 14px;border-radius:14px;font-family:var(--display);font-size:17px;font-weight:500;background:var(--card2);box-shadow:0 3px 0 var(--line)}
-.chipw:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
-.chipw.on{background:var(--teal);color:var(--ink);box-shadow:0 3px 0 var(--teal-d)}
-.answer{min-height:62px;border:2px dashed var(--line);border-radius:16px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.answer.ok{border-style:solid;border-color:var(--good);background:var(--good-soft)}
-.answer.ko{border-style:solid;border-color:var(--bad);background:var(--bad-soft)}
+.chipw{min-height:42px;padding:0 13px;border-radius:10px;font-size:16px;font-weight:500;background:var(--card2);border:1px solid var(--line)}
+.chipw.on{background:var(--amber-soft);color:var(--amber);border-color:var(--amber)}
+.answer{min-height:60px;border:1px dashed var(--line);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.answer.ok{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+.answer.ko{border-style:solid;border-color:var(--red);background:var(--red-soft)}
 .answer:empty::before{content:"Tape les mots dans l'ordre";color:var(--muted);font-size:14px;padding-left:6px}
-.verdict{font-family:var(--display);font-weight:600;font-size:18px}
-.verdict.ok{color:var(--good)}.verdict.ko{color:var(--bad)}
-
-.progress{display:flex;gap:4px;margin:4px 0 12px}
-.progress i{flex:1;height:6px;border-radius:3px;background:var(--card2)}
-.progress i.done{background:var(--teal)}
-.progress i.cur{background:var(--sun)}
-
-.hero{position:relative;overflow:hidden;border-radius:26px;padding:22px 20px;color:#fff;background:linear-gradient(135deg,#FF6B4A 0%,#FF3D81 55%,#8B5CFF 100%);display:flex;flex-direction:column;gap:10px;box-shadow:0 18px 40px -18px #FF3D81}
-.hero::before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.14);right:-70px;top:-90px}
-.hero::after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.1);left:-50px;bottom:-70px}
-.hero > *{position:relative}
-.hero .kicker{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
-.hero h1{font-size:28px;line-height:1.1;font-weight:700;color:#fff}
-.hero .lead{opacity:.95;font-size:16px}
-.hero .meta{font-family:var(--display);font-size:13px;opacity:.9;display:flex;gap:12px;flex-wrap:wrap}
-.hero .btn{margin-top:4px}
-.page-h1{font-size:28px;font-weight:700}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.tile{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:4px;text-align:left;box-shadow:0 4px 0 var(--line);transition:transform .06s,box-shadow .06s;min-height:96px}
-.tile:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
-.tile .ico{font-size:26px;line-height:1}
-.tile b{font-family:var(--display);font-weight:600;font-size:16px}
-.tile span{font-size:12.5px;color:var(--muted)}
-.tile.sun{background:var(--sun);color:var(--ink);border-color:transparent;box-shadow:0 4px 0 var(--sun-d)}
-.tile.sun span{color:var(--ink);opacity:.75}
-.tile .pbar{height:5px;border-radius:3px;background:var(--bg2);overflow:hidden;margin-top:6px}
-.tile .pbar i{display:block;height:100%;background:var(--teal)}
+.verdict{font-weight:600;font-size:16px}
+.verdict.ok{color:var(--green)}.verdict.ko{color:var(--red)}
+.progress{display:flex;gap:4px;margin:4px 0 10px}
+.progress i{flex:1;height:4px;border-radius:2px;background:var(--card2)}
+.progress i.done{background:var(--amber)}
+.progress i.cur{background:var(--amber);opacity:.45}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 8px;text-align:center}
-.stat b{display:block;font-family:var(--display);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
-.stat span{font-size:12px;color:var(--muted)}
-.sect{font-family:var(--display);font-size:17px;font-weight:600;margin-top:4px;display:flex;justify-content:space-between;align-items:baseline}
-.sect small{font-size:12.5px;color:var(--muted);font-weight:500}
-.trophies{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:none}
-.trophies::-webkit-scrollbar{display:none}
-.trophy{flex:none;width:92px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 8px;text-align:center;display:flex;flex-direction:column;gap:4px;align-items:center}
-.trophy .ico{font-size:28px;line-height:1;filter:grayscale(1);opacity:.35}
-.trophy.on .ico{filter:none;opacity:1}
-.trophy.on{border-color:var(--sun)}
-.trophy span{font-size:11px;line-height:1.2;color:var(--muted)}
-.trophy.on span{color:var(--fg)}
-.explain{font-size:15px;line-height:1.5;background:var(--card2);border-radius:14px;padding:12px 14px;white-space:pre-wrap}
-.explain:empty{display:none}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;gap:6px}
+.stat b{font-family:var(--mono);font-size:22px;font-weight:600;line-height:1}
+.stat b small{font-size:12px;color:var(--green)}
+.stat span{font-size:11px;color:var(--muted)}
+.cando{display:flex;flex-direction:column;gap:10px}
+.cando .it{display:flex;align-items:center;gap:12px;font-size:14.5px;text-align:left;width:100%}
+.cando .box{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line);flex:none;display:inline-flex;align-items:center;justify-content:center}
+.cando .it.done .box{background:var(--green);border-color:var(--green);color:var(--ink)}
+.cando .it.wip{color:var(--amber);font-weight:600}.cando .it.wip .box{border:2px solid var(--amber)}
+.cando .it.todo{color:var(--dim)}
+.cando .box svg{width:12px;height:12px}
+.barsrow{display:flex;align-items:flex-end;gap:8px;height:56px}
+.barsrow i{flex:1;border-radius:4px 4px 0 0;background:var(--card2);display:block;min-height:3px}
+.barsrow i.last{background:var(--amber)}
+.axis{display:flex;gap:8px}
+.axis span{flex:1;font-family:var(--mono);font-size:10px;color:var(--dim);text-align:center}
+textarea,select,input[type=text]{width:100%;font:inherit;color:var(--fg);background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:52px}
+textarea{min-height:120px;resize:vertical;font-size:17px;line-height:1.45}
+select{appearance:none;-webkit-appearance:none}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px}
+.item.flat{background:none;border:0;padding:6px 0}
+.item .txt{flex:1;min-width:0}
+.item .w{font-size:16px;font-weight:600}
+.item .sub{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .sub.wrap{white-space:normal}
+.item .mini{width:42px;height:42px;border-radius:10px;background:var(--card2);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;flex:none;color:var(--fg)}
+.item .mini svg{width:18px;height:18px}
+.item .mini.acc{background:var(--amber);color:var(--ink);border-color:transparent}
+.badge{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:6px;background:var(--card2);color:var(--muted);flex:none}
+.badge.due{background:var(--amber-soft);color:var(--amber)}
+.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters .chipw{flex:none;font-size:14px;min-height:36px}
+.empty{color:var(--muted);font-size:14.5px;text-align:center;padding:14px 8px;line-height:1.5}
+.gap{display:flex;flex-direction:column;gap:4px;padding:10px 12px;background:var(--card2);border-radius:12px}
+.gap .said{font-size:13px;color:var(--red);text-decoration:line-through}
+.gap .better{font-size:18px;font-weight:600}
+.gap .why{font-size:13px;color:var(--muted)}
 .needs-claude{display:none}.has-claude .needs-claude{display:flex}
 .no-claude{display:block}.has-claude .no-claude{display:none}
 .has-claude .needs-claude.block{display:block}
-
-textarea,select,input[type=text]{width:100%;font:inherit;color:var(--fg);background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 14px;min-height:52px}
-textarea{min-height:84px;resize:vertical;font-size:17px}
-select{appearance:none;-webkit-appearance:none}
-
-.list{display:flex;flex-direction:column;gap:8px}
-.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 12px;display:flex;align-items:center;gap:10px}
-.item .txt{flex:1;min-width:0}
-.item .w{font-size:17px;font-weight:800}
-.item .sub{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.item .mini{width:44px;height:44px;border-radius:13px;background:var(--card2);display:inline-flex;align-items:center;justify-content:center;flex:none;color:var(--fg);box-shadow:0 3px 0 var(--line)}
-.item .mini:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
-.item .mini svg{width:20px;height:20px}
-.item .mini.acc{background:var(--teal);color:var(--ink);box-shadow:0 3px 0 var(--teal-d)}
-.badge{font-family:var(--display);font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--card2);color:var(--muted);flex:none}
-.badge.due{background:var(--sun);color:var(--ink)}
-.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
-.filters::-webkit-scrollbar{display:none}
-.filters .chipw{flex:none;font-size:14px;min-height:38px}
-.empty{color:var(--muted);font-size:15px;text-align:center;padding:16px 8px}
-.themes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.timer{display:flex;align-items:center;gap:10px}
-.timer .tbar{flex:1;height:10px;border-radius:5px;background:var(--card2);overflow:hidden}
-.timer .tbar i{display:block;height:100%;background:var(--sun);transition:width 1s linear}
-.timer .tbar i.hot{background:var(--coral)}
-.timer b{font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums;min-width:2.2em;text-align:right}
-.score{font-family:var(--display);font-size:46px;font-weight:700;line-height:1;text-align:center}
-.score small{display:block;font-size:14px;color:var(--muted);font-weight:500;margin-top:6px}
-.big-ico{font-size:54px;text-align:center;line-height:1}
-
-.sheet-bg{position:fixed;inset:0;background:rgba(10,8,30,.55);display:flex;align-items:flex-end;justify-content:center;z-index:10}
-.sheet{width:100%;max-width:560px;max-height:88%;overflow-y:auto;background:var(--bg);border-radius:24px 24px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
-.sheet h2{font-size:20px}
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.sheet{width:100%;max-width:560px;max-height:88%;overflow-y:auto;background:var(--bg);border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:18px 20px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
 .field{display:flex;flex-direction:column;gap:6px}
-.field label{font-family:var(--display);font-size:13px;font-weight:600;color:var(--muted)}
-.seg{display:flex;background:var(--card2);border-radius:14px;padding:4px;gap:4px}
-.seg button{flex:1;min-height:40px;border-radius:11px;font-family:var(--display);font-weight:500;font-size:14px}
-.seg button.on{background:var(--teal);color:var(--ink)}
-.toast{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font-family:var(--display);font-size:14px;font-weight:600;z-index:20;max-width:90%;text-align:center}
-.xpfloat{position:fixed;left:50%;top:38%;transform:translateX(-50%);font-family:var(--display);font-weight:700;font-size:30px;color:var(--sun);text-shadow:0 2px 0 var(--sun-d);z-index:21;pointer-events:none;animation:xpf 1.1s ease-out forwards}
-@keyframes xpf{0%{opacity:0;transform:translate(-50%,10px) scale(.6)}20%{opacity:1;transform:translate(-50%,0) scale(1.1)}100%{opacity:0;transform:translate(-50%,-70px) scale(1)}}
-@media (prefers-reduced-motion:reduce){.xpfloat{animation:none;opacity:0}}
-#fx{position:fixed;inset:0;pointer-events:none;z-index:30}
-.spin{display:inline-block;width:18px;height:18px;border:2.5px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+.seg{display:flex;background:var(--card2);border-radius:10px;padding:3px;gap:3px;border:1px solid var(--line)}
+.seg button{flex:1;min-height:38px;border-radius:8px;font-weight:500;font-size:14px}
+.seg button.on{background:var(--amber);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;z-index:20;max-width:90%;text-align:center}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite;vertical-align:-3px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.wotd{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--line)}
-.sitpick{gap:10px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:6px;background:var(--card2);color:var(--muted)}
+.pill.amber{background:var(--amber-soft);color:var(--amber)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.themes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.theme{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px;text-align:left;min-height:84px}
+.theme b{font-size:14.5px;font-weight:600}
+.theme span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.theme .pb{height:3px;border-radius:2px;background:var(--card2);overflow:hidden;margin-top:4px}
+.theme .pb i{display:block;height:100%;background:var(--amber)}
+.hint{display:flex;flex-wrap:wrap;gap:6px}
+.hint span{font-family:var(--mono);font-size:12px;padding:5px 8px;border-radius:6px;background:var(--card2);color:var(--fg)}
 </style>
 
 <div id="app">
   <header class="top">
-    <div class="lvl" data-action="open-settings">
-      <div class="lvlbadge" id="lvlN">1</div>
-      <div class="lvltxt"><b id="lvlT">Fresh off the plane</b><div class="xpbar"><i id="xpBar" style="width:0%"></i></div></div>
-    </div>
-    <div class="top-right">
-      <button class="chip" id="streakChip" data-action="open-settings" aria-label="Série de jours">🔥 <b id="streakN">0</b></button>
-      <button class="iconbtn" data-action="open-settings" aria-label="Réglages">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
-      </button>
+    <div class="l"><span class="mono" id="dateLine">Jour 1</span><span class="brand">Sabai</span></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="streak" id="streakChip" data-action="open-settings" aria-label="Série"><i></i><span id="streakN">0 jours</span></button>
+      <button class="iconbtn" data-action="open-settings" aria-label="Réglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     </div>
   </header>
   <main id="main"></main>
   <nav class="tabs" aria-label="Onglets">
-    <button class="tab active" data-tab="today">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
-      Aujourd'hui
-    </button>
-    <button class="tab" data-tab="vocab">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>
-      Vocab
-    </button>
-    <button class="tab" data-tab="say">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.1A8 8 0 1 1 21 12z"/></svg>
-      Dire
-    </button>
-    <button class="tab" data-tab="words">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      Mes mots
-    </button>
+    <button class="tab active" data-tab="parle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>Parler</button>
+    <button class="tab" data-tab="ecoute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>Écouter</button>
+    <button class="tab" data-tab="mots"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Mots</button>
+    <button class="tab" data-tab="progres"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-8M22 19H2"/></svg>Progrès</button>
   </nav>
 </div>
 <div id="overlay"></div>
-<canvas id="fx" hidden></canvas>
 
 <script>
 /*DATA-START*/
@@ -520,6 +453,65 @@ const VOCAB = [
 ["run a business","diriger une entreprise","I run a business."],["client","client","a new client"],["deadline","date limite","The deadline is Friday."],["invoice","facture","Send me the invoice."],["quote","devis","Can I get a quote?"],["remote","à distance","I work remote."],["freelance","indépendant","I'm freelance."],["a call","un appel, une visio","I have a call at 3."],["follow up","relancer","I'll follow up tomorrow."],["launch","lancer","We launch next week."],["lead","prospect","a hot lead"],["budget","budget","What's your budget?"],["hire","embaucher","We're hiring."],["outsource","sous-traiter","We outsource that."],["side hustle","activité à côté","It's my side hustle."],["revenue","chiffre d'affaires","Revenue is up."],["grow","faire grandir","grow the business"],["get things done","faire avancer les choses","Let's get things done."]
 ]}
 ];
+
+const CANDO = [
+ {id:'presenter',t:'Me présenter et dire ce que je fais'},
+ {id:'journee',t:'Raconter ma journée'},
+ {id:'gouts',t:"Parler de ce que j'aime"},
+ {id:'vouloir',t:'Expliquer ce que je veux (coiffeur, massage, resto)'},
+ {id:'commander',t:'Commander, payer, négocier'},
+ {id:'probleme',t:'Expliquer un problème'},
+ {id:'plans',t:'Proposer un plan, fixer un rendez-vous'},
+ {id:'boulot',t:'Parler de mon business'},
+ {id:'opinion',t:'Donner mon avis et dire pourquoi'},
+ {id:'souvenir',t:'Raconter un souvenir'},
+ {id:'clarifier',t:'Demander de répéter, clarifier'},
+ {id:'projets',t:'Parler de mes projets'}
+];
+const PROMPTS = [
+ {id:'pr1',g:'presenter',sit:'people',fr:"Présente-toi en 5 phrases : ton prénom, d'où tu viens, depuis combien de temps tu es en Thaïlande, ce que tu fais.",hints:["I've been here for…","I'm from…","I run a…"]},
+ {id:'pr2',g:'presenter',sit:'people',fr:"Quelqu'un te demande pourquoi tu es venu vivre en Thaïlande. Réponds.",hints:["I moved here because…","the weather, the food, the people","it's easier to…"]},
+ {id:'pr3',g:'presenter',sit:'hotel',fr:"Explique où tu habites et à quoi ressemble ton quartier.",hints:["I live in a condo near…","there's a market nearby","it's pretty quiet"]},
+ {id:'jo1',g:'journee',sit:'cafe',fr:"Raconte ta journée d'hier, du réveil au coucher.",hints:["I woke up at…","then I…","in the evening I…"]},
+ {id:'jo2',g:'journee',sit:'bar',fr:"Raconte ce que tu as fait ce week-end.",hints:["on Saturday I…","we went to…","it was…"]},
+ {id:'jo3',g:'journee',sit:'gym',fr:"Décris ta routine du matin, étape par étape.",hints:["first I…","after that…","I usually…"]},
+ {id:'jo4',g:'journee',sit:'cafe',fr:"Dis ce que tu vas faire aujourd'hui après cette session.",hints:["I'm going to…","later I might…","then I'll…"]},
+ {id:'go1',g:'gouts',sit:'food',fr:"Parle de la nourriture que tu aimes en Thaïlande et de ce que tu n'aimes pas.",hints:["my favorite dish is…","I can't stand…","it's too spicy for me"]},
+ {id:'go2',g:'gouts',sit:'people',fr:"Parle d'un truc que tu adores faire pendant ton temps libre.",hints:["I'm into…","I love it because…","it helps me relax"]},
+ {id:'go3',g:'gouts',sit:'bar',fr:"Explique quel genre de musique ou de films tu aimes.",hints:["I mostly listen to…","I'm a big fan of…","not really my thing"]},
+ {id:'go4',g:'gouts',sit:'island',fr:"Décris ton endroit préféré en Thaïlande et pourquoi.",hints:["the vibe is…","what I like about it is…","you can…"]},
+ {id:'vo1',g:'vouloir',sit:'massage',fr:"Chez le coiffeur : explique la coupe que tu veux.",hints:["short on the sides","a bit longer on top","just a trim, not too short"]},
+ {id:'vo2',g:'vouloir',sit:'massage',fr:"Au massage : dis le type de massage, la durée et la pression que tu veux.",hints:["a Thai massage, one hour","not too hard","focus on my back"]},
+ {id:'vo3',g:'vouloir',sit:'market',fr:"Chez le tailleur : décris la chemise ou le pantalon que tu veux.",hints:["slim fit","a bit loose here","can you take it in?"]},
+ {id:'vo4',g:'vouloir',sit:'food',fr:"Au resto : commande un plat en précisant ce que tu veux changer.",hints:["without onions","medium spicy","can I get it with rice?"]},
+ {id:'co1',g:'commander',sit:'food',fr:"Tu commandes au street food pour deux personnes et tu demandes le prix.",hints:["two of these, please","how much altogether?","to go, please"]},
+ {id:'co2',g:'commander',sit:'market',fr:"Tu négocies le prix d'un vêtement au marché.",hints:["can you do 200?","that's too much for me","I'll take two if…"]},
+ {id:'co3',g:'commander',sit:'bar',fr:"Au bar, tu commandes et tu demandes s'il y a une happy hour.",hints:["what do you have on tap?","is there a happy hour?","can I open a tab?"]},
+ {id:'pb1',g:'probleme',sit:'hotel',fr:"Ta chambre a un problème (clim, eau chaude, bruit). Explique-le à la réception.",hints:["the air con isn't working","there's no hot water","could someone check it?"]},
+ {id:'pb2',g:'probleme',sit:'scooter',fr:"Ton scooter fait un bruit bizarre. Explique au loueur.",hints:["it makes a weird noise","the brakes feel…","can you have a look?"]},
+ {id:'pb3',g:'probleme',sit:'pharma',fr:"Tu es à la pharmacie : décris tes symptômes.",hints:["I've had a sore throat since…","I feel dizzy","do you have something for…?"]},
+ {id:'pb4',g:'probleme',sit:'delivery',fr:"Ta commande Grab Food est arrivée froide et incomplète. Explique au support.",hints:["my order was missing…","it arrived cold","can I get a refund?"]},
+ {id:'pl1',g:'plans',sit:'island',fr:"Propose à quelqu'un d'aller à la plage ce week-end : jour, heure, comment y aller.",hints:["are you free on…?","let's meet at…","we could take a Grab"]},
+ {id:'pl2',g:'plans',sit:'phone',fr:"Tu dois décaler un rendez-vous. Explique et propose une autre heure.",hints:["something came up","can we move it to…?","does 5 work for you?"]},
+ {id:'pl3',g:'plans',sit:'dating',fr:"Invite quelqu'un à boire un verre et propose un endroit.",hints:["wanna grab a drink?","I know a place near…","around 8?"]},
+ {id:'bo1',g:'boulot',sit:'cafe',fr:"Explique ton business en 4 phrases, comme à quelqu'un qui n'y connaît rien.",hints:["I help… to…","basically, we…","my clients are…"]},
+ {id:'bo2',g:'boulot',sit:'phone',fr:"Raconte un problème que tu as eu au boulot cette semaine et comment tu l'as réglé.",hints:["the issue was…","so I…","in the end…"]},
+ {id:'bo3',g:'boulot',sit:'cafe',fr:"Explique pourquoi tu peux bosser à distance et comment tu t'organises.",hints:["I work remotely","I usually start at…","the time difference is…"]},
+ {id:'op1',g:'opinion',sit:'bar',fr:"Bangkok ou les îles : laquelle tu préfères, et pourquoi ?",hints:["I'd say…","on the other hand…","for me, it's about…"]},
+ {id:'op2',g:'opinion',sit:'money',fr:"Est-ce que vivre en Thaïlande est bon marché ? Donne ton avis avec des exemples.",hints:["it depends on…","for example, rent is…","compared to France…"]},
+ {id:'op3',g:'opinion',sit:'people',fr:"Un ami hésite à venir en Thaïlande. Qu'est-ce que tu lui conseilles ?",hints:["you should…","I'd avoid…","the best time is…"]},
+ {id:'so1',g:'souvenir',sit:'island',fr:"Raconte ton meilleur souvenir depuis que tu es en Thaïlande.",hints:["one of the best moments was…","we ended up…","I'll never forget…"]},
+ {id:'so2',g:'souvenir',sit:'airport',fr:"Raconte une galère que tu as eue en voyage.",hints:["it was a nightmare","I got lost","luckily…"]},
+ {id:'so3',g:'souvenir',sit:'grab',fr:"Raconte comment s'est passée ta première semaine ici.",hints:["at first…","I didn't know…","then I got used to it"]},
+ {id:'cl1',g:'clarifier',sit:'phone',fr:"Quelqu'un parle trop vite. Demande-lui de répéter et de ralentir, poliment, de deux façons.",hints:["sorry, could you say that again?","a bit slower, please","what does … mean?"]},
+ {id:'cl2',g:'clarifier',sit:'food',fr:"Tu n'as pas compris un mot au resto. Demande ce que c'est et si c'est épicé.",hints:["what's … exactly?","is it spicy?","is it pork or chicken?"]},
+ {id:'cl3',g:'clarifier',sit:'people',fr:"Explique à quelqu'un que ton anglais est limité mais que tu veux parler.",hints:["my English is still basic","I'm learning","bear with me"]},
+ {id:'pj1',g:'projets',sit:'visa',fr:"Explique ce que tu comptes faire dans les six prochains mois.",hints:["I'm planning to…","I'd like to…","hopefully by…"]},
+ {id:'pj2',g:'projets',sit:'cafe',fr:"Dis ce que tu veux améliorer en anglais et pourquoi.",hints:["I want to be able to…","my goal is…","so that I can…"]},
+ {id:'pj3',g:'projets',sit:'airport',fr:"Décris le voyage que tu aimerais faire après la Thaïlande.",hints:["next, I'd love to…","I've always wanted to…","probably in…"]}
+];
+const PLACEMENT = "Raconte-moi en anglais, pendant 2 minutes : qui tu es, ta vie en Thaïlande, ce que tu fais dans une journée, ce que tu aimes. Pas besoin que ce soit parfait. Dicte avec le micro du clavier, en anglais.";
+const WEEKLY = "Bilan de la semaine : raconte en anglais ce que tu as fait cette semaine, un bon moment, un truc qui t'a énervé, et ce que tu prévois pour la suite. 2 minutes.";
 /*DATA-END*/
 
 // ---------- utils ----------
@@ -533,130 +525,55 @@ const pad = n => String(n).padStart(2, '0');
 const fmtDate = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
 const todayKey = () => fmtDate(new Date());
 function addDays(key, n){ const [y, m, d] = key.split('-').map(Number); return fmtDate(new Date(y, m - 1, d + n)); }
+function daysBetween(a, b){ const [y1, m1, d1] = a.split('-').map(Number); const [y2, m2, d2] = b.split('-').map(Number); return Math.round((new Date(y2, m2 - 1, d2) - new Date(y1, m1 - 1, d1)) / 86400000); }
+const DAYS_FR = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+const MONTHS_FR = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+function prettyDate(key){ const [y, m, d] = key.split('-').map(Number); const dt = new Date(y, m - 1, d); return DAYS_FR[dt.getDay()] + ' ' + d + ' ' + MONTHS_FR[m - 1]; }
 const INTERVALS = [0, 1, 3, 7, 14, 30];
 const VOCAB_ALL = VOCAB.flatMap(t => t.items.map((it, i) => ({ id: t.id + ':' + i, theme: t.id, en: it[0], fr: it[1], ex: it[2] })));
-const REDUCED = /^(prefers-reduced-motion: reduce)$/;
-const reduced = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 const ICON = {
   play: '<svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><span class="bars"><i></i><i></i><i></i><i></i></span>',
   speaker: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>',
   plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
   x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
-  turtle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a8 5 0 0 1 16 0"/><path d="M2 14h20"/><path d="M5 14v3M19 14v3M9 14v3M15 14v3"/><path d="M20 12l2-3"/></svg>'
+  turtle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a8 5 0 0 1 16 0"/><path d="M2 14h20"/><path d="M5 14v3M19 14v3M9 14v3M15 14v3"/><path d="M20 12l2-3"/></svg>',
+  mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>'
 };
-
-// ---------- gamification ----------
-const LEVELS = [0, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 4000, 5000, 6500, 8000, 10000];
-const TITLES = ['Fresh off the plane', 'Farang débutant', 'Habitué du 7-Eleven', 'Pro du Grab', 'Négociateur du marché', 'Pote des locaux', 'Presque local', 'Sabai master', 'Légende de Bangkok', 'Thai at heart', 'Boss du Sud-Est', 'Mister Same Same', 'Sensei du Thaiglish', 'Immortel', 'Immortel'];
-function levelInfo(xp){ let i = 0; while (i + 1 < LEVELS.length && xp >= LEVELS[i + 1]) i++; const cur = LEVELS[i], nxt = LEVELS[i + 1] || cur + 2000; return { n: i + 1, title: TITLES[Math.min(i, TITLES.length - 1)], pct: Math.min(100, Math.round(100 * (xp - cur) / (nxt - cur))), toNext: nxt - xp }; }
-const BADGES = [
-  { id: 'first', ico: '🎯', t: 'Première session', test: s => s.sessions >= 1 },
-  { id: 's3', ico: '🔥', t: '3 jours de suite', test: s => s.streak.count >= 3 },
-  { id: 's7', ico: '🌶️', t: '7 jours de suite', test: s => s.streak.count >= 7 },
-  { id: 's30', ico: '🏆', t: '30 jours de suite', test: s => s.streak.count >= 30 },
-  { id: 'w25', ico: '📒', t: '25 mots suivis', test: s => Object.keys(s.words).length >= 25 },
-  { id: 'w100', ico: '📚', t: '100 mots suivis', test: s => Object.keys(s.words).length >= 100 },
-  { id: 'b15', ico: '⚡', t: 'Blitz 15+', test: s => s.blitzBest >= 15 },
-  { id: 'b25', ico: '🚀', t: 'Blitz 25+', test: s => s.blitzBest >= 25 },
-  { id: 's10', ico: '🛵', t: '10 sessions', test: s => s.sessions >= 10 },
-  { id: 'thai', ico: '🇹🇭', t: 'Thaiglish décodé', test: s => Object.values(s.days).some(d => d.sit === 'thaiglish') },
-  { id: 'v100', ico: '🧠', t: '100 mots de vocab vus', test: s => Object.keys(s.seen).length >= 100 },
-  { id: 'l5', ico: '⭐', t: 'Niveau 5', test: s => levelInfo(s.xp).n >= 5 },
-  { id: 'all', ico: '🗺️', t: 'Toutes les situations', test: s => new Set(Object.values(s.days).map(d => d.sit)).size >= SITS.length },
-  { id: 'l10', ico: '👑', t: 'Niveau 10', test: s => levelInfo(s.xp).n >= 10 }
-];
 
 // ---------- state ----------
 const KEY = 'sabai.v1';
-function fresh(){ return { v: 2, updated: 0, settings: { voice: 'auto', rate: 1, sound: true }, streak: { count: 0, last: null }, days: {}, words: {}, hard: [], today: null, xp: 0, badges: [], blitzBest: 0, sessions: 0, seen: {} }; }
+function fresh(){ return { v: 3, updated: 0, settings: { voice: 'auto', rate: 1 }, streak: { count: 0, last: null }, days: {}, words: {}, hard: [], listen: null, parle: null, level: null, baseline: null, measures: [], cando: {}, seen: {}, sessions: 0 }; }
 function migrate(s){
   if (!s || typeof s !== 'object') return null;
-  if (s.v === 1) { s.v = 2; s.xp = 0; s.badges = []; s.blitzBest = 0; s.sessions = Object.keys(s.days || {}).length; s.seen = {}; s.settings = s.settings || {}; if (s.settings.sound == null) s.settings.sound = true; if (s.today) s.today = null; }
-  return s.v === 2 ? s : null;
+  if (s.v === 1) { s.v = 2; s.sessions = Object.keys(s.days || {}).length; s.seen = {}; s.today = null; }
+  if (s.v === 2) {
+    s.v = 3; s.listen = null; delete s.today; s.parle = null; s.level = null; s.baseline = null; s.measures = []; s.cando = {};
+    const d = {}; Object.entries(s.days || {}).forEach(([k, v]) => { d[k] = (v && (v.listen || v.parle)) ? v : { listen: v }; }); s.days = d;
+    delete s.xp; delete s.badges; delete s.blitzBest; s.settings = s.settings || {}; delete s.settings.sound; s.seen = s.seen || {}; s.hard = s.hard || [];
+  }
+  return s.v === 3 ? s : null;
 }
 function load(){ try { return migrate(JSON.parse(localStorage.getItem(KEY) || 'null')); } catch (e) {} return null; }
 let state = load() || fresh();
-let ui = { tab: 'today', step: {}, review: null, say: null, sheet: false, toast: null, combo: 0, vocab: {}, quiz: null, blitz: null };
+let ui = { tab: 'parle', step: {}, review: null, sheet: false, toast: null, vocab: {}, drill: null, busy: null, pickSit: false };
 let sampleFn = null, dbRef = null, dbTimer = null, dbChain = Promise.resolve();
-
 function save(){
   state.updated = Date.now();
   try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
-  if (dbRef) {
-    clearTimeout(dbTimer);
-    dbTimer = setTimeout(() => { const snap = JSON.parse(JSON.stringify(state)); dbChain = dbChain.then(() => dbRef.set(snap)).catch(() => {}); }, 1500);
-  }
-}
-function addXP(n, silent){
-  if (!n) return;
-  const before = levelInfo(state.xp).n;
-  state.xp += n;
-  const after = levelInfo(state.xp);
-  if (!silent) floatXP(n);
-  renderTop();
-  if (after.n > before) { setTimeout(() => { toast('Niveau ' + after.n + ' : ' + after.title); FX.win(); confetti(true); }, 350); }
-  checkBadges();
-}
-function checkBadges(){
-  const fresh = BADGES.filter(b => !state.badges.includes(b.id) && b.test(state));
-  if (!fresh.length) return;
-  fresh.forEach(b => state.badges.push(b.id));
-  save();
-  setTimeout(() => { toast('Trophée : ' + fresh[0].ico + ' ' + fresh[0].t); FX.win(); confetti(true); }, 900);
-}
-function floatXP(n){
-  if (reduced()) return;
-  const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = '+' + n + ' XP';
-  document.body.appendChild(el); setTimeout(() => el.remove(), 1200);
+  if (dbRef) { clearTimeout(dbTimer); dbTimer = setTimeout(() => { const snap = JSON.parse(JSON.stringify(state)); dbChain = dbChain.then(() => dbRef.set(snap)).catch(() => {}); }, 1500); }
 }
 function toast(msg){
-  clearTimeout(ui.toast);
-  let el = document.querySelector('.toast');
+  clearTimeout(ui.toast); let el = document.querySelector('.toast');
   if (!el) { el = document.createElement('div'); el.className = 'toast'; document.body.appendChild(el); }
-  el.textContent = msg;
-  ui.toast = setTimeout(() => el.remove(), 2400);
+  el.textContent = msg; ui.toast = setTimeout(() => el.remove(), 2400);
 }
-function buzz(ms){ try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} }
-
-// ---------- sound effects ----------
-const FX = {
-  ctx: null,
-  get(){ if (!this.ctx) { try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (this.ctx && this.ctx.state === 'suspended') { try { this.ctx.resume(); } catch (e) {} } return this.ctx; },
-  tone(f, t0, dur, type, g){
-    if (!state.settings.sound) return; const c = this.get(); if (!c) return;
-    try {
-      const o = c.createOscillator(), gn = c.createGain(); o.type = type || 'sine'; o.frequency.value = f;
-      const t = c.currentTime + t0; gn.gain.setValueAtTime(0.0001, t); gn.gain.linearRampToValueAtTime(g || 0.12, t + 0.012); gn.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      o.connect(gn).connect(c.destination); o.start(t); o.stop(t + dur + 0.05);
-    } catch (e) {}
-  },
-  good(){ this.tone(523, 0, 0.12); this.tone(784, 0.09, 0.2); },
-  bad(){ this.tone(200, 0, 0.18, 'sawtooth', 0.05); this.tone(160, 0.12, 0.25, 'sawtooth', 0.05); },
-  win(){ [523, 659, 784, 1047].forEach((f, i) => this.tone(f, i * 0.09, 0.28)); },
-  tick(){ this.tone(1300, 0, 0.04, 'square', 0.035); },
-  pop(){ this.tone(900, 0, 0.06, 'triangle', 0.07); }
-};
-
-// ---------- confetti ----------
-let fxAnim = null;
-function confetti(big){
-  if (reduced()) return;
-  const cv = document.getElementById('fx'); if (!cv) return;
-  const ctx = cv.getContext('2d'); const W = cv.width = innerWidth, H = cv.height = innerHeight; cv.hidden = false;
-  const colors = ['#FF6B4A', '#2EE6C5', '#FFD166', '#FF3D81', '#8B5CFF', '#3DDC97'];
-  const n = big ? 140 : 40; const ps = [];
-  for (let i = 0; i < n; i++) ps.push({ x: W / 2 + (Math.random() - .5) * (big ? 200 : 120), y: big ? H * 0.45 : H * 0.38, vx: (Math.random() - .5) * (big ? 16 : 9), vy: -Math.random() * (big ? 16 : 10) - 4, s: 5 + Math.random() * 6, c: colors[i % colors.length], r: Math.random() * Math.PI, vr: (Math.random() - .5) * .3, life: 0 });
-  cancelAnimationFrame(fxAnim);
-  const t0 = performance.now();
-  const frame = now => {
-    ctx.clearRect(0, 0, W, H); let alive = 0;
-    for (const p of ps) { p.vy += 0.45; p.x += p.vx; p.y += p.vy; p.vx *= 0.99; p.r += p.vr; if (p.y < H + 20) alive++; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.globalAlpha = Math.max(0, 1 - (now - t0) / (big ? 2200 : 1300)); ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6); ctx.restore(); }
-    if (alive && now - t0 < (big ? 2200 : 1300)) fxAnim = requestAnimationFrame(frame); else { ctx.clearRect(0, 0, W, H); cv.hidden = true; }
-  };
-  fxAnim = requestAnimationFrame(frame);
+function markDay(k, kind, data){
+  const d = state.days[k] || (state.days[k] = {}); const first = !d.parle && !d.listen; d[kind] = data;
+  if (first) { const y = addDays(k, -1); if (state.streak.last === y) state.streak.count += 1; else if (state.streak.last !== k) state.streak.count = 1; state.streak.last = k; }
 }
+function streakNow(){ const s = state.streak; if (!s.last) return 0; const k = todayKey(); return (s.last === k || s.last === addDays(k, -1)) ? s.count : 0; }
+function dayNumber(){ return Object.keys(state.days).length + (state.days[todayKey()] ? 0 : 1); }
 
 // ---------- speech ----------
 const TTS = {
@@ -670,513 +587,416 @@ const TTS = {
     for (const n of order) { const v = this.voices.find(v => v.name.startsWith(n)); if (v) return v; }
     return this.voices.find(v => v.lang === 'en-US') || this.voices[0] || null;
   },
-  utter(text, rate){
-    const u = new SpeechSynthesisUtterance(text);
-    const v = this.pick(); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
-    u.rate = rate; u.pitch = 1;
-    u.onstart = () => setPlaying(true); u.onend = () => setPlaying(false); u.onerror = () => setPlaying(false);
-    return u;
-  },
-  speak(text, rate){
-    if (!this.ok()) { toast('Pas de synthèse vocale sur ce navigateur'); return; }
-    try { speechSynthesis.cancel(); speechSynthesis.speak(this.utter(text, rate)); } catch (e) { setPlaying(false); }
-  },
-  words(text){
-    if (!this.ok()) { toast('Pas de synthèse vocale sur ce navigateur'); return; }
-    try { speechSynthesis.cancel(); text.split(/\s+/).map(w => w.replace(/^[^\w'’]+|[^\w'’]+$/g, '')).filter(Boolean).forEach(w => speechSynthesis.speak(this.utter(w, 0.85))); } catch (e) { setPlaying(false); }
-  },
+  utter(text, rate){ const u = new SpeechSynthesisUtterance(text); const v = this.pick(); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US'; u.rate = rate; u.pitch = 1; u.onstart = () => setPlaying(true); u.onend = () => setPlaying(false); u.onerror = () => setPlaying(false); return u; },
+  speak(text, rate){ if (!this.ok()) { toast('Pas de synthèse vocale sur ce navigateur'); return; } try { speechSynthesis.cancel(); speechSynthesis.speak(this.utter(text, rate)); } catch (e) { setPlaying(false); } },
+  words(text){ if (!this.ok()) { toast('Pas de synthèse vocale sur ce navigateur'); return; } try { speechSynthesis.cancel(); text.split(/\s+/).map(w => w.replace(/^[^\w'’]+|[^\w'’]+$/g, '')).filter(Boolean).forEach(w => speechSynthesis.speak(this.utter(w, 0.85))); } catch (e) { setPlaying(false); } },
   stop(){ try { speechSynthesis.cancel(); } catch (e) {} setPlaying(false); },
-  unlock(){ if (this.ok()) { try { speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch (e) {} } FX.get(); }
+  unlock(){ if (this.ok()) { try { speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch (e) {} } }
 };
 if (TTS.ok()) { TTS.refresh(); speechSynthesis.onvoiceschanged = () => { TTS.refresh(); if (ui.sheet) renderSheet(); }; }
 function setPlaying(on){ document.querySelectorAll('.play').forEach(b => b.classList.toggle('playing', on)); }
-function playLine(line, mode){
-  const rate = state.settings.rate || 1;
-  if (mode === 'slow') TTS.speak(line.en, 0.62);
-  else if (mode === 'words') TTS.words(line.en);
-  else TTS.speak(line.say || line.en, rate);
-}
+function playLine(line, mode){ const rate = state.settings.rate || 1; if (mode === 'slow') TTS.speak(line.en, 0.62); else if (mode === 'words') TTS.words(line.en); else TTS.speak(line.say || line.en, rate); }
 
-// ---------- session ----------
+// ---------- words (spaced recall) ----------
+function dueWords(){ const k = todayKey(); return Object.values(state.words).filter(w => w.due <= k).sort((a, b) => a.box - b.box); }
+function wordKey(w){ return norm(w).replace(/[^a-z0-9'\-\s/.…]/g, '').replace(/\s+/g, '-').slice(0, 48); }
+function addWord(w, fr, ex, exfr, src){
+  const key = wordKey(w); if (!key || state.words[key]) return false;
+  state.words[key] = { key, w: String(w).trim(), fr: fr || '', ex: ex || '', exfr: exfr || '', box: 1, due: todayKey(), added: todayKey(), src: src || '' };
+  return true;
+}
+function gradeWord(key, known){ const w = state.words[key]; if (!w) return; w.box = known ? Math.min(w.box + 1, INTERVALS.length - 1) : 1; w.due = addDays(todayKey(), INTERVALS[w.box]); w.last = todayKey(); save(); }
+function activeWords(){ return Object.values(state.words).filter(w => w.box >= 3).length; }
+
+// ---------- Parle session ----------
+function candoCount(g){ return state.cando[g] || 0; }
+function candoStatus(g){ const n = candoCount(g); return n >= 2 ? 'done' : n === 1 ? 'wip' : (Object.values(state.days).some(d => d.parle && d.parle.g === g) ? 'wip' : 'todo'); }
+function pickPrompt(k){
+  const used = {}; Object.values(state.days).forEach(d => { if (d.parle && d.parle.pid) used[d.parle.pid] = (used[d.parle.pid] || 0) + 1; });
+  const y = state.days[addDays(k, -1)]; const yg = y && y.parle ? y.parle.g : null;
+  const open = CANDO.filter(c => candoStatus(c.id) !== 'done' && c.id !== yg);
+  const goals = open.length ? open : CANDO.filter(c => c.id !== yg);
+  const g = goals[hash('g' + k) % goals.length];
+  const ps = PROMPTS.filter(p => p.g === g.id); const min = Math.min(...ps.map(p => used[p.id] || 0));
+  const cands = ps.filter(p => (used[p.id] || 0) === min);
+  return cands[hash('p' + k) % cands.length];
+}
+function ensureParle(){
+  const k = todayKey();
+  if (!state.parle || state.parle.date !== k) { const p = pickPrompt(k); state.parle = { date: k, pid: p.id, text: '', result: null, repeated: false, done: false }; save(); }
+}
+function promptOf(id){ return PROMPTS.find(p => p.id === id) || PROMPTS[0]; }
+function weeklyDue(){ if (!state.baseline) return false; const last = state.measures.length ? state.measures[state.measures.length - 1].date : state.baseline.date; return daysBetween(last, todayKey()) >= 7; }
+function currentLevel(){ const m = state.measures.length ? state.measures[state.measures.length - 1] : state.baseline; return m ? m.cefr : null; }
+function parleSeries(){ return Object.keys(state.days).sort().filter(k => state.days[k].parle && state.days[k].parle.errors != null).slice(-8).map(k => ({ k, e: state.days[k].parle.errors })); }
+
+// ---------- Écoute session (from v2) ----------
 function sitForDate(key){
   const counts = {}; SITS.forEach(s => counts[s.id] = 0);
-  Object.values(state.days).forEach(d => { if (counts[d.sit] != null) counts[d.sit]++; });
-  const min = Math.min(...Object.values(counts));
-  const cands = SITS.filter(s => counts[s.id] === min);
+  Object.values(state.days).forEach(d => { if (d.listen && counts[d.listen.sit] != null) counts[d.listen.sit]++; });
+  const min = Math.min(...Object.values(counts)); const cands = SITS.filter(s => counts[s.id] === min);
   return cands[hash(key) % cands.length];
 }
-function dueWords(){ const k = todayKey(); return Object.values(state.words).filter(w => w.due <= k).sort((a, b) => a.box - b.box); }
-function ensureToday(){
-  const k = todayKey();
-  if (!state.today || state.today.date !== k) {
-    const sit = sitForDate(k);
-    state.today = { date: k, sit: sit.id, title: sit.title, ctx: sit.ctx, lines: null, plan: null, step: 0, ok: 0, total: 0, added: 0, extra: false };
-    save();
-  }
-}
-function sessionLines(){
-  const t = state.today; if (t.lines) return t.lines;
-  const sit = SITS.find(s => s.id === t.sit) || SITS[0];
-  return sit.lines.map((l, i) => ({ ...l, id: sit.id + '-' + i }));
-}
+function newListen(sit, extra){ return { date: todayKey(), sit: sit.id, title: sit.title, ctx: sit.ctx, lines: null, plan: null, step: 0, ok: 0, total: 0, added: 0, extra: !!extra }; }
+function ensureListen(){ const k = todayKey(); if (!state.listen || state.listen.date !== k) { state.listen = newListen(sitForDate(k), false); save(); } }
+function sessionLines(){ const t = state.listen; if (t.lines) return t.lines; const sit = SITS.find(s => s.id === t.sit) || SITS[0]; return sit.lines.map((l, i) => ({ ...l, id: sit.id + '-' + i })); }
 function gapIndex(line){ const toks = line.en.split(/\s+/); const i = toks.findIndex(t => norm(t) === norm(line.gap)); return i >= 0 ? { i, toks } : null; }
 function buildPlan(){
-  const lines = sessionLines(); const plan = [{ t: 'intro' }];
-  const types = ['listen', 'gap', 'order', 'listen', 'gap', 'order'];
+  const lines = sessionLines(); const plan = [{ t: 'intro' }]; const types = ['listen', 'gap', 'order', 'listen', 'gap', 'order'];
   lines.forEach((l, i) => { let t = types[i % types.length]; const n = l.en.split(/\s+/).length; if (t === 'order' && (n > 8 || n < 3)) t = 'gap'; if (t === 'gap' && !gapIndex(l)) t = 'listen'; plan.push({ t, i }); });
   const hardHere = lines.map((l, i) => i).filter(i => state.hard.includes(lines[i].id));
   [...new Set([...hardHere, 0, Math.min(3, lines.length - 1)])].slice(0, 2).forEach(i => plan.push({ t: 'repeat', i }));
-  const due = dueWords().slice(0, 6).map(w => w.key); if (due.length) plan.push({ t: 'review', words: due });
   plan.push({ t: 'done' }); return plan;
 }
-function currentStep(){ const t = state.today; if (!t.plan) return { t: 'intro' }; return t.plan[Math.min(t.step, t.plan.length - 1)]; }
-function next(){
-  const t = state.today;
+function currentStep(){ const t = state.listen; if (!t.plan) return { t: 'intro' }; return t.plan[Math.min(t.step, t.plan.length - 1)]; }
+function nextStep(){
+  const t = state.listen;
   if (!t.plan) { t.plan = buildPlan(); t.step = 1; } else t.step = Math.min(t.step + 1, t.plan.length - 1);
-  ui.step = {}; save();
-  if (currentStep().t === 'done') finishDay();
-  render();
-  const st = currentStep();
-  if (st.t === 'gap' || st.t === 'listen') playLine(sessionLines()[st.i], 'normal');
+  ui.step = {}; if (currentStep().t === 'done') finishListen(); save(); render();
+  const st = currentStep(); if (st.t === 'gap' || st.t === 'listen') playLine(sessionLines()[st.i], 'normal');
 }
-function finishDay(){
-  const t = state.today; const k = t.date;
-  state.sessions = (state.sessions || 0) + 1;
-  if (!t.extra && !state.days[k]) {
-    state.days[k] = { sit: t.sit, ok: t.ok, total: t.total };
-    const y = addDays(k, -1);
-    if (state.streak.last === y) state.streak.count += 1; else if (state.streak.last !== k) state.streak.count = 1;
-    state.streak.last = k;
-    addXP(50, true);
-  } else addXP(20, true);
-  save(); FX.win(); confetti(true); checkBadges();
-}
-function addWord(w, line){
-  const key = norm(w).replace(/[^a-z0-9'-]/g, '');
-  if (!key || state.words[key]) return false;
-  state.words[key] = { key, w: norm(w), fr: '', ex: line.en, exfr: line.fr, box: 1, due: todayKey(), added: todayKey() };
-  return true;
-}
-function addVocabWord(v){
-  const key = norm(v.en).replace(/[^a-z0-9'\-\s/.…]/g, '').replace(/\s+/g, '-').slice(0, 40);
-  if (!key) return false; if (state.words[key]) return false;
-  state.words[key] = { key, w: v.en, fr: v.fr, ex: v.ex, exfr: '', box: 1, due: todayKey(), added: todayKey() };
-  return true;
-}
-function gradeWord(key, known){
-  const w = state.words[key]; if (!w) return;
-  w.box = known ? Math.min(w.box + 1, INTERVALS.length - 1) : 1;
-  w.due = addDays(todayKey(), INTERVALS[w.box]); save();
-}
-function hit(ok){
-  if (ok) { ui.combo++; FX.good(); buzz(15); if (ui.combo >= 3 && ui.combo % 3 === 0) { addXP(15); toast('Combo x' + ui.combo + ' !'); confetti(false); } else addXP(10); if (!reduced() && ui.combo >= 2) confetti(false); }
-  else { ui.combo = 0; FX.bad(); buzz(60); }
-}
-function streakNow(){ const s = state.streak; if (!s.last) return 0; const k = todayKey(); return (s.last === k || s.last === addDays(k, -1)) ? s.count : 0; }
+function finishListen(){ const t = state.listen; state.sessions = (state.sessions || 0) + 1; if (!t.extra) markDay(t.date, 'listen', { sit: t.sit, ok: t.ok, total: t.total }); save(); }
 
 // ---------- render ----------
 function renderTop(){
-  const li = levelInfo(state.xp);
-  $('#lvlN').textContent = li.n; $('#lvlT').textContent = li.title; $('#xpBar').style.width = li.pct + '%';
-  $('#streakN').textContent = streakNow(); $('#streakChip').classList.toggle('lit', streakNow() > 0);
+  $('#dateLine').textContent = prettyDate(todayKey()) + ' · jour ' + dayNumber();
+  const s = streakNow(); $('#streakN').textContent = s + (s > 1 ? ' jours' : ' jour'); $('#streakChip').classList.toggle('on', s > 0);
 }
 function render(){
-  ensureToday(); renderTop();
+  ensureParle(); ensureListen(); renderTop();
   document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === ui.tab));
   const main = $('#main'); main.scrollTop = 0;
-  if (ui.tab === 'today') main.innerHTML = renderToday();
-  else if (ui.tab === 'vocab') main.innerHTML = renderVocab();
-  else if (ui.tab === 'say') main.innerHTML = renderSay();
-  else main.innerHTML = renderWords();
+  if (ui.tab === 'parle') main.innerHTML = renderParle();
+  else if (ui.tab === 'ecoute') main.innerHTML = renderEcoute();
+  else if (ui.tab === 'mots') main.innerHTML = renderMots();
+  else main.innerHTML = renderProgres();
   if (ui.sheet) renderSheet(); else $('#overlay').innerHTML = '';
 }
-function progressBar(){
-  const t = state.today; if (!t.plan) return '';
-  const n = t.plan.length - 2, cur = t.step - 1; let h = '<div class="progress">';
-  for (let i = 0; i < n; i++) h += `<i class="${i < cur ? 'done' : i === cur ? 'cur' : ''}"></i>`;
+function busyCard(label){ return `<div class="card"><p class="lead"><span class="spin"></span>&nbsp; ${esc(label)}</p><p class="note">Claude lit ce que tu as dit. 10 à 40 secondes.</p></div>`; }
+function playRow(text){
+  return `<div class="playrow"><button class="play" data-action="say-play" data-t="${esc(text)}" aria-label="Écouter">${ICON.play}</button>
+    <div class="speedrow"><button class="btn" data-action="say-play" data-slow="1" data-t="${esc(text)}">${ICON.turtle} Lent</button><button class="btn" data-action="say-words" data-t="${esc(text)}">Mot par mot</button></div></div>`;
+}
+
+// ---------- Parler ----------
+function renderParle(){
+  const p = state.parle; const pr = promptOf(p.pid); const goal = CANDO.find(c => c.id === pr.g) || CANDO[0];
+  const due = dueWords().length; const lis = state.listen;
+  let h = '<div class="stack">';
+  if (!state.baseline && !ui.skipPlacement) {
+    if (ui.busy === 'placement') h += busyCard('Claude évalue ton niveau…');
+    else h += `<div class="card soft"><div class="head"><span class="mono acc">Avant de commencer</span><span class="pill">2 min</span></div>
+      <p class="lead">${esc(PLACEMENT)}</p>
+      <textarea id="placeIn" placeholder="Hi, my name is Marvin, I'm from…">${esc(ui.placeText || '')}</textarea>
+      <button class="btn amber needs-claude" data-action="placement-send">${ICON.mic} Envoyer pour évaluation</button>
+      <p class="note no-claude">Il faut être connecté à ton compte Claude pour l'évaluation. Ouvre la page depuis l'app Claude.</p>
+      <button class="btn line small" data-action="placement-skip">Plus tard</button></div>`;
+  }
+  if (ui.busy === 'parle') h += busyCard('Claude corrige…');
+  else if (!p.result) {
+    h += `<div class="card"><div class="head"><span class="mono acc">Aujourd'hui · Parle</span><span class="pill">${esc(goal.t)}</span></div>
+      <p class="lead">${esc(pr.fr)}</p>
+      <div class="hint">${pr.hints.map(x => `<span>${esc(x)}</span>`).join('')}</div>
+      <textarea id="parleIn" placeholder="Dis-le en anglais. Appuie sur le micro du clavier et parle, sans chercher la perfection.">${esc(p.text || '')}</textarea>
+      <button class="btn amber needs-claude" data-action="parle-send">${ICON.mic} Envoyer à Claude</button>
+      <p class="note no-claude">Sans compte Claude, pas de correction. Ton texte est gardé quand même.</p>
+      <p class="note">Dictée : appuie sur le micro du clavier, parle en anglais. Si ça écrit en français, change la langue du clavier (touche globe).</p>
+    </div>`;
+  } else {
+    const r = p.result;
+    h += `<div class="card"><div class="head"><span class="mono acc">Ta version corrigée</span><span class="pill ${r.ok ? 'green' : 'amber'}">${r.ok ? 'Consigne réussie' : 'Presque'}</span></div>
+      <p class="en">${esc(r.corrected)}</p>${playRow(r.corrected)}
+      <p class="note">${r.words} mots · ${r.errors} erreur${r.errors > 1 ? 's' : ''} pour 100 mots</p>
+      ${r.good ? `<div class="tip"><span class="lbl">Bien joué</span>${esc(r.good)}</div>` : ''}
+      <details><summary class="note" style="cursor:pointer">Ce que tu avais dit</summary><p class="note" style="margin-top:6px">${esc(p.text)}</p></details></div>`;
+    if (r.gaps && r.gaps.length) h += `<div class="card"><div class="head"><span class="mono acc">Ce qui te manquait</span><span class="pill">gardé dans Mots</span></div>
+      ${r.gaps.map(g => `<div class="gap">${g.said ? `<span class="said">${esc(g.said)}</span>` : ''}<span class="better">${esc(g.better)} <button class="btn small line" style="display:inline-flex;min-height:30px;padding:0 8px;vertical-align:middle" data-action="say-play" data-t="${esc(g.better)}" aria-label="Écouter">${ICON.speaker}</button></span><span class="why">${esc(g.fr)}${g.why ? ' · ' + esc(g.why) : ''}</span>${g.ex ? `<span class="why" style="color:var(--fg)">« ${esc(g.ex)} »</span>` : ''}</div>`).join('')}
+      ${r.tip ? `<div class="tip"><span class="lbl">Pour la prochaine fois</span>${esc(r.tip)}</div>` : ''}</div>`;
+    h += `<div class="card"><div class="head"><span class="mono acc">Répète</span><span class="pill">2 min</span></div>
+      <p class="note">Écoute en lent, puis en normal. Dis ta version corrigée trois fois à voix haute, en imitant le rythme.</p>
+      ${p.repeated ? `<p class="verdict ok">Fait. Session de parole terminée pour aujourd'hui.</p><button class="btn line small" data-action="parle-again">Refaire une consigne</button>` : `<button class="btn amber" data-action="parle-repeated">Je l'ai dite trois fois</button>`}</div>`;
+  }
+  if (weeklyDue()) h += `<div class="card soft"><div class="head"><span class="mono acc">Bilan hebdo</span><span class="pill amber">à faire</span></div><p class="note">Une semaine est passée. Deux minutes de parole libre pour mesurer tes progrès.</p><button class="btn" data-action="goto-progres">Faire le bilan</button></div>`;
+  h += `<div class="row2"><button class="btn" data-action="goto-review">Rappel · ${due} mot${due > 1 ? 's' : ''}</button><button class="btn" data-action="goto-ecoute">Écouter · ${esc(lis.title)}</button></div>`;
   return h + '</div>';
 }
-function comboChip(){ return ui.combo >= 2 ? `<span class="combo">🔥 x${ui.combo}</span>` : ''; }
+
+// ---------- Écouter ----------
+function progressBar(){ const t = state.listen; if (!t.plan) return ''; const n = t.plan.length - 2, cur = t.step - 1; let h = '<div class="progress">'; for (let i = 0; i < n; i++) h += `<i class="${i < cur ? 'done' : i === cur ? 'cur' : ''}"></i>`; return h + '</div>'; }
 function playBlock(){
-  return `<div class="playrow">
-    <button class="play" data-action="play" data-mode="normal" aria-label="Écouter">${ICON.play}</button>
-    <div class="speedrow">
-      <button class="btn ghost" data-action="play" data-mode="slow">${ICON.turtle} Lent</button>
-      <button class="btn ghost" data-action="play" data-mode="words">Mot par mot</button>
-    </div></div>`;
+  return `<div class="playrow"><button class="play" data-action="play" data-mode="normal" aria-label="Écouter">${ICON.play}</button>
+    <div class="speedrow"><button class="btn" data-action="play" data-mode="slow">${ICON.turtle} Lent</button><button class="btn" data-action="play" data-mode="words">Mot par mot</button></div></div>`;
 }
 function lineReveal(line){
   return `<p class="en">${esc(line.en)}</p><p class="fr">${esc(line.fr)}</p>
     ${line.say && line.say !== line.en ? `<div class="say"><span class="lbl">Ça sonne comme</span>${esc(line.say)}</div>` : ''}
     ${line.tip ? `<div class="tip"><span class="lbl">Le truc</span>${esc(line.tip)}</div>` : ''}
-    <button class="btn line small needs-claude" data-action="explain">Explique-moi plus</button><div class="explain" id="explain"></div>`;
+    <button class="btn line small needs-claude" data-action="explain">Explique-moi plus</button><div class="explain say" id="explain" style="display:none"></div>`;
 }
-function wotd(){
-  const v = VOCAB_ALL[hash('w' + todayKey()) % VOCAB_ALL.length]; const th = VOCAB.find(t => t.id === v.theme);
-  return `<div class="card wotd"><div class="eyebrow"><b>Mot du jour</b><span>${th.ico} ${esc(th.title)}</span></div>
-    <div class="item" style="padding:0;border:0;background:none"><button class="mini acc" data-action="say-play" data-t="${esc(v.en)}" aria-label="Écouter">${ICON.speaker}</button>
-    <div class="txt"><div class="w" style="font-size:22px">${esc(v.en)}</div><div class="sub" style="white-space:normal">${esc(v.fr)}</div></div></div>
-    <p class="fr" style="font-size:15px">« ${esc(v.ex)} »</p>
-    <button class="btn ghost small" data-action="vocab-add" data-id="${esc(v.id)}">${ICON.plus} Garder dans mes mots</button></div>`;
-}
-function trophies(){
-  return `<div class="sect">Trophées <small>${state.badges.length}/${BADGES.length}</small></div>
-    <div class="trophies">${BADGES.map(b => `<div class="trophy ${state.badges.includes(b.id) ? 'on' : ''}"><div class="ico">${b.ico}</div><span>${esc(b.t)}</span></div>`).join('')}</div>`;
-}
-
-function renderToday(){
-  const t = state.today; const st = currentStep(); const lines = sessionLines();
+function renderEcoute(){
+  const t = state.listen; const st = currentStep(); const lines = sessionLines();
   const stepN = t.plan ? `${Math.min(t.step, t.plan.length - 2)}/${t.plan.length - 2}` : '';
   if (st.t === 'intro') {
-    const done = !!state.days[t.date]; const due = dueWords().length;
-    return `<div class="stack">
-      <div class="hero">
-        <div class="kicker">${done ? 'Déjà fait aujourd\'hui. Encore une ?' : 'Session du jour'}</div>
-        <h1>${esc(t.title)}</h1>
-        <p class="lead">${esc(t.ctx)}</p>
-        <div class="meta"><span>${lines.length} phrases</span><span>5 min</span><span>+50 XP</span></div>
-        <button class="btn sun" data-action="start">${done ? 'Refaire la session' : 'Commencer'}</button>
-      </div>
-      <div class="grid2">
-        <button class="tile sun" data-action="blitz-open"><span class="ico">⚡</span><b>Blitz 60 s</b><span>Record : ${state.blitzBest}</span></button>
-        <button class="tile" data-action="goto-review"><span class="ico">🔁</span><b>Réviser</b><span>${due ? due + ' mot' + (due > 1 ? 's' : '') + ' à revoir' : 'Rien à revoir'}</span></button>
-      </div>
-      ${wotd()}
-      <div class="stats">
-        <div class="stat"><b>${streakNow()}</b><span>jours de suite</span></div>
-        <div class="stat"><b>${state.sessions || 0}</b><span>sessions</span></div>
-        <div class="stat"><b>${state.xp}</b><span>XP</span></div>
-      </div>
-      ${trophies()}
-      <div class="needs-claude block"><button class="btn ghost" data-action="gen-open">Une autre situation, générée par Claude</button></div>
-      ${ui.step.genOpen ? renderGenPicker() : ''}
-    </div>`;
+    const done = !!(state.days[t.date] && state.days[t.date].listen);
+    let h = `<div class="stack"><div class="card"><div class="head"><span class="mono acc">${done ? 'Déjà fait aujourd\'hui' : 'Situation du jour'}</span><span class="pill">${lines.length} phrases · 5 min</span></div>
+      <h1 class="h1">${esc(t.title)}</h1><p class="note">${esc(t.ctx)}</p>
+      <button class="btn amber" data-action="start">${done ? 'Refaire' : 'Commencer'}</button>
+      <button class="btn line small" data-action="pick-sit">${ui.pickSit ? 'Fermer' : 'Choisir une autre situation'}</button></div>`;
+    if (ui.pickSit) h += `<div class="card"><div class="chips">${SITS.map(s => `<button class="chipw ${s.id === t.sit ? 'on' : ''}" data-action="choose-sit" data-sit="${s.id}">${esc(s.title)}</button>`).join('')}</div></div>`;
+    h += `<p class="note">Écoute à vitesse normale, puis lente, puis mot par mot. Tape « Pas tout » pour garder les mots que tu n'as pas captés.</p></div>`;
+    return h;
   }
   if (st.t === 'listen') return progressBar() + renderListen(lines[st.i], stepN);
   if (st.t === 'gap') return progressBar() + renderGap(lines[st.i], stepN);
   if (st.t === 'order') return progressBar() + renderOrder(lines[st.i], stepN);
   if (st.t === 'repeat') return progressBar() + renderRepeat(lines[st.i], stepN);
-  if (st.t === 'review') return progressBar() + renderReviewStep(st, stepN);
-  return renderDone();
+  return renderListenDone();
 }
 function renderListen(line, stepN){
   const s = ui.step; let body;
-  if (!s.revealed) body = `<p class="prompt">Écoute. Qu'est-ce que tu as compris ?</p>${playBlock()}<button class="btn coral" data-action="reveal">Voir la phrase</button>`;
-  else if (s.picking) {
-    const toks = line.en.split(/\s+/);
-    body = `<p class="en">${esc(line.en)}</p><p class="fr">${esc(line.fr)}</p><p class="prompt">Tape les mots que tu n'avais pas captés.</p>
+  if (!s.revealed) body = `<p class="note">Écoute. Qu'est-ce que tu as compris ?</p>${playBlock()}<button class="btn amber" data-action="reveal">Voir la phrase</button>`;
+  else if (s.picking) { const toks = line.en.split(/\s+/);
+    body = `<p class="en">${esc(line.en)}</p><p class="fr">${esc(line.fr)}</p><p class="note">Tape les mots que tu n'avais pas captés.</p>
       <div class="chips">${toks.map((w, i) => `<button class="chipw ${s.picked && s.picked.includes(i) ? 'on' : ''}" data-action="pick" data-i="${i}">${esc(w)}</button>`).join('')}</div>
-      <button class="btn coral" data-action="add-picked">${s.picked && s.picked.length ? `Garder ${s.picked.length} mot${s.picked.length > 1 ? 's' : ''} et continuer` : 'Continuer'}</button>`;
-  } else body = `${playBlock()}${lineReveal(line)}<div class="row2"><button class="btn good" data-action="grade" data-ok="1">${ICON.check} Compris</button><button class="btn ghost" data-action="grade" data-ok="0">Pas tout</button></div>`;
-  return `<div class="card"><div class="eyebrow"><span><b>Écoute</b> · ${stepN}</span>${comboChip()}</div>${body}</div>`;
+      <button class="btn amber" data-action="add-picked">${s.picked && s.picked.length ? `Garder ${s.picked.length} mot${s.picked.length > 1 ? 's' : ''} et continuer` : 'Continuer'}</button>`; }
+  else body = `${playBlock()}${lineReveal(line)}<div class="row2"><button class="btn green" data-action="grade" data-ok="1">${ICON.check} Compris</button><button class="btn" data-action="grade" data-ok="0">Pas tout</button></div>`;
+  return `<div class="card"><div class="head"><span class="mono acc">Écoute</span><span class="mono">${stepN}</span></div>${body}</div>`;
 }
 function renderGap(line, stepN){
   const s = ui.step; const g = gapIndex(line); const toks = g.toks;
-  const options = shuffle([line.gap, ...(line.alts || [])].slice(0, 3), hash(line.id + state.today.date));
+  const options = shuffle([line.gap, ...(line.alts || [])].slice(0, 3), hash(line.id + state.listen.date));
   const html = toks.map((t, i) => { if (i !== g.i) return esc(t); const core = t.replace(/^[^A-Za-z0-9'’-]+|[^A-Za-z0-9'’-]+$/g, ''); return s.answered ? t.replace(core, `<span class="hit">${esc(core)}</span>`) : t.replace(core, `<span class="gapword">${esc(core)}</span>`); }).join(' ');
-  let body = `<p class="prompt">Écoute et trouve le mot qui manque.</p>${playBlock()}<p class="en">${html}</p>`;
+  let body = `<p class="note">Écoute et trouve le mot qui manque.</p>${playBlock()}<p class="en">${html}</p>`;
   if (!s.answered) body += `<div class="opts">${options.map(o => `<button class="opt" data-action="answer" data-v="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
   else body += `<div class="opts">${options.map(o => { const isR = norm(o) === norm(line.gap); const cls = isR ? 'right' : (norm(o) === norm(s.chosen) ? 'wrong' : ''); return `<button class="opt ${cls}" disabled>${esc(o)}</button>`; }).join('')}</div>
       <p class="verdict ${s.ok ? 'ok' : 'ko'}">${s.ok ? 'Oui, c\'est ça.' : 'Raté. C\'était « ' + esc(line.gap) + ' ».'}</p><p class="fr">${esc(line.fr)}</p>
       ${line.tip ? `<div class="tip"><span class="lbl">Le truc</span>${esc(line.tip)}</div>` : ''}
-      <button class="btn line small needs-claude" data-action="explain">Explique-moi plus</button><div class="explain" id="explain"></div>
-      <button class="btn coral" data-action="next">Suivant</button>`;
-  return `<div class="card"><div class="eyebrow"><span><b>Mot manquant</b> · ${stepN}</span>${comboChip()}</div>${body}</div>`;
+      <button class="btn line small needs-claude" data-action="explain">Explique-moi plus</button><div class="explain say" id="explain" style="display:none"></div>
+      <button class="btn amber" data-action="next">Suivant</button>`;
+  return `<div class="card"><div class="head"><span class="mono acc">Mot manquant</span><span class="mono">${stepN}</span></div>${body}</div>`;
 }
 function renderOrder(line, stepN){
   const s = ui.step; const toks = line.en.split(/\s+/);
-  const order = s.order || (s.order = shuffle(toks.map((_, i) => i), hash('o' + line.id + state.today.date)));
-  const picked = s.picked || (s.picked = []);
-  let body = `<p class="prompt">Écoute, puis remets les mots dans l'ordre.</p>${playBlock()}`;
+  const order = s.order || (s.order = shuffle(toks.map((_, i) => i), hash('o' + line.id + state.listen.date))); const picked = s.picked || (s.picked = []);
+  let body = `<p class="note">Écoute, puis remets les mots dans l'ordre.</p>${playBlock()}`;
   if (!s.answered) body += `<div class="answer">${picked.map(i => `<button class="chipw" data-action="unpick" data-i="${i}">${esc(toks[i])}</button>`).join('')}</div>
       <div class="chips">${order.filter(i => !picked.includes(i)).map(i => `<button class="chipw" data-action="pickw" data-i="${i}">${esc(toks[i])}</button>`).join('')}</div>
-      <button class="btn coral" data-action="check-order" ${picked.length === toks.length ? '' : 'disabled'}>Vérifier</button>`;
+      <button class="btn amber" data-action="check-order" ${picked.length === toks.length ? '' : 'disabled'}>Vérifier</button>`;
   else body += `<div class="answer ${s.ok ? 'ok' : 'ko'}">${picked.map(i => `<span class="chipw">${esc(toks[i])}</span>`).join('')}</div>
       <p class="verdict ${s.ok ? 'ok' : 'ko'}">${s.ok ? 'Parfait.' : 'Pas tout à fait. La bonne phrase :'}</p>${s.ok ? '' : `<p class="en">${esc(line.en)}</p>`}<p class="fr">${esc(line.fr)}</p>
-      <button class="btn coral" data-action="next">Suivant</button>`;
-  return `<div class="card"><div class="eyebrow"><span><b>Dans l'ordre</b> · ${stepN}</span>${comboChip()}</div>${body}</div>`;
+      <button class="btn amber" data-action="next">Suivant</button>`;
+  return `<div class="card"><div class="head"><span class="mono acc">Dans l'ordre</span><span class="mono">${stepN}</span></div>${body}</div>`;
 }
 function renderRepeat(line, stepN){
-  return `<div class="card"><div class="eyebrow"><span><b>Répète</b> · ${stepN}</span>${comboChip()}</div>
-    <p class="prompt">Écoute en lent, puis en normal. Dis-la à voix haute trois fois, en imitant le rythme.</p>${playBlock()}
-    <p class="en">${esc(line.en)}</p><p class="fr">${esc(line.fr)}</p>
-    ${line.say && line.say !== line.en ? `<div class="say"><span class="lbl">Ça sonne comme</span>${esc(line.say)}</div>` : ''}
-    <div class="row2"><button class="btn good" data-action="rep" data-ok="1">${ICON.check} Facile</button><button class="btn bad" data-action="rep" data-ok="0">Dur, à revoir</button></div></div>`;
+  return `<div class="card"><div class="head"><span class="mono acc">Répète</span><span class="mono">${stepN}</span></div>
+    <p class="note">Écoute en lent, puis en normal. Dis-la trois fois à voix haute, en imitant le rythme.</p>${playBlock()}
+    <p class="en">${esc(line.en)}</p><p class="fr">${esc(line.fr)}</p>${line.say && line.say !== line.en ? `<div class="say"><span class="lbl">Ça sonne comme</span>${esc(line.say)}</div>` : ''}
+    <div class="row2"><button class="btn green" data-action="rep" data-ok="1">${ICON.check} Facile</button><button class="btn red" data-action="rep" data-ok="0">Dur, à revoir</button></div></div>`;
 }
-function renderReviewStep(st, stepN){
-  const s = ui.step; const idx = s.idx || 0; const keys = st.words.filter(k => state.words[k]);
-  if (idx >= keys.length) return `<div class="card"><div class="eyebrow"><b>Révision</b></div><p class="lead">Révision terminée.</p><button class="btn coral" data-action="next">Suivant</button></div>`;
-  return `<div class="card"><div class="eyebrow"><b>Révision</b> · ${idx + 1}/${keys.length}</div>${reviewCard(state.words[keys[idx]], s)}</div>`;
+function renderListenDone(){
+  const t = state.listen; const lines = sessionLines(); const pct = t.total ? Math.round(100 * t.ok / t.total) : 0;
+  return `<div class="stack"><div class="card"><div class="head"><span class="mono acc">Session terminée</span><span class="pill ${pct >= 70 ? 'green' : ''}">${t.ok}/${t.total}</span></div>
+    <h1 class="h1">${pct >= 80 ? 'Très propre.' : pct >= 50 ? 'Pas mal.' : 'Dur, mais c\'est normal.'}</h1><p class="note">Les mots ratés reviendront dans Rappel. Réécoute tout une fois avant de partir.</p></div>
+    <div class="card"><div class="head"><span class="mono acc">Ce que tu as entendu</span></div><div class="list">${lines.map(l => `<div class="item flat"><button class="mini acc" data-action="say-play" data-t="${esc(l.say || l.en)}" aria-label="Écouter">${ICON.speaker}</button><div class="txt"><div class="w" style="font-size:15px">${esc(l.en)}</div><div class="sub">${esc(l.fr)}</div></div></div>`).join('')}</div></div>
+    <div class="row2"><button class="btn" data-action="replay">Refaire</button><button class="btn" data-action="pick-sit-go">Autre situation</button></div></div>`;
 }
-function reviewCard(w, s){
-  let body = `<p class="prompt">Tu te souviens de ce mot ?</p>
-    <div class="playrow"><button class="play" data-action="play-word" data-w="${esc(w.w)}" aria-label="Écouter">${ICON.play}</button></div><p class="en">${esc(w.w)}</p>`;
-  if (!s.revealed) body += `<button class="btn coral" data-action="reveal">Voir</button>`;
-  else body += `${w.fr ? `<p class="lead">${esc(w.fr)}</p>` : ''}<div class="say"><span class="lbl">Dans la phrase</span>${esc(w.ex)}${w.exfr ? `<br><span class="note">${esc(w.exfr)}</span>` : ''}</div>
-    <div class="row2"><button class="btn good" data-action="know" data-ok="1" data-k="${esc(w.key)}">${ICON.check} Je sais</button><button class="btn bad" data-action="know" data-ok="0" data-k="${esc(w.key)}">Pas encore</button></div>`;
+
+// ---------- Mots ----------
+function recallCard(w, s, label){
+  const q = w.fr || w.exfr || '';
+  let body = `<p class="note">${label}</p><p class="lead">${q ? esc(q) : '<span class="note">(pas de traduction enregistrée)</span>'}</p>`;
+  if (!s.revealed) body += `<p class="note">Dis-le en anglais, à voix haute. Puis vérifie.</p><button class="btn amber" data-action="reveal">Voir</button>`;
+  else body += `<p class="en">${esc(w.w)}</p>${playRow(w.w)}${w.ex ? `<div class="say"><span class="lbl">Dans une phrase</span>${esc(w.ex)}${w.exfr && w.exfr !== q ? `<br><span class="note">${esc(w.exfr)}</span>` : ''}</div>` : ''}
+    <div class="row2"><button class="btn green" data-action="know" data-ok="1" data-k="${esc(w.key)}">${ICON.check} Je l'avais</button><button class="btn red" data-action="know" data-ok="0" data-k="${esc(w.key)}">Pas encore</button></div>`;
   return body;
 }
-function renderDone(){
-  const t = state.today; const lines = sessionLines(); const pct = t.total ? Math.round(100 * t.ok / t.total) : 0;
-  return `<div class="stack">
-    <div class="hero"><div class="kicker">Session terminée</div><h1>${pct >= 80 ? 'Très propre.' : pct >= 50 ? 'Pas mal du tout.' : 'C\'était dur, c\'est normal.'}</h1>
-      <p class="lead">${t.ok}/${t.total} bonnes réponses, +${t.extra ? 20 : 50} XP. Les mots ratés reviendront tout seuls.</p></div>
-    <div class="card"><div class="eyebrow"><b>Ce que tu as appris</b><span>réécoute</span></div>
-      <div class="list">${lines.map(l => `<div class="item" style="padding:8px 10px"><button class="mini acc" data-action="say-play" data-t="${esc(l.say || l.en)}" aria-label="Écouter">${ICON.speaker}</button><div class="txt"><div class="w" style="font-size:15px">${esc(l.en)}</div><div class="sub">${esc(l.fr)}</div></div></div>`).join('')}</div></div>
-    <div class="grid2"><button class="tile sun" data-action="blitz-open"><span class="ico">⚡</span><b>Blitz 60 s</b><span>Encore des XP</span></button><button class="tile" data-action="replay"><span class="ico">🔁</span><b>Refaire</b><span>cette situation</span></button></div>
-    <div class="needs-claude block"><button class="btn coral" data-action="gen-open">Encore une session, générée par Claude</button></div>
-    ${ui.step.genOpen ? renderGenPicker() : ''}
-    ${trophies()}</div>`;
-}
-function renderGenPicker(){
-  const s = ui.step;
-  if (s.genBusy) return `<div class="card"><p class="lead"><span class="spin"></span>&nbsp; Claude prépare 6 phrases…</p><p class="note">10 à 30 secondes.</p><button class="btn ghost" data-action="gen-stop">Annuler</button></div>`;
-  return `<div class="card sitpick"><div class="eyebrow"><b>Quelle situation ?</b></div>
-    <select id="genSit"><option value="">Surprends-moi</option>${SITS.map(s => `<option value="${s.id}">${esc(s.title)}</option>`).join('')}</select>
-    <input type="text" id="genFree" placeholder="Ou décris-la : chez le dentiste, au tatoueur…">
-    <button class="btn coral" data-action="gen-go">Générer</button>${s.genErr ? `<p class="note">${esc(s.genErr)}</p>` : ''}</div>`;
-}
-
-// ---------- Vocab ----------
-function themeSeen(th){ return th.items.filter((_, i) => state.seen[th.id + ':' + i]).length; }
-function renderVocab(){
-  if (ui.blitz) return renderBlitz();
-  if (ui.quiz) return renderQuiz();
-  const v = ui.vocab;
-  if (v.theme) {
-    const th = VOCAB.find(t => t.id === v.theme);
-    return `<div class="stack">
-      <button class="btn ghost small" data-action="vocab-back">← Thèmes</button>
-      <h1 class="page-h1">${th.ico} ${esc(th.title)}</h1>
-      <p class="note">${th.items.length} mots · ${themeSeen(th)} vus</p>
-      <div class="row2"><button class="btn coral" data-action="quiz-start" data-theme="${th.id}">Quiz 10</button><button class="btn sun" data-action="blitz-open" data-theme="${th.id}">Blitz</button></div>
-      <div class="list">${th.items.map((it, i) => `<div class="item"><button class="mini acc" data-action="say-play" data-t="${esc(it[0])}" aria-label="Écouter">${ICON.speaker}</button>
-        <div class="txt"><div class="w">${esc(it[0])}</div><div class="sub" style="white-space:normal">${esc(it[1])} · <i>${esc(it[2])}</i></div></div>
-        <button class="mini" data-action="vocab-add" data-id="${th.id}:${i}" aria-label="Garder">${ICON.plus}</button></div>`).join('')}</div></div>`;
-  }
-  const seen = Object.keys(state.seen).length;
-  return `<div class="stack">
-    <h1 class="page-h1">Vocab</h1>
-    <p class="note">${VOCAB_ALL.length} mots qu'on entend vraiment, en ${VOCAB.length} thèmes. ${seen} déjà vus.</p>
-    <button class="btn sun" data-action="blitz-open">⚡ Blitz 60 secondes · record ${state.blitzBest}</button>
-    <div class="themes">${VOCAB.map(th => { const n = themeSeen(th); return `<button class="tile" data-action="vocab-theme" data-theme="${th.id}"><span class="ico">${th.ico}</span><b>${esc(th.title)}</b><span>${n}/${th.items.length} vus</span><div class="pbar"><i style="width:${Math.round(100 * n / th.items.length)}%"></i></div></button>`; }).join('')}</div></div>`;
-}
-function makeQuestion(v, dir){
-  const pool = VOCAB_ALL.filter(x => x.theme === v.theme && x.id !== v.id);
-  const ds = shuffle(pool).slice(0, 3);
-  const opts = shuffle([v, ...ds]).map(x => ({ id: x.id, label: dir === 'en' ? x.fr : x.en }));
-  return { v, dir, opts };
-}
-function startQuiz(themeId){
-  const th = VOCAB.find(t => t.id === themeId); if (!th) return;
-  const items = shuffle(VOCAB_ALL.filter(x => x.theme === themeId)).slice(0, 10);
-  ui.quiz = { theme: themeId, qs: items.map((v, i) => makeQuestion(v, i % 2 ? 'fr' : 'en')), i: 0, score: 0, answered: false, done: false };
-  ui.combo = 0; render(); const q = ui.quiz.qs[0]; if (q.dir === 'en') TTS.speak(q.v.en, state.settings.rate || 1);
-}
-function renderQuiz(){
-  const q = ui.quiz; const th = VOCAB.find(t => t.id === q.theme);
-  if (q.done) return `<div class="stack"><div class="hero"><div class="kicker">Quiz terminé</div><h1>${q.score}/${q.qs.length}</h1><p class="lead">${q.score >= 8 ? 'Tu gères ce thème.' : q.score >= 5 ? 'Ça rentre. Encore un ?' : 'Refais-le demain, ça va rentrer.'} +${q.score * 5} XP</p></div>
-    <div class="row2"><button class="btn coral" data-action="quiz-start" data-theme="${q.theme}">Encore un</button><button class="btn ghost" data-action="quiz-quit">Thèmes</button></div></div>`;
-  const cur = q.qs[q.i]; const v = cur.v;
-  const prompt = cur.dir === 'en' ? `<div class="playrow"><button class="play" data-action="say-play" data-t="${esc(v.en)}" aria-label="Écouter">${ICON.play}</button></div><p class="en" style="text-align:center">${esc(v.en)}</p><p class="prompt" style="text-align:center">Ça veut dire quoi ?</p>`
-    : `<p class="prompt" style="text-align:center">Comment on dit…</p><p class="en" style="text-align:center">${esc(v.fr)}</p>`;
-  const opts = cur.opts.map(o => { let cls = ''; if (q.answered) { if (o.id === v.id) cls = 'right'; else if (o.id === q.chosen) cls = 'wrong'; } return `<button class="opt ${cls}" data-action="quiz-answer" data-id="${esc(o.id)}" ${q.answered ? 'disabled' : ''}>${esc(o.label)}</button>`; }).join('');
-  return `<div class="progress">${q.qs.map((_, i) => `<i class="${i < q.i ? 'done' : i === q.i ? 'cur' : ''}"></i>`).join('')}</div>
-    <div class="card"><div class="eyebrow"><span><b>${th.ico} Quiz</b> · ${q.i + 1}/${q.qs.length}</span>${comboChip()}</div>${prompt}<div class="opts grid">${opts}</div>
-    ${q.answered ? `<p class="fr" style="text-align:center">« ${esc(v.ex)} »</p>${q.ok ? '' : `<button class="btn coral" data-action="quiz-next">Suivant</button>`}` : ''}
-    <button class="btn line small" data-action="quiz-quit">Arrêter</button></div>`;
-}
-function startBlitz(themeId){
-  const pool = themeId ? VOCAB_ALL.filter(x => x.theme === themeId) : VOCAB_ALL;
-  ui.blitz = { theme: themeId || '', pool: shuffle(pool), i: 0, score: 0, left: 60, timer: null, answered: false, done: false, q: null };
-  ui.combo = 0; blitzQ(); render();
-  ui.blitz.timer = setInterval(() => { const b = ui.blitz; if (!b) return; b.left--; if (b.left <= 5 && b.left > 0) FX.tick(); const bar = document.getElementById('tbar'), tn = document.getElementById('tnum'); if (bar) { bar.style.width = (100 * b.left / 60) + '%'; bar.classList.toggle('hot', b.left <= 10); } if (tn) tn.textContent = b.left; if (b.left <= 0) endBlitz(); }, 1000);
-}
-function blitzQ(){ const b = ui.blitz; const v = b.pool[b.i % b.pool.length]; b.q = makeQuestion(v, 'en'); b.answered = false; }
-function endBlitz(){
-  const b = ui.blitz; if (!b || b.done) return; clearInterval(b.timer); b.done = true;
-  const xp = b.score * 3; if (b.score > state.blitzBest) { state.blitzBest = b.score; b.record = true; }
-  addXP(xp, true); save(); FX.win(); if (b.score >= 10) confetti(true); checkBadges(); render();
-}
-function renderBlitz(){
-  const b = ui.blitz;
-  if (b.done) return `<div class="stack"><div class="hero"><div class="kicker">${b.record ? 'Nouveau record !' : 'Blitz terminé'}</div><div class="score" style="color:#fff">${b.score}<small style="color:#fff;opacity:.9">bonnes réponses en 60 s · +${b.score * 3} XP</small></div></div>
-    <div class="row2"><button class="btn sun" data-action="blitz-open" data-theme="${b.theme}">Rejouer</button><button class="btn ghost" data-action="blitz-quit">Quitter</button></div></div>`;
-  const v = b.q.v;
-  const opts = b.q.opts.map(o => { let cls = ''; if (b.answered) { if (o.id === v.id) cls = 'right'; else if (o.id === b.chosen) cls = 'wrong'; } return `<button class="opt ${cls}" data-action="blitz-answer" data-id="${esc(o.id)}" ${b.answered ? 'disabled' : ''}>${esc(o.label)}</button>`; }).join('');
-  return `<div class="stack"><div class="timer"><div class="tbar"><i id="tbar" class="${b.left <= 10 ? 'hot' : ''}" style="width:${100 * b.left / 60}%"></i></div><b id="tnum">${b.left}</b></div>
-    <div class="card"><div class="eyebrow"><span><b>⚡ Blitz</b> · ${b.score} pts</span>${comboChip()}</div>
-    <p class="en" style="text-align:center;font-size:28px">${esc(v.en)}</p><div class="opts grid">${opts}</div>
-    <button class="btn line small" data-action="blitz-quit">Arrêter</button></div></div>`;
-}
-
-// ---------- Dire ----------
-function renderSay(){
-  const r = ui.say || {}; const groups = [...new Set(PHRASES.map(p => p.g))]; const g = r.group || 'Comprendre'; let out = '';
-  if (r.busy) out = `<div class="card"><p class="lead"><span class="spin"></span>&nbsp; Claude cherche la phrase…</p></div>`;
-  else if (r.err) out = `<div class="card"><p class="note">${esc(r.err)}</p></div>`;
-  else if (r.res) { const x = r.res;
-    out = `<div class="card"><div class="eyebrow"><b>En anglais</b></div><p class="en">${esc(x.en)}</p>
-      <div class="speedrow"><button class="btn ghost" data-action="say-play" data-t="${esc(x.say || x.en)}">${ICON.speaker} Normal</button><button class="btn ghost" data-action="say-play" data-t="${esc(x.en)}" data-slow="1">${ICON.turtle} Lent</button></div>
-      ${x.say && x.say !== x.en ? `<div class="say"><span class="lbl">Ça sonne comme</span>${esc(x.say)}</div>` : ''}${x.alt ? `<p class="fr">Autre façon : ${esc(x.alt)}</p>` : ''}${x.note ? `<div class="tip"><span class="lbl">Le truc</span>${esc(x.note)}</div>` : ''}
-      ${Array.isArray(x.words) && x.words.length ? `<div class="chips">${x.words.map(w => `<button class="chipw" data-action="say-add" data-w="${esc(w.w)}" data-fr="${esc(w.fr)}" data-en="${esc(x.en)}" data-exfr="${esc(r.q)}">+ ${esc(w.w)} <span class="note">${esc(w.fr)}</span></button>`).join('')}</div>` : ''}</div>`; }
-  return `<div class="stack"><h1 class="page-h1">Je veux dire…</h1><p class="note">Écris en français. Tu auras la phrase simple et comment elle sonne.</p>
-    <textarea id="sayIn" placeholder="Ex : Je peux avoir une table dehors ?">${esc(r.q || '')}</textarea>
-    <button class="btn coral needs-claude" data-action="translate">Traduire avec Claude</button>
-    <p class="note no-claude">Pour la traduction, ouvre cette page connecté à ton compte Claude. Les phrases de survie marchent sans.</p>${out}
-    <div class="sect">Phrases de survie</div>
-    <div class="filters">${groups.map(x => `<button class="chipw ${x === g ? 'on' : ''}" data-action="say-group" data-g="${esc(x)}">${esc(x)}</button>`).join('')}</div>
-    <div class="list">${PHRASES.filter(p => p.g === g).map(p => `<div class="item"><button class="mini acc" data-action="say-play" data-t="${esc(p.en)}" aria-label="Écouter">${ICON.speaker}</button><div class="txt"><div class="w">${esc(p.en)}</div><div class="sub">${esc(p.fr)}</div></div><button class="mini" data-action="say-play" data-t="${esc(p.en)}" data-slow="1" aria-label="Lent">${ICON.turtle}</button></div>`).join('')}</div></div>`;
-}
-
-// ---------- Mes mots ----------
-function renderWords(){
+function renderMots(){
+  if (ui.review) { const q = ui.review.queue, i = ui.review.i; if (i >= q.length) { ui.review = null; toast('Rappel terminé'); return renderMots(); } const w = state.words[q[i]]; if (!w) { ui.review.i++; return renderMots(); }
+    return `<div class="card"><div class="head"><span class="mono acc">Rappel</span><span class="mono">${i + 1}/${q.length}</span></div>${recallCard(w, ui.step, 'Comment tu dis…')}<button class="btn line small" data-action="review-stop">Arrêter</button></div>`; }
+  if (ui.drill) return renderDrill();
+  if (ui.vocab.theme) { const th = VOCAB.find(t => t.id === ui.vocab.theme);
+    return `<div class="stack"><button class="btn line small" data-action="vocab-back">← Banque de mots</button>
+      <div class="card"><div class="head"><span class="mono acc">${esc(th.title)}</span><span class="mono">${themeSeen(th)}/${th.items.length} vus</span></div>
+      <button class="btn amber" data-action="drill-start" data-theme="${th.id}">S'entraîner · 10 mots</button></div>
+      <div class="list">${th.items.map((it, i) => `<div class="item"><button class="mini acc" data-action="say-play" data-t="${esc(it[0])}" aria-label="Écouter">${ICON.speaker}</button><div class="txt"><div class="w">${esc(it[0])}</div><div class="sub wrap">${esc(it[1])} · <i>${esc(it[2])}</i></div></div><button class="mini" data-action="vocab-add" data-id="${th.id}:${i}" aria-label="Garder">${ICON.plus}</button></div>`).join('')}</div></div>`; }
   const all = Object.values(state.words).sort((a, b) => (a.due > b.due ? 1 : a.due < b.due ? -1 : 0)); const due = dueWords();
-  if (ui.review) { const q = ui.review.queue, i = ui.review.i; if (i >= q.length) { ui.review = null; return renderWords(); } const w = state.words[q[i]]; if (!w) { ui.review.i++; return renderWords(); }
-    return `<div class="card"><div class="eyebrow"><b>Révision</b> · ${i + 1}/${q.length}</div>${reviewCard(w, ui.step)}<button class="btn line small" data-action="review-stop">Arrêter</button></div>`; }
-  return `<div class="stack"><h1 class="page-h1">Mes mots</h1><p class="note">Les mots que tu rates reviennent à J+1, J+3, J+7, J+14, J+30. +5 XP par mot su.</p>
-    ${due.length ? `<button class="btn coral" data-action="review-start">Réviser ${due.length} mot${due.length > 1 ? 's' : ''} maintenant</button>` : all.length ? `<p class="note">Rien à réviser aujourd'hui. Prochain : ${esc(all[0].due)}.</p>` : ''}
-    ${all.length ? `<div class="list">${all.map(w => `<div class="item"><button class="mini acc" data-action="play-word" data-w="${esc(w.w)}" aria-label="Écouter">${ICON.speaker}</button>
-        <div class="txt"><div class="w">${esc(w.w)}${w.fr ? ` <span class="note">${esc(w.fr)}</span>` : ''}</div><div class="sub">${esc(w.ex)}</div></div>
-        <span class="badge ${w.due <= todayKey() ? 'due' : ''}">${w.due <= todayKey() ? 'à revoir' : 'boîte ' + w.box}</span>
-        <button class="mini" data-action="del-word" data-k="${esc(w.key)}" aria-label="Supprimer">${ICON.x}</button></div>`).join('')}</div>` : `<div class="empty">Aucun mot pour l'instant. Pendant une session, tape « Pas tout » et choisis les mots ratés. Dans Vocab, tape + pour garder un mot.</div>`}</div>`;
+  return `<div class="stack">
+    <div class="card"><div class="head"><span class="mono acc">Rappel</span><span class="pill ${due.length ? 'amber' : ''}">${due.length} à revoir</span></div>
+      <p class="note">Tes mots reviennent à J+1, J+3, J+7, J+14, J+30. Tu les dis en anglais avant de vérifier.</p>
+      ${due.length ? `<button class="btn amber" data-action="review-start">Commencer le rappel</button>` : `<p class="note">Rien à revoir aujourd'hui${all.length ? '. Prochain : ' + esc(all[0].due) : ''}.</p>`}</div>
+    <div class="head" style="padding:4px 2px"><span class="h2">Mes mots</span><span class="mono">${all.length}</span></div>
+    ${all.length ? `<div class="list">${all.map(w => `<div class="item"><button class="mini acc" data-action="say-play" data-t="${esc(w.w)}" aria-label="Écouter">${ICON.speaker}</button>
+        <div class="txt"><div class="w">${esc(w.w)}</div><div class="sub">${esc(w.fr || w.ex)}</div></div><span class="badge ${w.due <= todayKey() ? 'due' : ''}">${w.due <= todayKey() ? 'à revoir' : 'J+' + INTERVALS[w.box]}</span><button class="mini" data-action="del-word" data-k="${esc(w.key)}" aria-label="Supprimer">${ICON.x}</button></div>`).join('')}</div>` : `<div class="empty">Encore vide. Tes manques arrivent ici automatiquement après chaque session de parole. Tu peux aussi garder des mots de la banque.</div>`}
+    <div class="head" style="padding:4px 2px"><span class="h2">Banque de mots</span><span class="mono">${VOCAB_ALL.length}</span></div>
+    <div class="themes">${VOCAB.map(th => { const n = themeSeen(th); return `<button class="theme" data-action="vocab-theme" data-theme="${th.id}"><b>${esc(th.title)}</b><span>${n}/${th.items.length} vus</span><div class="pb"><i style="width:${Math.round(100 * n / th.items.length)}%"></i></div></button>`; }).join('')}</div></div>`;
+}
+function themeSeen(th){ return th.items.filter((_, i) => state.seen[th.id + ':' + i]).length; }
+function renderDrill(){
+  const d = ui.drill; const th = VOCAB.find(t => t.id === d.theme);
+  if (d.i >= d.items.length) return `<div class="stack"><div class="card"><div class="head"><span class="mono acc">${esc(th.title)}</span><span class="pill ${d.ok >= 7 ? 'green' : ''}">${d.ok}/${d.items.length}</span></div><h1 class="h1">${d.ok >= 8 ? 'Tu les as.' : d.ok >= 5 ? 'Ça rentre.' : 'À refaire demain.'}</h1><p class="note">Les mots ratés sont dans Mes mots, ils reviendront en rappel.</p>
+    <div class="row2"><button class="btn amber" data-action="drill-start" data-theme="${th.id}">Encore</button><button class="btn" data-action="drill-quit">Retour</button></div></div></div>`;
+  const v = d.items[d.i];
+  const w = { key: v.id, w: v.en, fr: v.fr, ex: v.ex, exfr: '' };
+  return `<div class="card"><div class="head"><span class="mono acc">${esc(th.title)}</span><span class="mono">${d.i + 1}/${d.items.length}</span></div>${recallCard(w, ui.step, 'Comment tu dis…').replace(/data-action="know"/g, 'data-action="drill-grade"')}<button class="btn line small" data-action="drill-quit">Arrêter</button></div>`;
+}
+
+// ---------- Progrès ----------
+function renderProgres(){
+  const lvl = currentLevel(); const b = state.baseline; const series = parleSeries(); const active = activeWords(); const total = Object.keys(state.words).length;
+  const last = state.measures.length ? state.measures[state.measures.length - 1] : b;
+  let h = '<div class="stack">';
+  if (ui.busy === 'weekly') h += busyCard('Claude mesure tes progrès…');
+  else if (ui.weeklyOpen) h += `<div class="card soft"><div class="head"><span class="mono acc">Bilan hebdo</span><span class="pill">2 min</span></div><p class="lead">${esc(WEEKLY)}</p>
+    <textarea id="weeklyIn" placeholder="This week I…">${esc(ui.weeklyText || '')}</textarea>
+    <button class="btn amber needs-claude" data-action="weekly-send">${ICON.mic} Envoyer</button><p class="note no-claude">Il faut être connecté à Claude.</p><button class="btn line small" data-action="weekly-close">Annuler</button></div>`;
+  h += `<div class="card"><div class="head"><span class="mono acc">Niveau estimé</span>${last ? `<span class="mono">${esc(prettyDate(last.date))}</span>` : ''}</div>
+    <div style="display:flex;align-items:baseline;gap:14px"><span style="font-family:var(--mono);font-size:44px;font-weight:600;line-height:1">${lvl ? esc(lvl) : '—'}</span><span class="note">${lvl ? (lvl.startsWith('A1') ? 'débutant' : lvl.startsWith('A2') ? 'élémentaire, tu te débrouilles' : lvl.startsWith('B1') ? 'intermédiaire, tu tiens une conversation' : 'tu es à l\'aise') : 'Fais l\'évaluation de départ dans Parler.'}</span></div>
+    ${b ? `<p class="note">${esc(b.summary || '')}</p>` : ''}
+    ${weeklyDue() && !ui.weeklyOpen ? `<button class="btn amber" data-action="weekly-open">Faire le bilan de la semaine</button>` : b && !ui.weeklyOpen ? `<p class="note">Prochain bilan dans ${Math.max(0, 7 - daysBetween(last.date, todayKey()))} jour(s).</p>` : ''}
+    ${!b ? `<button class="btn" data-action="goto-parle-placement">Faire l'évaluation de départ</button>` : ''}</div>`;
+  h += `<div class="stats"><div class="stat"><b>${active}</b><span>mots actifs</span></div><div class="stat"><b>${total}</b><span>mots suivis</span></div><div class="stat"><b>${state.sessions || 0}</b><span>sessions d'écoute</span></div></div>`;
+  if (series.length) { const max = Math.max(10, ...series.map(x => x.e)); const first = series[0].e, lastE = series[series.length - 1].e; const delta = series.length > 1 ? lastE - first : 0;
+    h += `<div class="card"><div class="head"><span class="mono acc">Erreurs pour 100 mots</span><span class="mono" style="color:${delta < 0 ? 'var(--green)' : 'var(--muted)'}">${series.length > 1 ? (delta <= 0 ? '' : '+') + delta + ' depuis le début' : 'première mesure'}</span></div>
+      <div class="barsrow">${series.map((x, i) => `<i class="${i === series.length - 1 ? 'last' : ''}" style="height:${Math.max(6, Math.round(56 * x.e / max))}px" title="${x.e}"></i>`).join('')}</div>
+      <div class="axis">${series.map(x => `<span>${x.k.slice(8)}/${x.k.slice(5, 7)}</span>`).join('')}</div><p class="note">Une barre par session de parole. Plus c'est bas, mieux c'est.</p></div>`; }
+  if (state.measures.length) h += `<div class="card"><div class="head"><span class="mono acc">Bilans</span></div><div class="list">${[b, ...state.measures].filter(Boolean).map(m => `<div class="item flat"><div class="txt"><div class="w">${esc(m.cefr)} · ${m.errors} err./100 mots</div><div class="sub">${esc(prettyDate(m.date))} · ${m.words} mots</div></div></div>`).join('')}</div></div>`;
+  h += `<div class="card"><div class="head"><span class="mono acc">Je peux déjà</span><span class="mono">${CANDO.filter(c => candoStatus(c.id) === 'done').length}/${CANDO.length}</span></div><div class="cando">${CANDO.map(c => { const st = candoStatus(c.id); return `<div class="it ${st}"><span class="box">${st === 'done' ? ICON.check : ''}</span><span>${esc(c.t)}</span>${st === 'wip' ? `<span class="mono" style="margin-left:auto">${candoCount(c.id)}/2</span>` : ''}</div>`; }).join('')}</div><p class="note">Un objectif passe au vert après deux consignes réussies.</p></div>`;
+  if (b && (b.strengths || b.gaps)) h += `<div class="card"><div class="head"><span class="mono acc">Évaluation de départ</span></div>${b.strengths && b.strengths.length ? `<div class="tip"><span class="lbl">Points forts</span>${esc(b.strengths.join(' · '))}</div>` : ''}${b.gaps && b.gaps.length ? `<div class="say"><span class="lbl">À travailler</span>${esc(b.gaps.map(g => g.better || g).join(' · '))}</div>` : ''}</div>`;
+  return h + '</div>';
 }
 
 // ---------- settings ----------
 function renderSheet(){
-  const s = state.settings; const voices = TTS.voices; const li = levelInfo(state.xp);
+  const s = state.settings; const voices = TTS.voices;
   $('#overlay').innerHTML = `<div class="sheet-bg" data-action="close-settings"><div class="sheet" data-stop="1">
-    <h2>Niveau ${li.n} · ${esc(li.title)}</h2><p class="note">${state.xp} XP · encore ${li.toNext} XP pour le niveau ${li.n + 1}</p>
-    <div class="stats"><div class="stat"><b>${streakNow()}</b><span>jours de suite</span></div><div class="stat"><b>${state.sessions || 0}</b><span>sessions</span></div><div class="stat"><b>${state.streak.count}</b><span>record série</span></div></div>
-    <div class="field"><label>Sons du jeu</label><div class="seg"><button class="${s.sound ? 'on' : ''}" data-action="set-sound" data-v="1">Activés</button><button class="${!s.sound ? 'on' : ''}" data-action="set-sound" data-v="0">Coupés</button></div></div>
-    <div class="field"><label>Vitesse « normale »</label><div class="seg">${[['0.85', 'Posée'], ['1', 'Normale'], ['1.15', 'Rapide']].map(([v, l]) => `<button class="${String(s.rate) === v ? 'on' : ''}" data-action="set-rate" data-v="${v}">${l}</button>`).join('')}</div></div>
-    <div class="field"><label>Voix anglaise</label>${TTS.ok() ? `<select id="voiceSel"><option value="auto" ${s.voice === 'auto' ? 'selected' : ''}>Automatique</option>${voices.map(v => `<option value="${esc(v.name)}" ${s.voice === v.name ? 'selected' : ''}>${esc(v.name)} (${esc(v.lang)})</option>`).join('')}</select>
-      ${voices.length ? '' : '<p class="note">Aucune voix anglaise trouvée. Sur iPhone : Réglages, Accessibilité, Contenu énoncé, Voix, Anglais.</p>'}<p class="note">Sur iPhone, télécharge « Samantha » ou « Ava » en version améliorée : Réglages, Accessibilité, Contenu énoncé, Voix. Bien plus naturel.</p>` : '<p class="note">Ce navigateur n\'a pas de synthèse vocale.</p>'}</div>
-    <button class="btn ghost" data-action="test-voice">${ICON.speaker} Tester la voix</button>
-    <div class="field"><label>Claude</label><p class="note">${sampleFn ? 'Connecté : traduction et nouvelles sessions disponibles.' : 'Non connecté sur cette ouverture. Ouvre la page depuis l\'app Claude ou claude.ai pour activer la traduction.'}</p></div>
-    <div class="field"><label>Données</label>${ui.confirmReset ? `<div class="row2"><button class="btn bad" data-action="reset-yes">Oui, tout effacer</button><button class="btn ghost" data-action="reset-no">Non</button></div>` : `<button class="btn line" data-action="reset">Remettre à zéro</button>`}</div>
-    <button class="btn coral" data-action="close-settings">Fermer</button></div></div>`;
+    <div class="head"><span class="h2">Réglages</span><span class="mono">série ${streakNow()} · record ${state.streak.count}</span></div>
+    <div class="field"><span class="mono">Vitesse « normale »</span><div class="seg">${[['0.85', 'Posée'], ['1', 'Normale'], ['1.15', 'Rapide']].map(([v, l]) => `<button class="${String(s.rate) === v ? 'on' : ''}" data-action="set-rate" data-v="${v}">${l}</button>`).join('')}</div></div>
+    <div class="field"><span class="mono">Voix anglaise</span>${TTS.ok() ? `<select id="voiceSel"><option value="auto" ${s.voice === 'auto' ? 'selected' : ''}>Automatique</option>${voices.map(v => `<option value="${esc(v.name)}" ${s.voice === v.name ? 'selected' : ''}>${esc(v.name)} (${esc(v.lang)})</option>`).join('')}</select>${voices.length ? '' : '<p class="note">Aucune voix anglaise trouvée. Sur iPhone : Réglages, Accessibilité, Contenu énoncé, Voix, Anglais.</p>'}<p class="note">Sur iPhone, télécharge « Samantha » ou « Ava » en version améliorée. Bien plus naturel.</p>` : '<p class="note">Ce navigateur n\'a pas de synthèse vocale.</p>'}</div>
+    <button class="btn" data-action="test-voice">${ICON.speaker} Tester la voix</button>
+    <div class="field"><span class="mono">Claude</span><p class="note">${sampleFn ? 'Connecté : correction, évaluation et explications disponibles.' : 'Non connecté sur cette ouverture. Ouvre la page depuis l\'app Claude ou claude.ai.'}</p></div>
+    <div class="field"><span class="mono">Données</span>${ui.confirmReset ? `<div class="row2"><button class="btn red" data-action="reset-yes">Oui, tout effacer</button><button class="btn" data-action="reset-no">Non</button></div>` : `<button class="btn line" data-action="reset">Remettre à zéro</button>`}</div>
+    <button class="btn amber" data-action="close-settings">Fermer</button></div></div>`;
 }
 
 // ---------- Claude ----------
-const LEVEL = "Marvin est français, niveau A2 (anglais faible), il vit en Thaïlande. Il comprend à l'écrit mais quand on parle vite il rate des mots. Explique en français, simple, tutoiement, sans blabla.";
+const LEVEL = "Marvin est français, niveau A2 environ, il vit en Thaïlande et veut parler anglais au quotidien (expliquer ce qu'il veut, raconter sa journée, parler de ce qu'il aime). Il dicte ses réponses avec le micro du clavier : la transcription peut contenir des fautes de reconnaissance, ignore-les. Parle-lui en français, simple, tutoiement, sans blabla, sans jugement.";
+function claudeFail(e, fallback){
+  if (e && e.code === 'not_granted') { document.getElementById('app').classList.remove('has-claude'); return 'Claude n\'est pas autorisé sur cette page. Rouvre-la depuis l\'app Claude et accepte.'; }
+  if (e && e.code === 'rate_limited') return 'Trop de demandes pour le moment. Réessaie dans quelques minutes.';
+  if (e && e.code === 'cancelled') return '';
+  return fallback;
+}
 async function explain(line, box, btn){
-  if (!sampleFn) return; btn.disabled = true; box.textContent = 'Claude réfléchit…';
-  try {
-    const { text } = await sampleFn(`${LEVEL}\nPhrase anglaise : "${line.en}"\nTraduction : "${line.fr}"\nEn 3 phrases courtes max : (1) le sens exact et dans quel contexte on l'entend, (2) ce qui est dur à entendre à vitesse normale (mots avalés, liaisons, contractions), (3) un truc concret pour la reconnaître la prochaine fois. Pas de titre, pas de liste.`, { modelTier: 'quick', onText: ({ text }) => { box.textContent = text; } });
-    box.textContent = text;
-  } catch (e) {
-    box.textContent = e && e.text ? e.text : '';
-    if (e && e.code === 'not_granted') document.getElementById('app').classList.remove('has-claude');
-    else if (e && e.code === 'rate_limited') toast('Trop de demandes, réessaie dans un moment');
-    else if (e && e.code !== 'cancelled') toast('Claude n\'a pas répondu');
-  } finally { btn.disabled = false; }
+  if (!sampleFn) return; btn.disabled = true; box.style.display = 'block'; box.textContent = 'Claude réfléchit…';
+  try { const { text } = await sampleFn(`${LEVEL}\nPhrase anglaise : "${line.en}"\nTraduction : "${line.fr}"\nEn 3 phrases courtes max : (1) le sens exact et dans quel contexte on l'entend, (2) ce qui est dur à entendre à vitesse normale (mots avalés, liaisons, contractions), (3) un truc concret pour la reconnaître la prochaine fois. Pas de titre, pas de liste.`, { modelTier: 'quick', onText: ({ text }) => { box.textContent = text; } }); box.textContent = text; }
+  catch (e) { box.textContent = (e && e.text) || claudeFail(e, 'Claude n\'a pas répondu.'); }
+  finally { btn.disabled = false; }
 }
-let genCtl = null;
-async function generate(sitId, free){
-  if (!sampleFn) return;
-  const sit = SITS.find(s => s.id === sitId);
-  const desc = free ? free : sit ? `${sit.title} (${sit.ctx})` : SITS[hash(String(Date.now())) % SITS.length].title;
-  ui.step.genBusy = true; ui.step.genErr = ''; render(); genCtl = new AbortController();
+function cleanGaps(arr, max){ return (Array.isArray(arr) ? arr : []).map(g => (typeof g === 'string' ? { better: g } : g || {})).filter(g => g.better).map(g => ({ said: String(g.said || '').slice(0, 80), better: String(g.better).slice(0, 80), fr: String(g.fr || '').slice(0, 80), why: String(g.why || '').slice(0, 160), ex: String(g.ex || '').slice(0, 120) })).slice(0, max); }
+function keepGaps(gaps, src){ let n = 0; gaps.forEach(g => { if (addWord(g.better, g.fr, g.ex, '', src)) n++; }); return n; }
+async function correctSpeech(){
+  const p = state.parle; const pr = promptOf(p.pid); if (!sampleFn || !p.text.trim()) return;
+  ui.busy = 'parle'; render();
   try {
-    const data = await sampleFn.json(`${LEVEL}\nGénère 6 répliques courtes (3 à 9 mots) en anglais parlé que Marvin peut ENTENDRE dans cette situation en Thaïlande : ${desc}. Réalistes, naturelles, vocabulaire courant, niveau A2. Mélange des phrases dites par l'autre personne et une ou deux que Marvin dirait lui-même.\nRéponds UNIQUEMENT avec un JSON array de 6 objets, exemple :\n[{"en":"Do you want a bag?","say":"D'you want a bag?","fr":"Tu veux un sac ?","tip":"« Do you » se dit très vite, ça sonne « dju ».","gap":"bag","alts":["back","bank"]}]\nRègles : "en" = phrase anglaise correcte avec ponctuation ; "say" = la même phrase écrite comme elle sonne vite (wanna, gonna, gotta, ya…) ou identique à "en" ; "fr" = traduction naturelle en français familier ; "tip" = 1 phrase en français sur ce qui est dur à entendre ; "gap" = un mot important de "en", écrit exactement comme dans "en" sans ponctuation ; "alts" = 2 mots anglais qui sonnent presque pareil que "gap" mais différents.`, { modelTier: 'default', cache: false, signal: genCtl.signal });
-    const lines = (Array.isArray(data) ? data : []).map((x, i) => ({ id: 'gen-' + Date.now() + '-' + i, en: String(x.en || '').trim(), say: x.say ? String(x.say).trim() : '', fr: String(x.fr || '').trim(), tip: x.tip ? String(x.tip).trim() : '', gap: String(x.gap || '').trim(), alts: Array.isArray(x.alts) ? x.alts.slice(0, 2).map(String) : [] }))
-      .filter(l => l.en && l.fr).map(l => { if (!gapIndex(l)) { const toks = l.en.split(/\s+/).filter(t => norm(t).length > 3); l.gap = toks.length ? norm(toks[toks.length - 1]) : norm(l.en.split(/\s+/)[0]); } if (l.alts.length < 2) l.alts = [...l.alts, 'maybe', 'never'].slice(0, 2); return l; }).slice(0, 6);
-    if (lines.length < 3) throw { code: 'invalid_json' };
-    const t = state.today;
-    state.today = { date: t.date, sit: sit ? sit.id : 'gen', title: free || (sit ? sit.title : 'Surprise'), ctx: 'Session générée par Claude.', lines, plan: null, step: 0, ok: 0, total: 0, added: 0, extra: true };
-    ui.step = {}; save(); render();
-  } catch (e) {
-    ui.step.genBusy = false;
-    if (e && e.code === 'cancelled') ui.step.genOpen = false;
-    else if (e && e.code === 'not_granted') { document.getElementById('app').classList.remove('has-claude'); ui.step.genOpen = false; }
-    else if (e && e.code === 'rate_limited') ui.step.genErr = 'Trop de demandes pour le moment. Réessaie dans quelques minutes.';
-    else ui.step.genErr = 'Claude n\'a pas réussi cette fois. Réessaie, ou change la situation.';
-    render();
-  }
+    const r = await sampleFn.json(`${LEVEL}\nConsigne donnée à Marvin (en français) : "${pr.fr}"\nCe que Marvin a dit en anglais (transcription brute) : "${p.text.trim().slice(0, 3000)}"\nRéponds UNIQUEMENT avec un objet JSON :\n{"corrected": "sa version corrigée, naturelle à l'oral, en gardant ses idées et à peu près sa longueur, niveau A2-B1 (pas de vocabulaire compliqué)",\n "gaps": [{"said": "ce qu'il a dit ou tenté (vide s'il a contourné ou sauté)", "better": "le mot ou l'expression juste, court", "fr": "sens en français", "why": "1 phrase courte en français", "ex": "une phrase courte et simple en anglais qui l'utilise"}],\n "good": "1 phrase en français sur ce qu'il a bien fait",\n "tip": "1 conseil concret en français pour la prochaine fois",\n "errors_per_100": nombre entier d'erreurs pour 100 mots (grammaire, mot manquant ou faux ; pas l'accent ni la ponctuation),\n "words": nombre de mots qu'il a produits,\n "task_done": true si la consigne est accomplie de façon compréhensible même avec des fautes}\n"gaps" : 3 maximum, les plus utiles pour lui au quotidien. Si son texte est trop court (moins de 8 mots) ou hors sujet, mets task_done à false et explique dans "tip".`, { modelTier: 'default', cache: false });
+    if (!r || !r.corrected) throw { code: 'invalid_json' };
+    const res = { corrected: String(r.corrected).slice(0, 1500), gaps: cleanGaps(r.gaps, 3), good: String(r.good || '').slice(0, 300), tip: String(r.tip || '').slice(0, 300), errors: Math.max(0, Math.min(60, Math.round(Number(r.errors_per_100) || 0))), words: Math.max(0, Math.round(Number(r.words) || p.text.trim().split(/\s+/).length)), ok: !!r.task_done };
+    p.result = res; p.doneAt = Date.now();
+    const n = keepGaps(res.gaps, 'parle');
+    markDay(p.date, 'parle', { pid: p.pid, g: pr.g, errors: res.errors, words: res.words, ok: res.ok });
+    if (res.ok) state.cando[pr.g] = (state.cando[pr.g] || 0) + 1;
+    ui.busy = null; save(); render(); TTS.speak(res.corrected, state.settings.rate || 1);
+    if (n) toast(n + (n > 1 ? ' mots gardés dans Mots' : ' mot gardé dans Mots'));
+  } catch (e) { ui.busy = null; render(); toast(claudeFail(e, 'Claude n\'a pas réussi. Réessaie, ou dis-en un peu plus.')); }
 }
-async function translate(q){
-  if (!sampleFn) return; ui.say = { q, busy: true, group: (ui.say || {}).group }; render();
+async function assess(text, kind){
+  if (!sampleFn || !text.trim()) return;
+  ui.busy = kind; render();
   try {
-    const x = await sampleFn.json(`${LEVEL}\nMarvin veut dire en anglais, à l'oral, en Thaïlande : "${q}"\nRéponds UNIQUEMENT avec un objet JSON : {"en": "la version la plus simple et naturelle à l'oral", "alt": "une autre façon courante de le dire, ou vide", "say": "la phrase 'en' écrite comme elle sonne vite (wanna, gonna…) ou identique", "note": "1 phrase en français : quand l'utiliser ou le piège à éviter", "words": [{"w": "mot anglais clé", "fr": "son sens"}]} avec 1 à 3 mots dans "words".`, { modelTier: 'quick' });
-    if (!x || !x.en) throw { code: 'invalid_json' };
-    ui.say = { q, res: x, group: (ui.say || {}).group }; render(); TTS.speak(String(x.en), state.settings.rate || 1);
-  } catch (e) {
-    const msg = e && e.code === 'not_granted' ? 'Claude n\'est pas autorisé sur cette page.' : e && e.code === 'rate_limited' ? 'Trop de demandes, réessaie dans un moment.' : 'Claude n\'a pas réussi. Réessaie avec une phrase plus courte.';
-    if (e && e.code === 'not_granted') document.getElementById('app').classList.remove('has-claude');
-    ui.say = { q, err: msg, group: (ui.say || {}).group }; render();
-  }
+    const r = await sampleFn.json(`${LEVEL}\n${kind === 'placement' ? 'Évaluation de départ.' : 'Bilan hebdomadaire.'} Consigne : "${kind === 'placement' ? PLACEMENT : WEEKLY}"\nCe que Marvin a dit en anglais (transcription brute) : "${text.trim().slice(0, 4000)}"\nRéponds UNIQUEMENT avec un objet JSON :\n{"cefr": "A1" | "A1+" | "A2" | "A2+" | "B1" | "B1+" | "B2", "summary": "2 phrases en français, encourageantes et honnêtes, sur son niveau à l'oral", "strengths": ["3 points forts courts en français"], "gaps": [{"better": "mot ou expression qu'il lui manquait", "fr": "sens", "ex": "phrase simple en anglais qui l'utilise"}], "errors_per_100": nombre entier, "words": nombre de mots produits}\n"gaps" : 5 maximum, les plus utiles.`, { modelTier: 'default', cache: false });
+    if (!r || !r.cefr) throw { code: 'invalid_json' };
+    const m = { date: todayKey(), cefr: String(r.cefr).slice(0, 4), summary: String(r.summary || '').slice(0, 400), strengths: (Array.isArray(r.strengths) ? r.strengths : []).map(String).slice(0, 3), gaps: cleanGaps(r.gaps, 5), errors: Math.max(0, Math.min(60, Math.round(Number(r.errors_per_100) || 0))), words: Math.max(0, Math.round(Number(r.words) || text.trim().split(/\s+/).length)) };
+    if (kind === 'placement') { state.baseline = m; state.level = m.cefr; ui.placeText = ''; } else { state.measures.push(m); state.level = m.cefr; ui.weeklyOpen = false; ui.weeklyText = ''; }
+    const n = keepGaps(m.gaps, kind);
+    ui.busy = null; save(); ui.tab = 'progres'; render(); toast('Niveau estimé : ' + m.cefr + (n ? ' · ' + n + ' mots gardés' : ''));
+  } catch (e) { ui.busy = null; render(); toast(claudeFail(e, 'Claude n\'a pas réussi. Réessaie avec un peu plus de texte.')); }
 }
 async function fillMeanings(line, words){
   if (!sampleFn || !words.length) return;
-  try {
-    const arr = await sampleFn.json(`Dans la phrase anglaise "${line.en}" (en français : "${line.fr}"), donne le sens en français de ces mots : ${JSON.stringify(words)}. Réponds UNIQUEMENT avec un JSON array [{"w":"mot","fr":"sens court en français"}].`, { modelTier: 'quick' });
-    if (Array.isArray(arr)) { arr.forEach(x => { const k = norm(x.w).replace(/[^a-z0-9'-]/g, ''); if (state.words[k] && !state.words[k].fr) state.words[k].fr = String(x.fr || '').slice(0, 60); }); save(); if (ui.tab === 'words') render(); }
-  } catch (e) {}
+  try { const arr = await sampleFn.json(`Dans la phrase anglaise "${line.en}" (en français : "${line.fr}"), donne le sens en français de ces mots : ${JSON.stringify(words)}. Réponds UNIQUEMENT avec un JSON array [{"w":"mot","fr":"sens court en français"}].`, { modelTier: 'quick' });
+    if (Array.isArray(arr)) { arr.forEach(x => { const k = wordKey(x.w); if (state.words[k] && !state.words[k].fr) state.words[k].fr = String(x.fr || '').slice(0, 60); }); save(); if (ui.tab === 'mots') render(); } } catch (e) {}
 }
 
 // ---------- events ----------
 document.addEventListener('change', e => { if (e.target.id === 'voiceSel') { state.settings.voice = e.target.value; save(); } });
+document.addEventListener('input', e => {
+  const t = e.target; if (!t) return;
+  if (t.id === 'parleIn') { state.parle.text = t.value; save(); }
+  else if (t.id === 'placeIn') ui.placeText = t.value;
+  else if (t.id === 'weeklyIn') ui.weeklyText = t.value;
+});
 document.addEventListener('click', e => {
   const tab = e.target.closest('[data-tab]');
-  if (tab) { if (ui.blitz && !ui.blitz.done) { clearInterval(ui.blitz.timer); } ui.blitz = null; ui.quiz = null; ui.tab = tab.dataset.tab; ui.step = {}; TTS.stop(); render(); return; }
+  if (tab) { ui.tab = tab.dataset.tab; ui.step = {}; ui.drill = null; ui.review = null; ui.pickSit = false; TTS.stop(); render(); return; }
   const el = e.target.closest('[data-action]'); if (!el) return;
   if (el.dataset.action === 'close-settings' && e.target.closest('[data-stop]') && !e.target.closest('.btn')) return;
   const a = el.dataset.action;
-  const t = state.today; const lines = t ? sessionLines() : []; const st = t ? currentStep() : null; const line = st && st.i != null ? lines[st.i] : null;
+  const t = state.listen; const lines = t ? sessionLines() : []; const st = t ? currentStep() : null; const line = st && st.i != null ? lines[st.i] : null;
   switch (a) {
     case 'open-settings': ui.sheet = true; ui.confirmReset = false; renderSheet(); break;
     case 'close-settings': ui.sheet = false; ui.confirmReset = false; $('#overlay').innerHTML = ''; break;
     case 'set-rate': state.settings.rate = Number(el.dataset.v); save(); renderSheet(); break;
-    case 'set-sound': state.settings.sound = el.dataset.v === '1'; save(); renderSheet(); if (state.settings.sound) FX.good(); break;
     case 'test-voice': TTS.unlock(); TTS.speak('Hello Marvin. How are you going today?', state.settings.rate || 1); break;
     case 'reset': ui.confirmReset = true; renderSheet(); break;
     case 'reset-no': ui.confirmReset = false; renderSheet(); break;
-    case 'reset-yes': state = fresh(); ui = { tab: 'today', step: {}, sheet: false, combo: 0, vocab: {}, quiz: null, blitz: null }; save(); render(); toast('Remis à zéro'); break;
-    case 'start': TTS.unlock(); t.plan = null; t.step = 0; t.ok = 0; t.total = 0; t.added = 0; ui.combo = 0; next(); break;
-    case 'replay': t.plan = null; t.step = 0; t.ok = 0; t.total = 0; t.added = 0; t.extra = true; ui.step = {}; ui.combo = 0; save(); render(); break;
-    case 'next': next(); break;
-    case 'play': if (line) playLine(line, el.dataset.mode); break;
-    case 'play-word': TTS.unlock(); TTS.speak(el.dataset.w, 0.9); break;
+    case 'reset-yes': state = fresh(); ui = { tab: 'parle', step: {}, sheet: false, vocab: {}, drill: null, review: null }; save(); render(); toast('Remis à zéro'); break;
+    // Parler
+    case 'parle-send': { const v = ($('#parleIn') || {}).value || ''; state.parle.text = v; if (v.trim().split(/\s+/).length < 4) { toast('Dis-en un peu plus, au moins une phrase'); break; } TTS.unlock(); correctSpeech(); break; }
+    case 'parle-repeated': state.parle.repeated = true; save(); render(); toast('Bien. À demain, ou continue avec Écouter.'); break;
+    case 'parle-again': { const k = todayKey(); const used = state.parle.pid; let p = pickPrompt(k + 'x' + Date.now()); if (p.id === used) p = PROMPTS[(PROMPTS.findIndex(x => x.id === used) + 1) % PROMPTS.length]; state.parle = { date: k, pid: p.id, text: '', result: null, repeated: false, extra: true }; save(); render(); break; }
+    case 'placement-send': { const v = ($('#placeIn') || {}).value || ''; ui.placeText = v; if (v.trim().split(/\s+/).length < 15) { toast('Parle un peu plus longtemps, 2 minutes environ'); break; } TTS.unlock(); assess(v, 'placement'); break; }
+    case 'placement-skip': ui.skipPlacement = true; render(); break;
+    case 'goto-parle-placement': ui.skipPlacement = false; ui.tab = 'parle'; render(); break;
+    case 'weekly-open': ui.weeklyOpen = true; render(); break;
+    case 'weekly-close': ui.weeklyOpen = false; render(); break;
+    case 'weekly-send': { const v = ($('#weeklyIn') || {}).value || ''; ui.weeklyText = v; if (v.trim().split(/\s+/).length < 15) { toast('Parle un peu plus longtemps'); break; } TTS.unlock(); assess(v, 'weekly'); break; }
+    case 'goto-progres': ui.tab = 'progres'; ui.weeklyOpen = true; render(); break;
+    case 'goto-ecoute': ui.tab = 'ecoute'; ui.step = {}; render(); break;
+    case 'goto-review': { const d = dueWords(); if (!d.length) { toast('Rien à revoir pour l\'instant'); break; } ui.tab = 'mots'; ui.review = { queue: d.map(w => w.key), i: 0 }; ui.step = {}; render(); break; }
+    // audio
     case 'say-play': TTS.unlock(); TTS.speak(el.dataset.t, el.dataset.slow ? 0.62 : (state.settings.rate || 1)); break;
+    case 'say-words': TTS.unlock(); TTS.words(el.dataset.t); break;
+    case 'play': if (line) playLine(line, el.dataset.mode); break;
+    // Écouter
+    case 'start': TTS.unlock(); t.plan = null; t.step = 0; t.ok = 0; t.total = 0; t.added = 0; ui.pickSit = false; nextStep(); break;
+    case 'replay': t.plan = null; t.step = 0; t.ok = 0; t.total = 0; t.added = 0; t.extra = true; ui.step = {}; save(); render(); break;
+    case 'pick-sit': ui.pickSit = !ui.pickSit; render(); break;
+    case 'pick-sit-go': state.listen = newListen(SITS.find(s => s.id === t.sit) || SITS[0], true); ui.pickSit = true; ui.step = {}; save(); render(); break;
+    case 'choose-sit': { const sit = SITS.find(s => s.id === el.dataset.sit); if (sit) { const done = !!(state.days[todayKey()] && state.days[todayKey()].listen); state.listen = newListen(sit, done); ui.pickSit = false; ui.step = {}; save(); render(); } break; }
+    case 'next': nextStep(); break;
     case 'reveal': ui.step.revealed = true; render(); break;
     case 'explain': { const box = document.getElementById('explain'); if (box && line) explain(line, box, el); break; }
-    case 'grade': t.total++; if (el.dataset.ok === '1') { t.ok++; hit(true); next(); } else { hit(false); ui.step.picking = true; ui.step.picked = []; save(); render(); } break;
-    case 'pick': { const i = Number(el.dataset.i); const p = ui.step.picked; const k = p.indexOf(i); if (k >= 0) p.splice(k, 1); else p.push(i); FX.pop(); render(); break; }
-    case 'add-picked': { const toks = line.en.split(/\s+/); let n = 0; (ui.step.picked || []).forEach(i => { if (addWord(toks[i], line)) n++; }); t.added += n; if (n) { toast(n + (n > 1 ? ' mots gardés' : ' mot gardé')); fillMeanings(line, (ui.step.picked || []).map(i => norm(toks[i]))); } next(); break; }
-    case 'answer': { const ok = norm(el.dataset.v) === norm(line.gap); ui.step.answered = true; ui.step.ok = ok; ui.step.chosen = el.dataset.v; t.total++; if (ok) t.ok++; else if (addWord(line.gap, line)) { t.added++; fillMeanings(line, [norm(line.gap)]); } hit(ok); save(); render(); if (!ok) playLine(line, 'slow'); break; }
-    case 'pickw': ui.step.picked.push(Number(el.dataset.i)); FX.pop(); render(); break;
+    case 'grade': t.total++; if (el.dataset.ok === '1') { t.ok++; nextStep(); } else { ui.step.picking = true; ui.step.picked = []; save(); render(); } break;
+    case 'pick': { const i = Number(el.dataset.i); const p = ui.step.picked; const k = p.indexOf(i); if (k >= 0) p.splice(k, 1); else p.push(i); render(); break; }
+    case 'add-picked': { const toks = line.en.split(/\s+/); let n = 0; const added = []; (ui.step.picked || []).forEach(i => { const w = norm(toks[i]); if (addWord(w, '', line.en, line.fr, 'ecoute')) { n++; added.push(w); } }); t.added += n; if (n) { toast(n + (n > 1 ? ' mots gardés' : ' mot gardé')); fillMeanings(line, added); } nextStep(); break; }
+    case 'answer': { const ok = norm(el.dataset.v) === norm(line.gap); ui.step.answered = true; ui.step.ok = ok; ui.step.chosen = el.dataset.v; t.total++; if (ok) t.ok++; else if (addWord(norm(line.gap), '', line.en, line.fr, 'ecoute')) { t.added++; fillMeanings(line, [norm(line.gap)]); } save(); render(); if (!ok) playLine(line, 'slow'); break; }
+    case 'pickw': ui.step.picked.push(Number(el.dataset.i)); render(); break;
     case 'unpick': { const p = ui.step.picked; const k = p.indexOf(Number(el.dataset.i)); if (k >= 0) p.splice(k, 1); render(); break; }
-    case 'check-order': { const toks = line.en.split(/\s+/); const ok = ui.step.picked.map(i => toks[i]).join(' ') === toks.join(' '); ui.step.answered = true; ui.step.ok = ok; t.total++; if (ok) t.ok++; hit(ok); save(); render(); if (!ok) playLine(line, 'slow'); break; }
-    case 'rep': { const h = state.hard.filter(x => x !== line.id); if (el.dataset.ok === '0') h.push(line.id); else addXP(5); state.hard = h.slice(-20); next(); break; }
-    case 'know': { const known = el.dataset.ok === '1'; gradeWord(el.dataset.k, known); if (known) { FX.good(); addXP(5); } else FX.bad(); if (ui.review) { ui.review.i++; ui.step = {}; render(); } else { ui.step.idx = (ui.step.idx || 0) + 1; ui.step.revealed = false; render(); } break; }
-    case 'goto-review': { const d = dueWords(); if (!d.length) { toast('Rien à réviser pour l\'instant'); break; } ui.tab = 'words'; ui.review = { queue: d.map(w => w.key), i: 0 }; ui.step = {}; render(); break; }
+    case 'check-order': { const toks = line.en.split(/\s+/); const ok = ui.step.picked.map(i => toks[i]).join(' ') === toks.join(' '); ui.step.answered = true; ui.step.ok = ok; t.total++; if (ok) t.ok++; save(); render(); if (!ok) playLine(line, 'slow'); break; }
+    case 'rep': { const h = state.hard.filter(x => x !== line.id); if (el.dataset.ok === '0') h.push(line.id); state.hard = h.slice(-20); nextStep(); break; }
+    // Mots
     case 'review-start': ui.review = { queue: dueWords().map(w => w.key), i: 0 }; ui.step = {}; render(); break;
     case 'review-stop': ui.review = null; ui.step = {}; render(); break;
+    case 'know': gradeWord(el.dataset.k, el.dataset.ok === '1'); if (ui.review) { ui.review.i++; } ui.step = {}; render(); break;
     case 'del-word': delete state.words[el.dataset.k]; save(); render(); break;
-    case 'gen-open': ui.step.genOpen = !ui.step.genOpen; render(); break;
-    case 'gen-go': { const sel = document.getElementById('genSit'); const free = (document.getElementById('genFree') || {}).value || ''; generate(sel ? sel.value : '', free.trim()); break; }
-    case 'gen-stop': if (genCtl) genCtl.abort(); break;
-    case 'translate': { const q = ($('#sayIn') || {}).value || ''; if (q.trim().length < 2) { toast('Écris d\'abord ta phrase'); break; } TTS.unlock(); translate(q.trim()); break; }
-    case 'say-group': ui.say = { ...(ui.say || {}), group: el.dataset.g, q: ($('#sayIn') || {}).value || (ui.say || {}).q }; render(); break;
-    case 'say-add': { const key = norm(el.dataset.w).replace(/[^a-z0-9'-]/g, ''); if (key && !state.words[key]) { state.words[key] = { key, w: norm(el.dataset.w), fr: el.dataset.fr || '', ex: el.dataset.en, exfr: el.dataset.exfr || '', box: 1, due: todayKey(), added: todayKey() }; save(); FX.pop(); toast('Gardé dans mes mots'); } else toast('Déjà dans tes mots'); break; }
     case 'vocab-theme': ui.vocab.theme = el.dataset.theme; render(); break;
     case 'vocab-back': ui.vocab.theme = ''; render(); break;
-    case 'vocab-add': { const v = VOCAB_ALL.find(x => x.id === el.dataset.id); if (v && addVocabWord(v)) { save(); FX.pop(); toast('Gardé dans mes mots'); } else toast('Déjà dans tes mots'); break; }
-    case 'quiz-start': TTS.unlock(); startQuiz(el.dataset.theme); break;
-    case 'quiz-quit': ui.quiz = null; render(); break;
-    case 'quiz-answer': { const q = ui.quiz; if (!q || q.answered) break; const cur = q.qs[q.i]; const ok = el.dataset.id === cur.v.id; q.answered = true; q.ok = ok; q.chosen = el.dataset.id; state.seen[cur.v.id] = 1; if (ok) { q.score++; hit(true); addXP(0); } else { hit(false); if (addVocabWord(cur.v)) toast('Gardé dans mes mots'); } if (cur.dir === 'fr') TTS.speak(cur.v.en, state.settings.rate || 1); save(); render(); if (ok) setTimeout(() => { if (ui.quiz === q && q.answered) quizNext(); }, 900); break; }
-    case 'quiz-next': quizNext(); break;
-    case 'blitz-open': TTS.unlock(); ui.tab = 'vocab'; ui.quiz = null; startBlitz(el.dataset.theme || ''); break;
-    case 'blitz-answer': { const b = ui.blitz; if (!b || b.answered || b.done) break; const ok = el.dataset.id === b.q.v.id; b.answered = true; b.chosen = el.dataset.id; state.seen[b.q.v.id] = 1; if (ok) { b.score++; ui.combo++; FX.good(); buzz(10); } else { ui.combo = 0; FX.bad(); buzz(50); addVocabWord(b.q.v); } render(); setTimeout(() => { const bb = ui.blitz; if (!bb || bb.done || bb !== b) return; b.i++; blitzQ(); render(); }, ok ? 320 : 900); break; }
-    case 'blitz-quit': if (ui.blitz) { clearInterval(ui.blitz.timer); if (!ui.blitz.done && ui.blitz.score) { endBlitz(); break; } } ui.blitz = null; render(); break;
+    case 'vocab-add': { const v = VOCAB_ALL.find(x => x.id === el.dataset.id); if (v && addWord(v.en, v.fr, v.ex, '', 'banque')) { save(); toast('Gardé dans Mes mots'); } else toast('Déjà dans tes mots'); break; }
+    case 'drill-start': { const th = VOCAB.find(x => x.id === el.dataset.theme); if (!th) break; ui.drill = { theme: th.id, items: shuffle(VOCAB_ALL.filter(x => x.theme === th.id)).slice(0, 10), i: 0, ok: 0 }; ui.step = {}; render(); break; }
+    case 'drill-grade': { const d = ui.drill; if (!d) break; const v = d.items[d.i]; state.seen[v.id] = 1; if (el.dataset.ok === '1') d.ok++; else if (addWord(v.en, v.fr, v.ex, '', 'banque')) toast('Gardé dans Mes mots'); d.i++; ui.step = {}; save(); render(); break; }
+    case 'drill-quit': ui.drill = null; ui.step = {}; render(); break;
   }
 });
-function quizNext(){
-  const q = ui.quiz; if (!q) return; q.i++; q.answered = false;
-  if (q.i >= q.qs.length) { q.done = true; addXP(q.score * 5, true); if (q.score >= 8) confetti(true); FX.win(); save(); checkBadges(); render(); return; }
-  render(); const cur = q.qs[q.i]; if (cur.dir === 'en') TTS.speak(cur.v.en, state.settings.rate || 1);
-}
 
 // ---------- capabilities ----------
 async function initCaps(){
@@ -1188,8 +1008,7 @@ async function initCaps(){
     dbRef = ref; if (!remoteNewer) save();
   }).catch(() => {});
 }
-window.addEventListener('resize', () => { const cv = document.getElementById('fx'); if (cv && !cv.hidden) { cv.width = innerWidth; cv.height = innerHeight; } });
-ensureToday(); render(); initCaps();
+ensureParle(); ensureListen(); render(); initCaps();
 </script>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script>
 </body>
