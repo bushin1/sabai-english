@@ -28,3 +28,7 @@ state v3 : settings, streak, days{date:{parle,listen}}, words, hard, listen (ses
 
 ## Hébergement
 Primaire : artifact claude.ai (capacités sample + db). Miroir public GitHub Pages sans correction Claude.
+
+## Ajout v3.1 (2026-10-12) : QCM rapides
+- Écouter → « Dialogue du jour » : 12 dialogues à deux voix (TTS, deux voix si dispo), écoute sans texte, 3 QCM en français (sujet, détail chiffré, réplique clé), puis texte + réécoute. Séquence écouter → vérifier → lire → réécouter (approche métacognitive, Vandergrift).
+- Mots → « Quiz éclair » : 10 QCM, 4 choix, moitié EN→FR moitié FR→EN, mélange de ses mots et de la banque ; un raté sur un mot perso remet sa boîte à 1, un raté sur la banque l'ajoute à ses mots.

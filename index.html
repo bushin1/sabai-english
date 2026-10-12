@@ -512,6 +512,136 @@ const PROMPTS = [
 ];
 const PLACEMENT = "Raconte-moi en anglais, pendant 2 minutes : qui tu es, ta vie en Thaïlande, ce que tu fais dans une journée, ce que tu aimes. Pas besoin que ce soit parfait. Dicte avec le micro du clavier, en anglais.";
 const WEEKLY = "Bilan de la semaine : raconte en anglais ce que tu as fait cette semaine, un bon moment, un truc qui t'a énervé, et ce que tu prévois pour la suite. 2 minutes.";
+const DIALOGUES = [
+{id:'d-seven',sit:'seven',title:'Payer au 7-Eleven',who:['Caissier','Toi'],lines:[
+ {s:0,en:"Hi, do you want it heated up?",fr:"Bonjour, vous voulez que je le réchauffe ?"},
+ {s:1,en:"Yes, please. And one of these too.",fr:"Oui. Et un de ceux-là aussi."},
+ {s:0,en:"That's ninety-five baht. Do you have a points card?",fr:"Ça fait 95 bahts. Vous avez une carte de points ?"},
+ {s:1,en:"No, I don't. Can I pay by card?",fr:"Non. Je peux payer par carte ?"},
+ {s:0,en:"Sorry, cash only under two hundred.",fr:"Désolé, en espèces seulement en dessous de 200."},
+ {s:1,en:"Okay, here you go. Keep the change.",fr:"Ok, tenez. Gardez la monnaie."}],
+ qs:[{q:"De quoi parle ce dialogue ?",o:["Payer un achat au 7-Eleven","Réserver un hôtel","Demander son chemin","Commander un taxi"],a:0,ref:2},
+     {q:"Combien coûte l'achat ?",o:["95 bahts","59 bahts","195 bahts","200 bahts"],a:0,ref:2},
+     {q:"Pourquoi il ne peut pas payer par carte ?",o:["La carte est refusée","Espèces seulement sous 200 bahts","La machine est cassée","Il n'a pas de carte"],a:1,ref:4}]},
+{id:'d-grab',sit:'grab',title:'Un Grab vers Chatuchak',who:['Chauffeur','Toi'],lines:[
+ {s:0,en:"Hi, where are you going?",fr:"Bonjour, vous allez où ?"},
+ {s:1,en:"To the Chatuchak market, please.",fr:"Au marché de Chatuchak."},
+ {s:0,en:"It's gonna take about forty minutes with the traffic.",fr:"Ça va prendre environ 40 minutes avec les bouchons."},
+ {s:1,en:"No problem. Can you turn the air con up a bit?",fr:"Pas de problème. Vous pouvez monter un peu la clim ?"},
+ {s:0,en:"Sure. Do you want to go by the expressway? It's fifty baht more.",fr:"Bien sûr. Vous voulez passer par l'autoroute ? C'est 50 bahts de plus."},
+ {s:1,en:"Yes, let's take the expressway.",fr:"Oui, prenons l'autoroute."}],
+ qs:[{q:"Où va-t-il ?",o:["Au marché de Chatuchak","À l'aéroport","À la plage","À l'hôtel"],a:0,ref:1},
+     {q:"Combien de temps va durer le trajet ?",o:["Environ 40 minutes","Environ 14 minutes","Environ 4 minutes","Une heure"],a:0,ref:2},
+     {q:"Que propose le chauffeur ?",o:["De s'arrêter manger","De prendre l'autoroute pour 50 bahts de plus","De couper la clim","De changer de voiture"],a:1,ref:4}]},
+{id:'d-food',sit:'food',title:'Un pad thaï à emporter',who:['Vendeuse','Toi'],lines:[
+ {s:0,en:"What would you like?",fr:"Qu'est-ce que vous voulez ?"},
+ {s:1,en:"One pad thai with chicken, please.",fr:"Un pad thaï au poulet."},
+ {s:0,en:"Spicy or not spicy?",fr:"Épicé ou pas ?"},
+ {s:1,en:"A little bit spicy. And no peanuts, I'm allergic.",fr:"Un peu épicé. Et sans cacahuètes, je suis allergique."},
+ {s:0,en:"No peanuts, okay. To eat here or to go?",fr:"Sans cacahuètes, ok. Sur place ou à emporter ?"},
+ {s:1,en:"To go, please. How much is it?",fr:"À emporter. C'est combien ?"},
+ {s:0,en:"Sixty baht. Five minutes.",fr:"60 bahts. Cinq minutes."}],
+ qs:[{q:"Qu'est-ce qu'il commande ?",o:["Un pad thaï au poulet","Une soupe","Un riz au porc","Une salade de papaye"],a:0,ref:1},
+     {q:"Qu'est-ce qu'il ne veut pas ?",o:["Des oignons","Des cacahuètes","Du piment","De la coriandre"],a:1,ref:3},
+     {q:"Sur place ou à emporter ?",o:["Sur place","À emporter","Il ne dit pas","Il annule"],a:1,ref:5}]},
+{id:'d-hotel',sit:'hotel',title:"Pas d'eau chaude",who:['Réceptionniste','Toi'],lines:[
+ {s:0,en:"Good evening. How can I help you?",fr:"Bonsoir. Je peux vous aider ?"},
+ {s:1,en:"Hi, there's no hot water in my room. Room 412.",fr:"Bonsoir, il n'y a pas d'eau chaude dans ma chambre. La 412."},
+ {s:0,en:"I'm sorry about that. I'll send someone up in ten minutes.",fr:"Désolée. J'envoie quelqu'un dans dix minutes."},
+ {s:1,en:"Thanks. Also, what time is breakfast?",fr:"Merci. Et le petit-déjeuner, c'est à quelle heure ?"},
+ {s:0,en:"From six thirty to ten, on the second floor.",fr:"De 6h30 à 10h, au deuxième étage."},
+ {s:1,en:"Perfect. And checkout is at twelve, right?",fr:"Parfait. Et le départ, c'est à midi ?"},
+ {s:0,en:"That's right, twelve noon.",fr:"C'est ça, midi."}],
+ qs:[{q:"Quel est le problème ?",o:["Pas d'eau chaude","Pas de wifi","La clim est cassée","La chambre est sale"],a:0,ref:1},
+     {q:"Quand quelqu'un va venir ?",o:["Dans dix minutes","Demain matin","Dans une heure","Ce soir à 10h"],a:0,ref:2},
+     {q:"Le petit-déjeuner est servi…",o:["De 6h30 à 10h au 2e étage","De 7h à 9h au rez-de-chaussée","De 6h à 10h30 à la piscine","Il n'y en a pas"],a:0,ref:4}]},
+{id:'d-massage',sit:'massage',title:'Plus doux sur le cou',who:['Masseuse','Toi'],lines:[
+ {s:0,en:"Hello! What kind of massage would you like?",fr:"Bonjour ! Quel type de massage ?"},
+ {s:1,en:"A Thai massage, one hour, please.",fr:"Un massage thaï, une heure."},
+ {s:0,en:"Okay. Please change and lie down on your back.",fr:"Ok. Changez-vous et allongez-vous sur le dos."},
+ {s:0,en:"Is the pressure okay?",fr:"La pression, ça va ?"},
+ {s:1,en:"A bit softer on my neck, please. It hurts a little.",fr:"Un peu plus doux sur le cou. Ça fait un peu mal."},
+ {s:0,en:"Okay, softer. Tell me if it hurts again.",fr:"Ok, plus doux. Dites-moi si ça fait encore mal."}],
+ qs:[{q:"Qu'est-ce qu'il demande ?",o:["Un massage thaï d'une heure","Un massage à l'huile de 30 minutes","Un massage des pieds","Deux heures de massage"],a:0,ref:1},
+     {q:"Où est-ce que ça lui fait mal ?",o:["Au dos","Au cou","Aux jambes","Aux pieds"],a:1,ref:4},
+     {q:"Que demande-t-il à la masseuse ?",o:["D'appuyer plus fort","D'y aller plus doucement","D'arrêter","De changer d'huile"],a:1,ref:4}]},
+{id:'d-market',sit:'market',title:'Négocier une chemise',who:['Vendeur','Toi'],lines:[
+ {s:0,en:"Hello, have a look! Good price for you.",fr:"Bonjour, regardez ! Bon prix pour vous."},
+ {s:1,en:"How much is this shirt?",fr:"C'est combien cette chemise ?"},
+ {s:0,en:"Three hundred and fifty baht.",fr:"350 bahts."},
+ {s:1,en:"That's a bit expensive. Can you do two hundred?",fr:"C'est un peu cher. Vous pouvez faire 200 ?"},
+ {s:0,en:"Two hundred is too low. Three hundred, last price.",fr:"200 c'est trop bas. 300, dernier prix."},
+ {s:1,en:"Okay, if I take two, two hundred and fifty each?",fr:"Ok, si j'en prends deux, 250 chacune ?"},
+ {s:0,en:"Okay, okay. Two for five hundred.",fr:"Ok, ok. Deux pour 500."}],
+ qs:[{q:"Prix de départ de la chemise ?",o:["350 bahts","300 bahts","250 bahts","200 bahts"],a:0,ref:2},
+     {q:"Que propose-t-il à la fin ?",o:["Une chemise à 200","Deux chemises à 250 chacune","Trois chemises","Il part sans acheter"],a:1,ref:5},
+     {q:"Résultat final ?",o:["Deux pour 500 bahts","Une pour 300","Deux pour 700","Pas d'accord"],a:0,ref:6}]},
+{id:'d-people',sit:'people',title:'Un Australien au café',who:['Sam','Toi'],lines:[
+ {s:0,en:"Hey, is this seat taken?",fr:"Salut, cette place est prise ?"},
+ {s:1,en:"No, go ahead. I'm Marvin.",fr:"Non, vas-y. Moi c'est Marvin."},
+ {s:0,en:"Sam. Where are you from, Marvin?",fr:"Sam. Tu viens d'où, Marvin ?"},
+ {s:1,en:"France. I've been in Thailand for three months.",fr:"France. Ça fait trois mois que je suis en Thaïlande."},
+ {s:0,en:"Nice! I'm from Melbourne, just here for two weeks.",fr:"Cool ! Je viens de Melbourne, juste ici pour deux semaines."},
+ {s:1,en:"What do you do back home?",fr:"Tu fais quoi chez toi ?"},
+ {s:0,en:"I'm a nurse. Pretty tiring, so this is my break.",fr:"Je suis infirmier. Assez fatigant, donc c'est ma pause."}],
+ qs:[{q:"D'où vient Sam ?",o:["De Melbourne, en Australie","De Londres","Du Canada","De Bangkok"],a:0,ref:4},
+     {q:"Depuis combien de temps Marvin est en Thaïlande ?",o:["Trois mois","Trois semaines","Deux semaines","Un an"],a:0,ref:3},
+     {q:"Quel est le métier de Sam ?",o:["Prof","Infirmier","Serveur","Développeur"],a:1,ref:6}]},
+{id:'d-visa',sit:'visa',title:"Passage à l'immigration",who:['Agent','Toi'],lines:[
+ {s:0,en:"Passport, please. What's the purpose of your visit?",fr:"Passeport. Quel est le but de votre visite ?"},
+ {s:1,en:"Tourism. I'm traveling around the country.",fr:"Tourisme. Je voyage dans le pays."},
+ {s:0,en:"How long are you planning to stay?",fr:"Vous comptez rester combien de temps ?"},
+ {s:1,en:"About two months. I have a tourist visa.",fr:"Environ deux mois. J'ai un visa touriste."},
+ {s:0,en:"Do you have a return ticket?",fr:"Vous avez un billet retour ?"},
+ {s:1,en:"Yes, here it is, on my phone.",fr:"Oui, le voilà, sur mon téléphone."},
+ {s:0,en:"Okay. Welcome to Thailand.",fr:"Ok. Bienvenue en Thaïlande."}],
+ qs:[{q:"Pourquoi vient-il en Thaïlande ?",o:["Tourisme","Travail","Études","Voir la famille"],a:0,ref:1},
+     {q:"Combien de temps veut-il rester ?",o:["Environ deux mois","Deux semaines","Six mois","Un an"],a:0,ref:3},
+     {q:"Que demande l'agent à la fin ?",o:["Une réservation d'hôtel","Un billet retour","De l'argent","Une photo"],a:1,ref:4}]},
+{id:'d-cafe',sit:'cafe',title:'Un flat white et le wifi',who:['Barista','Toi'],lines:[
+ {s:0,en:"Hi, what can I get you?",fr:"Bonjour, qu'est-ce que je vous sers ?"},
+ {s:1,en:"A flat white, please. And what's the wifi password?",fr:"Un flat white. Et c'est quoi le mot de passe wifi ?"},
+ {s:0,en:"It's on the receipt. Oat milk or regular?",fr:"Il est sur le ticket. Lait d'avoine ou normal ?"},
+ {s:1,en:"Regular is fine. Can I sit by the window?",fr:"Normal, c'est bien. Je peux m'asseoir près de la fenêtre ?"},
+ {s:0,en:"Sure, but we close at six today.",fr:"Oui, mais on ferme à six heures aujourd'hui."},
+ {s:1,en:"Perfect, I only need an hour.",fr:"Parfait, j'ai besoin d'une heure seulement."}],
+ qs:[{q:"Qu'est-ce qu'il commande ?",o:["Un flat white","Un thé","Un cappuccino","Un jus"],a:0,ref:1},
+     {q:"Où est le mot de passe wifi ?",o:["Sur le ticket","Sur le mur","Il n'y a pas de wifi","Sur la table"],a:0,ref:2},
+     {q:"À quelle heure ferme le café ?",o:["À 18h","À 16h","À 20h","À 22h"],a:0,ref:4}]},
+{id:'d-pharma',sit:'pharma',title:'Mal de gorge à la pharmacie',who:['Pharmacienne','Toi'],lines:[
+ {s:0,en:"Hello, how can I help?",fr:"Bonjour, je peux vous aider ?"},
+ {s:1,en:"I've had a sore throat and a cough since yesterday.",fr:"J'ai mal à la gorge et je tousse depuis hier."},
+ {s:0,en:"Any fever?",fr:"De la fièvre ?"},
+ {s:1,en:"A little, last night.",fr:"Un peu, hier soir."},
+ {s:0,en:"Okay. Take these, one after each meal, for five days. And drink a lot of water.",fr:"Ok. Prenez ça, un après chaque repas, pendant cinq jours. Et buvez beaucoup d'eau."},
+ {s:1,en:"Is there anything for the cough too?",fr:"Il y a quelque chose pour la toux aussi ?"},
+ {s:0,en:"Yes, this syrup, twice a day. If it gets worse, see a doctor.",fr:"Oui, ce sirop, deux fois par jour. Si ça empire, voyez un médecin."}],
+ qs:[{q:"Depuis quand il est malade ?",o:["Depuis hier","Depuis une semaine","Depuis ce matin","Depuis un mois"],a:0,ref:1},
+     {q:"Comment prendre les cachets ?",o:["Un après chaque repas pendant 5 jours","Deux le matin","Un par jour pendant 10 jours","Avant de dormir"],a:0,ref:4},
+     {q:"Le sirop, c'est…",o:["Deux fois par jour","Une fois par jour","Trois fois par jour","Seulement si fièvre"],a:0,ref:6}]},
+{id:'d-scooter',sit:'scooter',title:'Louer un scooter trois jours',who:['Loueur','Toi'],lines:[
+ {s:0,en:"You want to rent a scooter? One day or more?",fr:"Vous voulez louer un scooter ? Un jour ou plus ?"},
+ {s:1,en:"Three days. How much is it?",fr:"Trois jours. C'est combien ?"},
+ {s:0,en:"Two hundred and fifty a day. I need your passport as a deposit.",fr:"250 par jour. J'ai besoin de votre passeport comme caution."},
+ {s:1,en:"Can I leave a copy and three thousand baht instead?",fr:"Je peux laisser une copie et 3000 bahts à la place ?"},
+ {s:0,en:"Okay, that's fine. Bring it back with a full tank.",fr:"Ok, ça marche. Ramenez-le avec le plein."},
+ {s:1,en:"Sure. Does it come with a helmet?",fr:"Bien sûr. Il y a un casque avec ?"},
+ {s:0,en:"Yes, two helmets. Any scratches, you pay.",fr:"Oui, deux casques. S'il y a des rayures, vous payez."}],
+ qs:[{q:"Combien de jours ?",o:["Trois jours","Un jour","Une semaine","Deux jours"],a:0,ref:1},
+     {q:"Que laisse-t-il comme caution ?",o:["Son passeport","Une copie et 3000 bahts","Rien","Sa carte bancaire"],a:1,ref:3},
+     {q:"Que doit-il faire au retour ?",o:["Laver le scooter","Ramener le scooter avec le plein","Payer 250 bahts de plus","Rendre les casques seulement"],a:1,ref:4}]},
+{id:'d-bar',sit:'bar',title:'Un verre avec Jake',who:['Jake','Toi'],lines:[
+ {s:0,en:"How ya going, mate? What are you drinking?",fr:"Ça va, mec ? Tu bois quoi ?"},
+ {s:1,en:"Good! A Chang, thanks. It's my round next.",fr:"Bien ! Une Chang, merci. La prochaine tournée est pour moi."},
+ {s:0,en:"No worries. First time in Bangkok?",fr:"Pas de souci. Première fois à Bangkok ?"},
+ {s:1,en:"No, I live here. I run a small business online.",fr:"Non, j'habite ici. Je gère une petite entreprise en ligne."},
+ {s:0,en:"Nice one. We're heading to a rooftop bar later, wanna come?",fr:"Cool. On va dans un rooftop plus tard, tu viens ?"},
+ {s:1,en:"Sounds good, but I've gotta be up early. Maybe next time.",fr:"Ça me tente, mais je dois me lever tôt. Peut-être la prochaine fois."},
+ {s:0,en:"Fair enough. Cheers!",fr:"Je comprends. Santé !"}],
+ qs:[{q:"Que propose Jake ?",o:["D'aller dans un rooftop plus tard","De rentrer","De manger","De jouer au billard"],a:0,ref:4},
+     {q:"Pourquoi Marvin refuse ?",o:["Il n'a pas d'argent","Il doit se lever tôt","Il n'aime pas Jake","Il est malade"],a:1,ref:5},
+     {q:"« It's my round next » veut dire…",o:["Je paie la prochaine tournée","Je rentre bientôt","C'est mon tour de parler","Je suis fatigué"],a:0,ref:1}]}
+];
 /*DATA-END*/
 
 // ---------- utils ----------
@@ -569,7 +699,7 @@ function toast(msg){
   el.textContent = msg; ui.toast = setTimeout(() => el.remove(), 2400);
 }
 function markDay(k, kind, data){
-  const d = state.days[k] || (state.days[k] = {}); const first = !d.parle && !d.listen; d[kind] = data;
+  const d = state.days[k] || (state.days[k] = {}); const first = !d.parle && !d.listen && !d.dialogue; d[kind] = data;
   if (first) { const y = addDays(k, -1); if (state.streak.last === y) state.streak.count += 1; else if (state.streak.last !== k) state.streak.count = 1; state.streak.last = k; }
 }
 function streakNow(){ const s = state.streak; if (!s.last) return 0; const k = todayKey(); return (s.last === k || s.last === addDays(k, -1)) ? s.count : 0; }
@@ -591,6 +721,8 @@ const TTS = {
   speak(text, rate){ if (!this.ok()) { toast('Pas de synthèse vocale sur ce navigateur'); return; } try { speechSynthesis.cancel(); speechSynthesis.speak(this.utter(text, rate)); } catch (e) { setPlaying(false); } },
   words(text){ if (!this.ok()) { toast('Pas de synthèse vocale sur ce navigateur'); return; } try { speechSynthesis.cancel(); text.split(/\s+/).map(w => w.replace(/^[^\w'’]+|[^\w'’]+$/g, '')).filter(Boolean).forEach(w => speechSynthesis.speak(this.utter(w, 0.85))); } catch (e) { setPlaying(false); } },
   stop(){ try { speechSynthesis.cancel(); } catch (e) {} setPlaying(false); },
+  voice2(){ const v1 = this.pick(); const others = this.voices.filter(v => v !== v1); const male = ['Daniel', 'Aaron', 'Fred', 'Arthur', 'Gordon', 'Rishi', 'Oliver', 'Google UK English Male', 'Microsoft Guy', 'Microsoft Ryan', 'Microsoft David']; for (const n of male) { const v = others.find(v => v.name.startsWith(n)); if (v) return v; } return others.find(v => v.lang === (v1 ? v1.lang : 'en-US')) || others[0] || null; },
+  dialogue(lines, rate){ if (!this.ok()) { toast('Pas de synthèse vocale sur ce navigateur'); return; } try { speechSynthesis.cancel(); const v2 = this.voice2(); lines.forEach(l => { const u = this.utter(l.en, rate); if (l.s === 1) { if (v2) { u.voice = v2; u.lang = v2.lang; } else u.pitch = 0.85; } speechSynthesis.speak(u); }); } catch (e) { setPlaying(false); } },
   unlock(){ if (this.ok()) { try { speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch (e) {} } }
 };
 if (TTS.ok()) { TTS.refresh(); speechSynthesis.onvoiceschanged = () => { TTS.refresh(); if (ui.sheet) renderSheet(); }; }
@@ -656,6 +788,21 @@ function nextStep(){
   const st = currentStep(); if (st.t === 'gap' || st.t === 'listen') playLine(sessionLines()[st.i], 'normal');
 }
 function finishListen(){ const t = state.listen; state.sessions = (state.sessions || 0) + 1; if (!t.extra) markDay(t.date, 'listen', { sit: t.sit, ok: t.ok, total: t.total }); save(); }
+
+// ---------- Dialogue du jour ----------
+function dialForDate(k){ const counts = {}; DIALOGUES.forEach(d => counts[d.id] = 0); Object.values(state.days).forEach(d => { if (d.dialogue && counts[d.dialogue.id] != null) counts[d.dialogue.id]++; }); const min = Math.min(...Object.values(counts)); const c = DIALOGUES.filter(d => counts[d.id] === min); return c[hash('d' + k) % c.length]; }
+function startDialogue(id){ ui.dial = { id, stage: 'listen', qi: 0, chosen: null, ok: 0, plays: 0 }; ui.step = {}; render(); }
+function finishDialogue(){ const u = ui.dial; const k = todayKey(); const d = state.days[k]; if (!(d && d.dialogue)) markDay(k, 'dialogue', { id: u.id, ok: u.ok, total: DIALOGUES.find(x => x.id === u.id).qs.length }); save(); }
+// ---------- Quiz éclair (QCM) ----------
+function quizQuestion(v, pool, dir){ const ds = shuffle(pool.filter(x => x.id !== v.id && x.fr !== v.fr && x.en !== v.en)).slice(0, 3); const opts = shuffle([v, ...ds]).map(x => ({ id: x.id, label: dir === 'en' ? x.fr : x.en })); return { v, dir, opts }; }
+function startQuiz(){
+  const mine = Object.values(state.words).filter(w => w.fr).map(w => ({ id: 'w:' + w.key, en: w.w, fr: w.fr, ex: w.ex, theme: 'mine', key: w.key }));
+  const picks = shuffle(mine).slice(0, 5); const rest = shuffle(VOCAB_ALL.filter(x => !picks.some(p => p.en === x.en))).slice(0, 10 - picks.length); picks.push(...rest);
+  const qs = shuffle(picks).map((v, i) => { const pool = v.theme === 'mine' ? (mine.length >= 4 ? mine : VOCAB_ALL) : VOCAB_ALL.filter(x => x.theme === v.theme); return quizQuestion(v, pool.length >= 4 ? pool : VOCAB_ALL, i % 2 ? 'fr' : 'en'); });
+  ui.quiz = { qs, i: 0, score: 0, answered: false, done: false }; ui.step = {}; render();
+  const q = qs[0]; if (q.dir === 'en') TTS.speak(q.v.en, state.settings.rate || 1);
+}
+function quizNext(){ const q = ui.quiz; if (!q) return; q.i++; q.answered = false; if (q.i >= q.qs.length) { q.done = true; save(); render(); return; } render(); const cur = q.qs[q.i]; if (cur.dir === 'en') TTS.speak(cur.v.en, state.settings.rate || 1); }
 
 // ---------- render ----------
 function renderTop(){
@@ -734,11 +881,12 @@ function lineReveal(line){
     <button class="btn line small needs-claude" data-action="explain">Explique-moi plus</button><div class="explain say" id="explain" style="display:none"></div>`;
 }
 function renderEcoute(){
+  if (ui.dial) return renderDialogue();
   const t = state.listen; const st = currentStep(); const lines = sessionLines();
   const stepN = t.plan ? `${Math.min(t.step, t.plan.length - 2)}/${t.plan.length - 2}` : '';
   if (st.t === 'intro') {
     const done = !!(state.days[t.date] && state.days[t.date].listen);
-    let h = `<div class="stack"><div class="card"><div class="head"><span class="mono acc">${done ? 'Déjà fait aujourd\'hui' : 'Situation du jour'}</span><span class="pill">${lines.length} phrases · 5 min</span></div>
+    let h = `<div class="stack">${dialogueCard()}<div class="card"><div class="head"><span class="mono acc">${done ? 'Déjà fait aujourd\'hui' : 'Situation du jour'}</span><span class="pill">${lines.length} phrases · 5 min</span></div>
       <h1 class="h1">${esc(t.title)}</h1><p class="note">${esc(t.ctx)}</p>
       <button class="btn amber" data-action="start">${done ? 'Refaire' : 'Commencer'}</button>
       <button class="btn line small" data-action="pick-sit">${ui.pickSit ? 'Fermer' : 'Choisir une autre situation'}</button></div>`;
@@ -810,7 +958,51 @@ function recallCard(w, s, label){
     <div class="row2"><button class="btn green" data-action="know" data-ok="1" data-k="${esc(w.key)}">${ICON.check} Je l'avais</button><button class="btn red" data-action="know" data-ok="0" data-k="${esc(w.key)}">Pas encore</button></div>`;
   return body;
 }
+
+// ---------- Dialogue ----------
+function dialogueCard(){
+  const k = todayKey(); const done = state.days[k] && state.days[k].dialogue; const d = dialForDate(k);
+  return `<div class="card soft"><div class="head"><span class="mono acc">Dialogue du jour</span><span class="pill">${d.lines.length} répliques · 3 questions</span></div>
+    <h2 class="h2">${esc(d.title)}</h2><p class="note">Écoute une fois sans lire. Réponds à 3 questions. Puis lis le texte et réécoute : c'est là que ça rentre.</p>
+    <button class="btn ${done ? '' : 'amber'}" data-action="dial-start" data-id="${d.id}">${done ? 'Refaire · ' + done.ok + '/' + done.total : 'Écouter le dialogue'}</button>
+    ${done ? `<button class="btn line small" data-action="dial-other">Un autre dialogue</button>` : ''}</div>`;
+}
+function renderDialogue(){
+  const u = ui.dial; const d = DIALOGUES.find(x => x.id === u.id); if (!d) { ui.dial = null; return renderEcoute(); }
+  if (u.stage === 'listen') return `<div class="card"><div class="head"><span class="mono acc">Dialogue</span><span class="pill">${esc(d.who[0])} · ${esc(d.who[1])}</span></div>
+      <h2 class="h2">${esc(d.title)}</h2><p class="note">Écoute sans lire, deux fois maximum. Essaie de capter de quoi ça parle et les chiffres.</p>
+      <div class="playrow"><button class="play" data-action="dial-play" data-mode="normal" aria-label="Écouter">${ICON.play}</button><div class="speedrow"><button class="btn" data-action="dial-play" data-mode="slow">${ICON.turtle} Lent</button></div></div>
+      <button class="btn amber" data-action="dial-questions" ${u.plays ? '' : 'disabled'}>Aux questions</button><button class="btn line small" data-action="dial-quit">Plus tard</button></div>`;
+  if (u.stage === 'q') { const q = d.qs[u.qi]; const ans = u.chosen != null; const ref = d.lines[q.ref];
+    return `<div class="progress">${d.qs.map((_, i) => `<i class="${i < u.qi ? 'done' : i === u.qi ? 'cur' : ''}"></i>`).join('')}</div>
+      <div class="card"><div class="head"><span class="mono acc">Question ${u.qi + 1}/${d.qs.length}</span><button class="btn line small" data-action="dial-play" data-mode="normal" style="min-height:34px">${ICON.speaker} Réécouter</button></div>
+      <p class="lead">${esc(q.q)}</p>
+      <div class="opts">${q.o.map((o, i) => `<button class="opt ${ans ? (i === q.a ? 'right' : i === u.chosen ? 'wrong' : '') : ''}" data-action="dial-answer" data-i="${i}" ${ans ? 'disabled' : ''}>${esc(o)}</button>`).join('')}</div>
+      ${ans ? `<p class="verdict ${u.chosen === q.a ? 'ok' : 'ko'}">${u.chosen === q.a ? 'Oui.' : 'Non, c\'était : ' + esc(q.o[q.a])}</p>${ref ? `<div class="say"><span class="lbl">La réplique qui le dit</span>${esc(ref.en)}<br><span class="note">${esc(ref.fr)}</span> <button class="btn line small" style="display:inline-flex;min-height:28px;padding:0 8px;vertical-align:middle" data-action="say-play" data-t="${esc(ref.en)}" aria-label="Écouter">${ICON.speaker}</button></div>` : ''}<button class="btn amber" data-action="dial-next">${u.qi + 1 < d.qs.length ? 'Question suivante' : 'Voir le texte'}</button>` : ''}</div>`; }
+  return `<div class="stack"><div class="card"><div class="head"><span class="mono acc">Résultat</span><span class="pill ${u.ok >= 2 ? 'green' : ''}">${u.ok}/${d.qs.length}</span></div>
+      <h2 class="h2">${u.ok === d.qs.length ? 'Tout compris.' : u.ok >= 2 ? 'Bien, presque tout.' : 'Dur à l\'oreille. Lis et réécoute.'}</h2>
+      <p class="note">Maintenant lis le texte, puis réécoute en normal. Tu vas entendre ce que tu avais raté.</p>
+      <div class="playrow"><button class="play" data-action="dial-play" data-mode="normal" aria-label="Réécouter">${ICON.play}</button><div class="speedrow"><button class="btn" data-action="dial-play" data-mode="slow">${ICON.turtle} Lent</button></div></div></div>
+    <div class="card"><div class="list">${d.lines.map(l => `<div class="item flat"><button class="mini ${l.s === 0 ? 'acc' : ''}" data-action="say-play" data-t="${esc(l.en)}" aria-label="Écouter">${ICON.speaker}</button><div class="txt"><div class="sub" style="font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase">${esc(d.who[l.s])}</div><div class="w" style="font-size:15.5px">${esc(l.en)}</div><div class="sub wrap">${esc(l.fr)}</div></div></div>`).join('')}</div></div>
+    <button class="btn amber" data-action="dial-finish">Terminer</button></div>`;
+}
+// ---------- Quiz éclair ----------
+function quizCard(){ return `<div class="card"><div class="head"><span class="mono acc">Quiz éclair</span><span class="pill">10 questions · 1 min</span></div><p class="note">QCM rapide : tes mots et la banque, moitié anglais vers français, moitié l'inverse. Les ratés reviennent en rappel.</p><button class="btn" data-action="quiz-start">Lancer le quiz</button></div>`; }
+function renderQuiz(){
+  const q = ui.quiz;
+  if (q.done) return `<div class="stack"><div class="card"><div class="head"><span class="mono acc">Quiz terminé</span><span class="pill ${q.score >= 7 ? 'green' : ''}">${q.score}/${q.qs.length}</span></div><h2 class="h2">${q.score >= 9 ? 'Nickel.' : q.score >= 6 ? 'Ça rentre.' : 'Les ratés sont dans tes mots.'}</h2>
+    <div class="row2"><button class="btn amber" data-action="quiz-start">Encore un</button><button class="btn" data-action="quiz-quit">Retour</button></div></div></div>`;
+  const cur = q.qs[q.i]; const v = cur.v;
+  const prompt = cur.dir === 'en' ? `<div class="playrow"><button class="play" data-action="say-play" data-t="${esc(v.en)}" aria-label="Écouter">${ICON.play}</button><p class="en" style="font-size:22px">${esc(v.en)}</p></div><p class="note">Ça veut dire quoi ?</p>` : `<p class="note">Comment on dit…</p><p class="en" style="font-size:22px">${esc(v.fr)}</p>`;
+  return `<div class="progress">${q.qs.map((_, i) => `<i class="${i < q.i ? 'done' : i === q.i ? 'cur' : ''}"></i>`).join('')}</div>
+    <div class="card"><div class="head"><span class="mono acc">Quiz éclair</span><span class="mono">${q.i + 1}/${q.qs.length}</span></div>${prompt}
+    <div class="opts">${cur.opts.map(o => { let cls = ''; if (q.answered) { if (o.id === v.id) cls = 'right'; else if (o.id === q.chosen) cls = 'wrong'; } return `<button class="opt ${cls}" data-action="quiz-answer" data-id="${esc(o.id)}" ${q.answered ? 'disabled' : ''}>${esc(o.label)}</button>`; }).join('')}</div>
+    ${q.answered ? `<p class="fr">« ${esc(v.ex)} »</p>${q.ok ? '' : `<button class="btn amber" data-action="quiz-next">Suivant</button>`}` : ''}
+    <button class="btn line small" data-action="quiz-quit">Arrêter</button></div>`;
+}
+
 function renderMots(){
+  if (ui.quiz) return renderQuiz();
   if (ui.review) { const q = ui.review.queue, i = ui.review.i; if (i >= q.length) { ui.review = null; toast('Rappel terminé'); return renderMots(); } const w = state.words[q[i]]; if (!w) { ui.review.i++; return renderMots(); }
     return `<div class="card"><div class="head"><span class="mono acc">Rappel</span><span class="mono">${i + 1}/${q.length}</span></div>${recallCard(w, ui.step, 'Comment tu dis…')}<button class="btn line small" data-action="review-stop">Arrêter</button></div>`; }
   if (ui.drill) return renderDrill();
@@ -824,6 +1016,7 @@ function renderMots(){
     <div class="card"><div class="head"><span class="mono acc">Rappel</span><span class="pill ${due.length ? 'amber' : ''}">${due.length} à revoir</span></div>
       <p class="note">Tes mots reviennent à J+1, J+3, J+7, J+14, J+30. Tu les dis en anglais avant de vérifier.</p>
       ${due.length ? `<button class="btn amber" data-action="review-start">Commencer le rappel</button>` : `<p class="note">Rien à revoir aujourd'hui${all.length ? '. Prochain : ' + esc(all[0].due) : ''}.</p>`}</div>
+    ${quizCard()}
     <div class="head" style="padding:4px 2px"><span class="h2">Mes mots</span><span class="mono">${all.length}</span></div>
     ${all.length ? `<div class="list">${all.map(w => `<div class="item"><button class="mini acc" data-action="say-play" data-t="${esc(w.w)}" aria-label="Écouter">${ICON.speaker}</button>
         <div class="txt"><div class="w">${esc(w.w)}</div><div class="sub">${esc(w.fr || w.ex)}</div></div><span class="badge ${w.due <= todayKey() ? 'due' : ''}">${w.due <= todayKey() ? 'à revoir' : 'J+' + INTERVALS[w.box]}</span><button class="mini" data-action="del-word" data-k="${esc(w.key)}" aria-label="Supprimer">${ICON.x}</button></div>`).join('')}</div>` : `<div class="empty">Encore vide. Tes manques arrivent ici automatiquement après chaque session de parole. Tu peux aussi garder des mots de la banque.</div>`}
@@ -937,7 +1130,7 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('click', e => {
   const tab = e.target.closest('[data-tab]');
-  if (tab) { ui.tab = tab.dataset.tab; ui.step = {}; ui.drill = null; ui.review = null; ui.pickSit = false; TTS.stop(); render(); return; }
+  if (tab) { ui.tab = tab.dataset.tab; ui.step = {}; ui.drill = null; ui.review = null; ui.dial = null; ui.quiz = null; ui.pickSit = false; TTS.stop(); render(); return; }
   const el = e.target.closest('[data-action]'); if (!el) return;
   if (el.dataset.action === 'close-settings' && e.target.closest('[data-stop]') && !e.target.closest('.btn')) return;
   const a = el.dataset.action;
@@ -984,6 +1177,20 @@ document.addEventListener('click', e => {
     case 'unpick': { const p = ui.step.picked; const k = p.indexOf(Number(el.dataset.i)); if (k >= 0) p.splice(k, 1); render(); break; }
     case 'check-order': { const toks = line.en.split(/\s+/); const ok = ui.step.picked.map(i => toks[i]).join(' ') === toks.join(' '); ui.step.answered = true; ui.step.ok = ok; t.total++; if (ok) t.ok++; save(); render(); if (!ok) playLine(line, 'slow'); break; }
     case 'rep': { const h = state.hard.filter(x => x !== line.id); if (el.dataset.ok === '0') h.push(line.id); state.hard = h.slice(-20); nextStep(); break; }
+    // Dialogue
+    case 'dial-start': TTS.unlock(); startDialogue(el.dataset.id); break;
+    case 'dial-other': { const cur = dialForDate(todayKey()).id; const others = DIALOGUES.filter(d => d.id !== cur); TTS.unlock(); startDialogue(others[hash(String(Date.now())) % others.length].id); break; }
+    case 'dial-play': { const d = DIALOGUES.find(x => x.id === ui.dial.id); TTS.unlock(); TTS.dialogue(d.lines, el.dataset.mode === 'slow' ? 0.65 : (state.settings.rate || 1)); if (ui.dial.stage === 'listen') { ui.dial.plays++; const b = document.querySelector('[data-action="dial-questions"]'); if (b) b.disabled = false; } break; }
+    case 'dial-questions': TTS.stop(); ui.dial.stage = 'q'; ui.dial.qi = 0; ui.dial.chosen = null; render(); break;
+    case 'dial-answer': { const u = ui.dial; if (u.chosen != null) break; const d = DIALOGUES.find(x => x.id === u.id); u.chosen = Number(el.dataset.i); if (u.chosen === d.qs[u.qi].a) u.ok++; render(); break; }
+    case 'dial-next': { const u = ui.dial; const d = DIALOGUES.find(x => x.id === u.id); if (u.qi + 1 < d.qs.length) { u.qi++; u.chosen = null; render(); } else { u.stage = 'done'; finishDialogue(); render(); const dd = DIALOGUES.find(x => x.id === u.id); TTS.dialogue(dd.lines, state.settings.rate || 1); } break; }
+    case 'dial-finish': TTS.stop(); ui.dial = null; render(); toast('Dialogue terminé'); break;
+    case 'dial-quit': TTS.stop(); ui.dial = null; render(); break;
+    // Quiz éclair
+    case 'quiz-start': TTS.unlock(); startQuiz(); break;
+    case 'quiz-quit': ui.quiz = null; render(); break;
+    case 'quiz-answer': { const q = ui.quiz; if (!q || q.answered) break; const cur = q.qs[q.i]; const ok = el.dataset.id === cur.v.id; q.answered = true; q.ok = ok; q.chosen = el.dataset.id; if (cur.v.theme !== 'mine') state.seen[cur.v.id] = 1; if (ok) q.score++; else { if (cur.v.theme === 'mine') gradeWord(cur.v.key, false); else if (addWord(cur.v.en, cur.v.fr, cur.v.ex, '', 'quiz')) toast('Gardé dans tes mots'); } if (cur.dir === 'fr') TTS.speak(cur.v.en, state.settings.rate || 1); save(); render(); if (ok) setTimeout(() => { if (ui.quiz === q && q.answered) quizNext(); }, 800); break; }
+    case 'quiz-next': quizNext(); break;
     // Mots
     case 'review-start': ui.review = { queue: dueWords().map(w => w.key), i: 0 }; ui.step = {}; render(); break;
     case 'review-stop': ui.review = null; ui.step = {}; render(); break;
