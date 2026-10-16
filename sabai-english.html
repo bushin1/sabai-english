@@ -677,6 +677,49 @@ const DIALOGUES = [
      {q:"Quelle est la cause probable ?",o:["Une core update et du contenu dupliqué","Une attaque","Un changement de nom de domaine","Trop de backlinks"],a:0,ref:2},
      {q:"Par quoi Marvin commence ?",o:["Les dix plus grandes villes","La page d'accueil","Les avis","Le sitemap"],a:0,ref:5}]}
 ];
+const CONVO_G = {salle:'Salle de sport',job:'Mon métier',rencontre:'Rencontres',relancer:'Relancer',comprendre:'Rattraper'};
+const CONVO = [
+{id:'c1',g:'salle',fr:"À la salle, quelqu'un te montre la machine que tu utilises.",q:"Are you done with this?",o:["Yeah, go ahead.","Yes, I am finish.","No problem, I do.","I am done it."],a:0,tr:"Oui, vas-y.",why:"« Go ahead » = vas-y. Court et naturel."},
+{id:'c2',g:'salle',fr:"On te demande combien de séries il te reste.",q:"How many sets have you got left?",o:["Two more, then it's yours.","Two sets rest.","I have two series.","It stays two."],a:0,tr:"Encore deux, et c'est à toi.",why:"« sets » = séries. « then it's yours » = après c'est à toi."},
+{id:'c3',g:'salle',fr:"Quelqu'un veut alterner avec toi sur la machine.",q:"Mind if I work in?",o:["Sure, no problem.","Yes, I mind.","No, I work here.","Of course not, it's mine."],a:0,tr:"Bien sûr, pas de problème.",why:"« Mind if… ? » attend « Sure » ou « No problem ». « Yes » voudrait dire que ça te dérange."},
+{id:'c4',g:'salle',fr:"Un habitué engage la conversation.",q:"You come here often?",o:["Almost every day, usually in the morning.","Yes, often I come here.","I am coming here often, yes.","Every days, the morning."],a:0,tr:"Presque tous les jours, en général le matin.",why:"« almost every day » et « usually » : deux mots qui rendent la phrase naturelle."},
+{id:'c5',g:'salle',fr:"On te demande ce que tu travailles aujourd'hui.",q:"What are you training today?",o:["Legs. Not my favorite.","I train the legs today.","Today is leg.","The legs, I don't like."],a:0,tr:"Les jambes. Pas mon truc préféré.",why:"Réponse courte + petit commentaire : c'est comme ça qu'on garde la conversation vivante."},
+{id:'c6',g:'salle',fr:"Quelqu'un te demande de l'assurer au développé couché.",q:"Can you spot me?",o:["Sure, how many reps?","Yes, I look you.","I can see you, yes.","Spot? Where?"],a:0,tr:"Bien sûr, combien de répétitions ?",why:"« spot » = assurer. « reps » = répétitions."},
+{id:'c7',g:'salle',fr:"Quelqu'un te dit que tu as l'air fatigué.",q:"You look tired, man.",o:["Yeah, late night. Worth it, though.","Yes, I am very tired man.","No, I am not look tired.","I sleep bad."],a:0,tr:"Ouais, couché tard. Mais ça valait le coup.",why:"« worth it » = ça valait le coup. « though » en fin de phrase = quand même."},
+{id:'c8',g:'salle',fr:"Fin de séance, quelqu'un te lance :",q:"See you tomorrow?",o:["Probably. Same time.","Yes, I see you.","Tomorrow, maybe I see.","See you, yes tomorrow."],a:0,tr:"Sûrement. Même heure.",why:"« Probably » = sûrement. Court, suffisant."},
+{id:'c9',g:'salle',fr:"Quelqu'un te complimente sur tes chaussures.",q:"Nice shoes.",o:["Thanks! Got them at the night market.","Thank you, they are nice.","Yes, they are my shoes.","It's shoes from the market night."],a:0,tr:"Merci ! Je les ai eues au marché de nuit.",why:"Un compliment : on remercie et on ajoute un détail. « Got them » = je les ai eues."},
+{id:'c10',g:'salle',fr:"Un nouveau te demande si tu es nouveau aussi.",q:"Are you new here?",o:["I joined last month. Still figuring out the machines.","Yes, I am new since one month.","No, I am old here.","I come since last month."],a:0,tr:"Je me suis inscrit le mois dernier. Je découvre encore les machines.",why:"« I joined » = je me suis inscrit. « figuring out » = en train de comprendre."},
+{id:'c11',g:'job',fr:"Un ami de ton patron te demande ce que tu fais dans la vie.",q:"So, what do you do?",o:["I do local SEO. I help businesses show up on Google Maps.","I am doing good, thanks.","I make the SEO local for the Google.","I work in the Google."],a:0,tr:"Je fais du SEO local. J'aide des entreprises à apparaître sur Google Maps.",why:"« What do you do? » = ton métier. « show up on » = apparaître sur."},
+{id:'c12',g:'job',fr:"La personne ne connaît pas le SEO local.",q:"Local SEO? What's that?",o:["When you search 'plumber near me', I make sure my clients show up in the top three.","It is the SEO but local.","It's for the Google My Business.","It's complicated, you don't know."],a:0,tr:"Quand tu cherches « plombier près de moi », je fais en sorte que mes clients soient dans les trois premiers.",why:"Un exemple concret vaut mieux qu'une définition. « make sure » = faire en sorte."},
+{id:'c13',g:'job',fr:"On te demande ce qui fait qu'une fiche Google est bien classée.",q:"What makes a listing rank?",o:["Mainly reviews, the right category, and being close to the person searching.","The Google decide.","You need many words keys.","Relevance, distance and prominence as defined by the algorithm's weighting."],a:0,tr:"Surtout les avis, la bonne catégorie, et être proche de la personne qui cherche.",why:"Trois choses simples. La version jargon est juste mais trop lourde à l'oral."},
+{id:'c14',g:'job',fr:"On te demande si c'est dur comme boulot.",q:"Is it hard?",o:["Not really, but Google changes the rules all the time.","Yes, it is very hard work.","No, it's easy, anybody can do.","Hard? No, I am expert."],a:0,tr:"Pas vraiment, mais Google change les règles tout le temps.",why:"« Not really » = pas vraiment. « all the time » = tout le temps."},
+{id:'c15',g:'job',fr:"Quelqu'un te demande comment tu trouves tes clients.",q:"How do you get clients?",o:["Mostly word of mouth, and a few through my own Google listing.","The clients come to me.","I search on the Facebook.","By the bouche à oreille."],a:0,tr:"Surtout le bouche-à-oreille, et quelques-uns via ma propre fiche Google.",why:"« word of mouth » = bouche-à-oreille. « mostly » = surtout."},
+{id:'c16',g:'job',fr:"On te demande ce qui est le plus dur dans ton métier.",q:"What's the hardest part?",o:["Suspended listings. Google suspends them and you have to get them back.","The hardest is the hard part.","When Google is not happy.","Everything is hard."],a:0,tr:"Les fiches suspendues. Google les suspend et il faut les récupérer.",why:"« suspended » = suspendue. « get them back » = les récupérer."},
+{id:'c17',g:'job',fr:"On te demande si tu utilises l'IA.",q:"Do you use AI for your work?",o:["Yeah, I use Claude Code to automate the boring parts.","Yes, the AI is good.","I use the Claude for make the code.","AI? A little bit, sometimes."],a:0,tr:"Ouais, j'utilise Claude Code pour automatiser les parties pénibles.",why:"« automate » = automatiser. « the boring parts » = les parties chiantes."},
+{id:'c18',g:'job',fr:"Quelqu'un te demande de l'aide pour le restaurant d'un ami.",q:"Could you help my friend's restaurant?",o:["Sure, send me their Google listing and I'll have a look.","Yes, give me money first.","Maybe, I don't know, it depends.","I can help the restaurant of your friend, yes."],a:0,tr:"Bien sûr, envoie-moi leur fiche Google et je regarde.",why:"« I'll have a look » = je vais jeter un œil. Simple et pro."},
+{id:'c19',g:'job',fr:"On te demande tes tarifs.",q:"How much do you charge?",o:["It depends on the city. Usually a monthly retainer.","It's expensive.","I charge you much money.","Depends. Monthly, it's a forfait."],a:0,tr:"Ça dépend de la ville. En général un forfait mensuel.",why:"« charge » = facturer. « retainer » = forfait mensuel."},
+{id:'c20',g:'job',fr:"On te demande pourquoi tu vis en Thaïlande.",q:"Why Thailand?",o:["Remote work. I can run everything from my laptop.","Because it is Thailand.","For the sun and the beach, you know.","I am digital nomad."],a:0,tr:"Le travail à distance. Je peux tout gérer depuis mon ordi.",why:"« run everything » = tout gérer. « remote work » = télétravail."},
+{id:'c21',g:'job',fr:"Quelqu'un te dit que sa boîte fait aussi du marketing.",q:"My company does marketing too.",o:["Really? We should talk, I'm in local SEO.","Ok.","Me too, I am marketing.","Marketing is good."],a:0,tr:"Ah oui ? On devrait en parler, je suis dans le SEO local.",why:"« We should talk » ouvre la porte. C'est comme ça qu'on montre son expertise sans forcer."},
+{id:'c22',g:'job',fr:"On te demande combien de fiches tu gères.",q:"How many listings do you manage?",o:["A few hundred, across different cities.","Many many listings.","I have a lot of fiches.","Hundred and more, in all the France."],a:0,tr:"Quelques centaines, dans différentes villes.",why:"« a few hundred » = quelques centaines. « across » = dans, à travers."},
+{id:'c23',g:'rencontre',fr:"Ton patron t'invite à boire un verre après la salle.",q:"Come join us for a drink after?",o:["Sure, I'd love to.","Yes, I come.","Ok, if you want.","I will join you for drink."],a:0,tr:"Avec plaisir.",why:"« I'd love to » = avec plaisir. Chaleureux et naturel."},
+{id:'c24',g:'rencontre',fr:"Quelqu'un se présente.",q:"I'm Alex, by the way.",o:["Marvin. Nice to meet you, Alex.","I am Marvin, by the way too.","Hello Alex, me Marvin.","Nice to meet you. What is your name?"],a:0,tr:"Marvin. Enchanté, Alex.",why:"On répète le prénom de l'autre : ça marque les esprits."},
+{id:'c25',g:'rencontre',fr:"On te demande depuis combien de temps tu es là.",q:"How long have you been in Thailand?",o:["About six months now.","Since six months.","I am here for six months ago.","Six months I live."],a:0,tr:"Environ six mois maintenant.",why:"« about » = environ. Pas de « since » avec une durée."},
+{id:'c26',g:'rencontre',fr:"On te demande si tu es français.",q:"You're French, right?",o:["Yeah, I am. How did you guess?","Yes, I am French people.","Oui, I am.","Yes. And you, you are what?"],a:0,tr:"Ouais. Comment t'as deviné ?",why:"« How did you guess? » relance avec humour."},
+{id:'c27',g:'rencontre',fr:"Ton patron te propose de venir avec ses potes samedi.",q:"The guys are coming to the gym Saturday, join us?",o:["Count me in. What time?","Yes, I join.","Saturday? Maybe, I see.","Ok I come with the guys."],a:0,tr:"Je suis de la partie. À quelle heure ?",why:"« Count me in » = compte sur moi. Et on enchaîne avec une question."},
+{id:'c28',g:'rencontre',fr:"On te demande comment se passe ta semaine.",q:"How's your week going?",o:["Busy, but good. Yours?","It goes.","My week is going.","Good good, and you your week?"],a:0,tr:"Chargée, mais bien. Et la tienne ?",why:"Réponse en deux mots + « Yours? » pour renvoyer la question."},
+{id:'c29',g:'rencontre',fr:"On te demande tes plans du week-end.",q:"Any plans this weekend?",o:["Probably the beach, if it doesn't rain.","I have no plan.","The weekend I go beach.","Yes, I have plans."],a:0,tr:"Sûrement la plage, s'il ne pleut pas.",why:"« if it doesn't rain » : une condition simple, ça fait une vraie phrase."},
+{id:'c30',g:'rencontre',fr:"On te complimente sur ton anglais.",q:"Your English is good!",o:["Thanks, I'm still learning. I practice every day.","No, my English is very bad.","Thank you, but no.","It's not good, sorry."],a:0,tr:"Merci, j'apprends encore. Je m'entraîne tous les jours.",why:"On ne se rabaisse pas. « I'm still learning » = j'apprends encore."},
+{id:'c31',g:'relancer',fr:"Quelqu'un te dit qu'il tient une boulangerie à Phuket. Tu relances.",q:"I run a bakery in Phuket.",o:["Oh nice, how's business?","Ok, good.","A bakery, it's bread?","Me, I do SEO."],a:0,tr:"Ah sympa, et les affaires, ça marche ?",why:"« How's business? » : la relance universelle quand quelqu'un parle de son boulot."},
+{id:'c32',g:'relancer',fr:"Quelqu'un te dit qu'il est là depuis dix ans. Tu relances.",q:"I've been here ten years.",o:["Ten years? Wow. What keeps you here?","Ten years is long.","Me, six months.","Why?"],a:0,tr:"Dix ans ? Wow. Qu'est-ce qui te retient ici ?",why:"Répéter le chiffre + une question ouverte : conversation relancée."},
+{id:'c33',g:'relancer',fr:"On te demande si tu suis le foot.",q:"Do you follow football?",o:["Not really, but I watch the big games.","No.","I don't like the football.","Football? I am French, so yes."],a:0,tr:"Pas vraiment, mais je regarde les gros matchs.",why:"« Not really, but… » : on dit non sans fermer la porte."},
+{id:'c34',g:'relancer',fr:"On te demande où bien manger dans le coin.",q:"Where's good to eat around here?",o:["There's a great Thai place around the corner.","I don't know, I eat at home.","The restaurant.","Around here it's good to eat."],a:0,tr:"Il y a un super thaï juste au coin.",why:"« around the corner » = juste au coin. « There's a great… » : la façon de recommander."},
+{id:'c35',g:'relancer',fr:"Quelqu'un te raconte sa galère de visa. Tu réagis.",q:"I had to do a visa run to Laos, it was a nightmare.",o:["Oh no. How long did it take?","Yes, the visa is bad.","Me too, I have a visa.","Laos is nice."],a:0,tr:"Oh non. Ça a pris combien de temps ?",why:"« Oh no » + une question : tu montres que tu écoutes."},
+{id:'c36',g:'comprendre',fr:"La personne parle trop vite, tu n'as rien compris.",q:"So basically the whole thing got flagged and we had to redo it from scratch, y'know?",o:["Sorry, could you say that again, a bit slower?","What?","I don't speak English.","Yes, yes."],a:0,tr:"Pardon, tu peux répéter, un peu plus lentement ?",why:"Poli, précis. « What? » tout seul est sec, et « Yes yes » te fait perdre le fil."},
+{id:'c37',g:'comprendre',fr:"Tu n'as pas compris un mot précis.",q:"They put us on a retainer.",o:["Sorry, what does 'retainer' mean?","I don't understand nothing.","Retainer, yes.","Can you speak French?"],a:0,tr:"Pardon, ça veut dire quoi « retainer » ?",why:"Demander un mot précis, c'est normal et ça montre que tu suis."},
+{id:'c38',g:'comprendre',fr:"Tu n'as pas saisi son prénom.",q:"…and I'm Siobhan.",o:["Sorry, I didn't catch your name.","What is your name again please?","Repeat.","Siobhan? Strange name."],a:0,tr:"Pardon, je n'ai pas saisi ton prénom.",why:"« I didn't catch » = je n'ai pas saisi. La formule exacte pour un nom."},
+{id:'c39',g:'comprendre',fr:"Tu veux vérifier que tu as bien compris.",q:"Let's meet at the gym at seven, then grab food.",o:["So, gym at seven, then food. Right?","Ok ok.","Seven? Yes.","Food at the gym at seven."],a:0,tr:"Donc, salle à sept heures, puis manger. C'est ça ?",why:"Reformuler en deux mots + « Right? » : tu confirmes sans paniquer."},
+{id:'c40',g:'comprendre',fr:"Tu cherches un mot au milieu d'une phrase.",q:"What did you think of the place?",o:["It was… how do you say… crowded? Lots of people.","It was… euh… je sais pas.","It was something.","I don't know the word, sorry, forget."],a:0,tr:"C'était… comment on dit… bondé ? Plein de monde.",why:"« How do you say… » + un mot simple derrière : tu gardes la parole au lieu de la perdre."}
+];
 /*DATA-END*/
 
 // ---------- utils ----------
@@ -697,7 +740,7 @@ function shortDate(key){ const [y, m, d] = key.split('-').map(Number); const dt 
 const MONTHS_FR = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
 function prettyDate(key){ const [y, m, d] = key.split('-').map(Number); const dt = new Date(y, m - 1, d); return DAYS_FR[dt.getDay()] + ' ' + d + ' ' + MONTHS_FR[m - 1]; }
 const INTERVALS = [0, 1, 3, 7, 14, 30];
-const VOCAB_ALL = VOCAB.flatMap(t => t.items.map((it, i) => ({ id: t.id + ':' + i, theme: t.id, en: it[0], fr: it[1], ex: it[2] })));
+const VOCAB_ALL = VOCAB.flatMap(t => t.items.map((it, i) => ({ id: t.id + ':' + i, theme: t.id, pro: !!t.pro, en: it[0], fr: it[1], ex: it[2] })));
 const ICON = {
   play: '<svg class="tri" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><span class="bars"><i></i><i></i><i></i><i></i></span>',
   speaker: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>',
@@ -832,14 +875,25 @@ function startDialogue(id){ ui.dial = { id, stage: 'listen', qi: 0, chosen: null
 function finishDialogue(){ const u = ui.dial; const k = todayKey(); const d = state.days[k]; if (!(d && d.dialogue)) markDay(k, 'dialogue', { id: u.id, ok: u.ok, total: DIALOGUES.find(x => x.id === u.id).qs.length }); save(); }
 // ---------- Quiz éclair (QCM) ----------
 function quizQuestion(v, pool, dir){ const ds = shuffle(pool.filter(x => x.id !== v.id && x.fr !== v.fr && x.en !== v.en)).slice(0, 3); const opts = shuffle([v, ...ds]).map(x => ({ id: x.id, label: dir === 'en' ? x.fr : x.en })); return { v, dir, opts }; }
-function startQuiz(){
-  const mine = Object.values(state.words).filter(w => w.fr).map(w => ({ id: 'w:' + w.key, en: w.w, fr: w.fr, ex: w.ex, theme: 'mine', key: w.key }));
-  const picks = shuffle(mine).slice(0, 5); const rest = shuffle(VOCAB_ALL.filter(x => !picks.some(p => p.en === x.en))).slice(0, 10 - picks.length); picks.push(...rest);
-  const qs = shuffle(picks).map((v, i) => { const pool = v.theme === 'mine' ? (mine.length >= 4 ? mine : VOCAB_ALL) : VOCAB_ALL.filter(x => x.theme === v.theme); return quizQuestion(v, pool.length >= 4 ? pool : VOCAB_ALL, i % 2 ? 'fr' : 'en'); });
-  ui.quiz = { qs, i: 0, score: 0, answered: false, done: false }; ui.step = {}; render();
-  const q = qs[0]; if (q.dir === 'en') TTS.speak(q.v.en, state.settings.rate || 1);
+function startQuiz(mode){
+  mode = mode || 'mix';
+  let qs;
+  if (mode === 'convo') {
+    const seenN = id => state.seen['c:' + id] || 0;
+    const items = shuffle(CONVO).sort((a, b) => seenN(a.id) - seenN(b.id)).slice(0, 8);
+    qs = items.map(it => ({ type: 'convo', it, order: shuffle([0, 1, 2, 3]) }));
+  } else {
+    const pro = mode === 'pro';
+    const proWords = new Set(VOCAB_ALL.filter(v => v.pro).map(v => v.en.toLowerCase()));
+    const mine = Object.values(state.words).filter(w => w.fr && (!pro || w.src === 'texte' || proWords.has(String(w.w).toLowerCase()))).map(w => ({ id: 'w:' + w.key, en: w.w, fr: w.fr, ex: w.ex, theme: 'mine', key: w.key }));
+    const bank = pro ? VOCAB_ALL.filter(v => v.pro) : VOCAB_ALL;
+    const picks = shuffle(mine).slice(0, pro ? 3 : 5); const rest = shuffle(bank.filter(x => !picks.some(p => p.en === x.en))).slice(0, 10 - picks.length); picks.push(...rest);
+    qs = shuffle(picks).map((v, i) => { let pool = v.theme === 'mine' ? (mine.length >= 4 ? mine : bank) : bank.filter(x => x.theme === v.theme); if (pool.length < 4) pool = bank; return quizQuestion(v, pool, i % 2 ? 'fr' : 'en'); });
+  }
+  ui.quiz = { mode, qs, i: 0, score: 0, answered: false, done: false }; ui.step = {}; render();
+  const q = qs[0]; if (q.type === 'convo') TTS.speak(q.it.q, state.settings.rate || 1); else if (q.dir === 'en') TTS.speak(q.v.en, state.settings.rate || 1);
 }
-function quizNext(){ const q = ui.quiz; if (!q) return; q.i++; q.answered = false; if (q.i >= q.qs.length) { q.done = true; save(); render(); return; } render(); const cur = q.qs[q.i]; if (cur.dir === 'en') TTS.speak(cur.v.en, state.settings.rate || 1); }
+function quizNext(){ const q = ui.quiz; if (!q) return; q.i++; q.answered = false; if (q.i >= q.qs.length) { q.done = true; save(); render(); return; } render(); const cur = q.qs[q.i]; if (cur.type === 'convo') TTS.speak(cur.it.q, state.settings.rate || 1); else if (cur.dir === 'en') TTS.speak(cur.v.en, state.settings.rate || 1); }
 
 // ---------- render ----------
 function renderTop(){
@@ -903,6 +957,7 @@ function renderParle(){
   }
   if (weeklyDue()) h += `<div class="card soft"><div class="head"><span class="mono acc">Bilan hebdo</span><span class="pill amber">à faire</span></div><p class="note">Une semaine est passée. Deux minutes de parole libre pour mesurer tes progrès.</p><button class="btn" data-action="goto-progres">Faire le bilan</button></div>`;
   h += `<div class="row2"><button class="btn" data-action="goto-review">Rappel · ${due} mot${due > 1 ? 's' : ''}</button><button class="btn" data-action="goto-ecoute">Écouter · ${esc(lis.title)}</button></div>`;
+  h += `<button class="btn" data-action="quiz-go" data-mode="convo">QCM conversation · 2 min</button>`;
   return h + '</div>';
 }
 
@@ -1034,12 +1089,25 @@ function extractCard(){
     <textarea id="extractIn" placeholder="Colle ici…" style="min-height:90px">${esc(x.text || '')}</textarea>
     <button class="btn amber needs-claude" data-action="extract-send">Extraire les mots utiles</button><p class="note no-claude">Il faut être connecté à Claude pour cette fonction.</p>${out}</div>`;
 }
-function quizCard(){ return `<div class="card"><div class="head"><span class="mono acc">Quiz éclair</span><span class="pill">10 questions · 1 min</span></div><p class="note">QCM rapide : tes mots et la banque, moitié anglais vers français, moitié l'inverse. Les ratés reviennent en rappel.</p><button class="btn" data-action="quiz-start">Lancer le quiz</button></div>`; }
+function renderConvoQ(q, cur){
+  const it = cur.it; const ans = q.answered;
+  return `<div class="progress">${q.qs.map((_, i) => `<i class="${i < q.i ? 'done' : i === q.i ? 'cur' : ''}"></i>`).join('')}</div>
+    <div class="card"><div class="head"><span class="mono acc">Conversation</span><span class="pill">${esc(CONVO_G[it.g] || '')}</span></div>
+    <p class="note">${esc(it.fr)}</p>
+    <div class="playrow"><button class="play" data-action="say-play" data-t="${esc(it.q)}" aria-label="Écouter">${ICON.play}</button><p class="en" style="font-size:19px">${esc(it.q)}</p></div>
+    <p class="note">Tu réponds quoi ?</p>
+    <div class="opts">${cur.order.map(i => { let cls = ''; if (ans) { if (i === it.a) cls = 'right'; else if (i === q.chosen) cls = 'wrong'; } return `<button class="opt ${cls}" style="font-size:15.5px;justify-content:flex-start;text-align:left" data-action="quiz-answer" data-i="${i}" ${ans ? 'disabled' : ''}>${esc(it.o[i])}</button>`; }).join('')}</div>
+    ${ans ? `<p class="fr">${esc(it.tr)}</p><div class="tip"><span class="lbl">Pourquoi</span>${esc(it.why)}</div><div class="playrow"><button class="play" data-action="say-play" data-t="${esc(it.o[it.a])}" aria-label="Écouter la réponse">${ICON.play}</button><p class="note">Réécoute la bonne réponse et dis-la une fois à voix haute.</p></div><button class="btn amber" data-action="quiz-next">Suivant</button>` : ''}
+    <button class="btn line small" data-action="quiz-quit">Arrêter</button></div>`;
+}
+function quizCard(){ return `<div class="card"><div class="head"><span class="mono acc">QCM rapides</span><span class="pill">1 à 2 min</span></div><p class="note">Des blocs tout faits pour répondre sans chercher tes mots. Les ratés reviennent en rappel.</p>
+  <button class="btn amber" data-action="quiz-start" data-mode="convo">Conversation · salle, mon métier, relancer</button>
+  <div class="row2"><button class="btn" data-action="quiz-start" data-mode="pro">Vocabulaire pro</button><button class="btn" data-action="quiz-start" data-mode="mix">Mélange</button></div></div>`; }
 function renderQuiz(){
   const q = ui.quiz;
-  if (q.done) return `<div class="stack"><div class="card"><div class="head"><span class="mono acc">Quiz terminé</span><span class="pill ${q.score >= 7 ? 'green' : ''}">${q.score}/${q.qs.length}</span></div><h2 class="h2">${q.score >= 9 ? 'Nickel.' : q.score >= 6 ? 'Ça rentre.' : 'Les ratés sont dans tes mots.'}</h2>
-    <div class="row2"><button class="btn amber" data-action="quiz-start">Encore un</button><button class="btn" data-action="quiz-quit">Retour</button></div></div></div>`;
-  const cur = q.qs[q.i]; const v = cur.v;
+  if (q.done) return `<div class="stack"><div class="card"><div class="head"><span class="mono acc">Quiz terminé</span><span class="pill ${q.score >= 7 ? 'green' : ''}">${q.score}/${q.qs.length}</span></div><h2 class="h2">${q.mode === 'convo' ? (q.score >= 7 ? 'Tu as les bons réflexes.' : 'Les bonnes réponses sont dans tes mots, elles reviendront.') : q.score >= 9 ? 'Nickel.' : q.score >= 6 ? 'Ça rentre.' : 'Les ratés sont dans tes mots.'}</h2>
+    <div class="row2"><button class="btn amber" data-action="quiz-start" data-mode="${q.mode}">Encore un</button><button class="btn" data-action="quiz-quit">Retour</button></div></div></div>`;
+  const cur = q.qs[q.i]; if (cur.type === 'convo') return renderConvoQ(q, cur); const v = cur.v;
   const prompt = cur.dir === 'en' ? `<div class="playrow"><button class="play" data-action="say-play" data-t="${esc(v.en)}" aria-label="Écouter">${ICON.play}</button><p class="en" style="font-size:22px">${esc(v.en)}</p></div><p class="note">Ça veut dire quoi ?</p>` : `<p class="note">Comment on dit…</p><p class="en" style="font-size:22px">${esc(v.fr)}</p>`;
   return `<div class="progress">${q.qs.map((_, i) => `<i class="${i < q.i ? 'done' : i === q.i ? 'cur' : ''}"></i>`).join('')}</div>
     <div class="card"><div class="head"><span class="mono acc">Quiz éclair</span><span class="mono">${q.i + 1}/${q.qs.length}</span></div>${prompt}
@@ -1248,9 +1316,12 @@ document.addEventListener('click', e => {
     case 'dial-finish': TTS.stop(); ui.dial = null; render(); toast('Dialogue terminé'); break;
     case 'dial-quit': TTS.stop(); ui.dial = null; render(); break;
     // Quiz éclair
-    case 'quiz-start': TTS.unlock(); startQuiz(); break;
+    case 'quiz-start': TTS.unlock(); startQuiz(el.dataset.mode || 'mix'); break;
+    case 'quiz-go': TTS.unlock(); ui.tab = 'mots'; ui.review = null; ui.drill = null; ui.vocab.theme = ''; startQuiz(el.dataset.mode || 'convo'); break;
     case 'quiz-quit': ui.quiz = null; render(); break;
-    case 'quiz-answer': { const q = ui.quiz; if (!q || q.answered) break; const cur = q.qs[q.i]; const ok = el.dataset.id === cur.v.id; q.answered = true; q.ok = ok; q.chosen = el.dataset.id; if (cur.v.theme !== 'mine') state.seen[cur.v.id] = 1; if (ok) q.score++; else { if (cur.v.theme === 'mine') gradeWord(cur.v.key, false); else if (addWord(cur.v.en, cur.v.fr, cur.v.ex, '', 'quiz')) toast('Gardé dans tes mots'); } if (cur.dir === 'fr') TTS.speak(cur.v.en, state.settings.rate || 1); save(); render(); if (ok) setTimeout(() => { if (ui.quiz === q && q.answered) quizNext(); }, 800); break; }
+    case 'quiz-answer': { const q = ui.quiz; if (!q || q.answered) break; const cur = q.qs[q.i];
+      if (cur.type === 'convo') { const it = cur.it; const i = Number(el.dataset.i); const ok = i === it.a; q.answered = true; q.ok = ok; q.chosen = i; state.seen['c:' + it.id] = (state.seen['c:' + it.id] || 0) + 1; if (ok) q.score++; else addWord(it.o[it.a], it.tr, it.q, it.fr, 'convo'); save(); render(); TTS.speak(it.o[it.a], state.settings.rate || 1); break; }
+      const ok = el.dataset.id === cur.v.id; q.answered = true; q.ok = ok; q.chosen = el.dataset.id; if (cur.v.theme !== 'mine') state.seen[cur.v.id] = 1; if (ok) q.score++; else { if (cur.v.theme === 'mine') gradeWord(cur.v.key, false); else if (addWord(cur.v.en, cur.v.fr, cur.v.ex, '', 'quiz')) toast('Gardé dans tes mots'); } if (cur.dir === 'fr') TTS.speak(cur.v.en, state.settings.rate || 1); save(); render(); if (ok) setTimeout(() => { if (ui.quiz === q && q.answered) quizNext(); }, 800); break; }
     case 'quiz-next': quizNext(); break;
     case 'dial-pro': { const pros = DIALOGUES.filter(d => d.pro); TTS.unlock(); startDialogue(pros[hash(String(Date.now())) % pros.length].id); break; }
     case 'parle-pro': { const used = {}; Object.values(state.days).forEach(d => { if (d.parle && d.parle.pid) used[d.parle.pid] = (used[d.parle.pid] || 0) + 1; }); const ps = PROMPTS.filter(p => p.g === 'pro'); const min = Math.min(...ps.map(p => used[p.id] || 0)); const c = ps.filter(p => (used[p.id] || 0) === min); const p = c[hash(String(Date.now())) % c.length]; state.parle = { date: todayKey(), pid: p.id, text: '', result: null, repeated: false, extra: !!(state.days[todayKey()] && state.days[todayKey()].parle) }; save(); render(); break; }

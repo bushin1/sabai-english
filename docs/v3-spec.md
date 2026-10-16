@@ -38,3 +38,8 @@ Primaire : artifact claude.ai (capacités sample + db). Miroir public GitHub Pag
 - 3 dialogues pro (fiche suspendue, script planté, chute de positions) + bouton « Dialogue pro ».
 - Objectif can-do « Expliquer mon métier » : 6 consignes de parole, bouton « Plutôt une consigne pro ».
 - « Depuis un texte » : coller un texte anglais lu au travail, Claude extrait 6 termes utiles (sens + exemple), à garder dans ses mots. Principe : vocabulaire issu de l'input authentique dont il a besoin, puis répétition espacée et réemploi en production.
+
+## Ajout v3.3 (2026-10-17) : QCM conversation et QCM pro
+- QCM conversation : 40 situations (salle de sport, mon métier, rencontres, relancer, rattraper). On entend la phrase de l'autre, on choisit la réplique naturelle parmi 4 (les pièges sont du franglais ou des réponses sèches), puis traduction, pourquoi, réécoute, à dire à voix haute. Les ratés deviennent des « mots » à réviser. Principe : blocs préfabriqués (formulaic sequences) qui donnent la fluidité à l'oral.
+- QCM vocabulaire pro : même quiz que « Mélange » mais limité à la banque pro et aux mots issus de textes.
+- Accès direct depuis l'accueil Parler.
