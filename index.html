@@ -937,11 +937,12 @@ function renderParle(){
   const p = state.parle; const pr = promptOf(p.pid); const goal = CANDO.find(c => c.id === pr.g) || CANDO[0];
   const due = dueWords().length; const lis = state.listen;
   let h = '<div class="stack">';
-  if (!state.baseline && !ui.skipPlacement) {
+  if ((!state.baseline || ui.redo) && !ui.skipPlacement) {
     if (ui.busy === 'placement') h += busyCard('Claude évalue ton niveau…');
-    else h += `<div class="card soft"><div class="head"><span class="mono acc">Avant de commencer</span><span class="pill">2 min</span></div>
+    else h += `<div class="card soft"><div class="head"><span class="mono acc">${ui.redo ? 'Nouvelle évaluation' : 'Avant de commencer'}</span><span class="pill">2 min</span></div>
       <p class="lead">${esc(PLACEMENT)}</p>
       <textarea id="placeIn" placeholder="Hi, my name is Marvin, I'm from…">${esc(ui.placeText || '')}</textarea>
+      <p class="note">Clavier en anglais, endroit calme, et relis le texte avant d'envoyer : corrige les mots que Siri a inventés.</p>
       <button class="btn amber needs-claude" data-action="placement-send">${ICON.mic} Envoyer pour évaluation</button>
       <p class="note no-claude">Il faut être connecté à ton compte Claude pour l'évaluation. Ouvre la page depuis l'app Claude.</p>
       <button class="btn line small" data-action="placement-skip">Plus tard</button></div>`;
@@ -952,6 +953,7 @@ function renderParle(){
       <p class="lead">${esc(pr.fr)}</p>
       <div class="hint">${pr.hints.map(x => `<span>${esc(x)}</span>`).join('')}</div>
       <textarea id="parleIn" placeholder="Dis-le en anglais. Appuie sur le micro du clavier et parle, sans chercher la perfection.">${esc(p.text || '')}</textarea>
+      <p class="note">Relis vite et corrige ce que Siri a mal entendu avant d'envoyer. Seules tes vraies fautes comptent.</p>
       <button class="btn amber needs-claude" data-action="parle-send">${ICON.mic} Envoyer à Claude</button>
       <p class="note no-claude">Sans compte Claude, pas de correction. Ton texte est gardé quand même.</p>
       ${pr.g !== 'pro' ? `<button class="btn line small" data-action="parle-pro">Plutôt une consigne pro</button>` : ''}
@@ -963,6 +965,7 @@ function renderParle(){
       <p class="en">${esc(r.corrected)}</p>${playRow(r.corrected)}
       <p class="note">${r.words} mots · ${r.errors} erreur${r.errors > 1 ? 's' : ''} pour 100 mots</p>
       ${r.good ? `<div class="tip"><span class="lbl">Bien joué</span>${esc(r.good)}</div>` : ''}
+      ${r.misheard && r.misheard.length ? `<div class="say"><span class="lbl">Siri a sans doute mal entendu</span>${r.misheard.map(m => '« ' + esc(m.heard) + ' »' + (m.maybe ? ' → ' + esc(m.maybe) : '')).join(' · ')}<br><span class="note">Pas compté dans tes erreurs.</span></div>` : ''}
       <details><summary class="note" style="cursor:pointer">Ce que tu avais dit</summary><p class="note" style="margin-top:6px">${esc(p.text)}</p></details></div>`;
     if (r.gaps && r.gaps.length) h += `<div class="card"><div class="head"><span class="mono acc">Ce qui te manquait</span><span class="pill">gardé dans Mots</span></div>
       ${r.gaps.map(g => `<div class="gap">${g.said ? `<span class="said">${esc(g.said)}</span>` : ''}<span class="better">${esc(g.better)} <button class="btn small line" style="display:inline-flex;min-height:30px;padding:0 8px;vertical-align:middle" data-action="say-play" data-t="${esc(g.better)}" aria-label="Écouter">${ICON.speaker}</button></span><span class="why">${esc(g.fr)}${g.why ? ' · ' + esc(g.why) : ''}</span>${g.ex ? `<span class="why" style="color:var(--fg)">« ${esc(g.ex)} »</span>` : ''}</div>`).join('')}
@@ -1180,7 +1183,7 @@ function renderProgres(){
     <div style="display:flex;align-items:baseline;gap:14px"><span style="font-family:var(--mono);font-size:44px;font-weight:600;line-height:1">${lvl ? esc(lvl) : '—'}</span><span class="note">${lvl ? (lvl.startsWith('A1') ? 'débutant' : lvl.startsWith('A2') ? 'élémentaire, tu te débrouilles' : lvl.startsWith('B1') ? 'intermédiaire, tu tiens une conversation' : 'tu es à l\'aise') : 'Fais l\'évaluation de départ dans Parler.'}</span></div>
     ${b ? `<p class="note">${esc(b.summary || '')}</p>` : ''}
     ${weeklyDue() && !ui.weeklyOpen ? `<button class="btn amber" data-action="weekly-open">Faire le bilan de la semaine</button>` : b && !ui.weeklyOpen ? `<p class="note">Prochain bilan dans ${Math.max(0, 7 - daysBetween(last.date, todayKey()))} jour(s).</p>` : ''}
-    ${!b ? `<button class="btn" data-action="goto-parle-placement">Faire l'évaluation de départ</button>` : ''}</div>`;
+    ${!b ? `<button class="btn" data-action="goto-parle-placement">Faire l'évaluation de départ</button>` : `<button class="btn line small" data-action="redo-placement">Refaire l'évaluation de départ</button>`}</div>`;
   h += `<div class="stats"><div class="stat"><b>${active}</b><span>mots actifs</span></div><div class="stat"><b>${total}</b><span>mots suivis</span></div><div class="stat"><b>${state.sessions || 0}</b><span>sessions d'écoute</span></div></div>`;
   if (series.length) { const max = Math.max(10, ...series.map(x => x.e)); const first = series[0].e, lastE = series[series.length - 1].e; const delta = series.length > 1 ? lastE - first : 0;
     h += `<div class="card"><div class="head"><span class="mono acc">Erreurs pour 100 mots</span><span class="mono" style="color:${delta < 0 ? 'var(--green)' : 'var(--muted)'}">${series.length > 1 ? (delta <= 0 ? '' : '+') + delta + ' depuis le début' : 'première mesure'}</span></div>
@@ -1206,7 +1209,7 @@ function renderSheet(){
 }
 
 // ---------- Claude ----------
-const LEVEL = "Marvin est français, niveau A2 environ, il vit en Thaïlande et veut parler anglais au quotidien (expliquer ce qu'il veut, raconter sa journée, parler de ce qu'il aime). Son métier : SEO local, fiches Google Business Profile, scripts avec Claude Code ; utilise les vrais termes anglais du métier quand c'est le sujet. Il dicte ses réponses avec le micro du clavier : la transcription peut contenir des fautes de reconnaissance, ignore-les. Parle-lui en français, simple, tutoiement, sans blabla, sans jugement.";
+const LEVEL = "Marvin est français, niveau A2 environ, il vit en Thaïlande et veut parler anglais au quotidien (expliquer ce qu'il veut, raconter sa journée, parler de ce qu'il aime). Son métier : SEO local, fiches Google Business Profile, scripts avec Claude Code ; utilise les vrais termes anglais du métier quand c'est le sujet. Il dicte ses réponses avec la dictée Siri de l'iPhone : un mot bizarre, hors contexte ou qui ressemble phonétiquement à un autre (ex. « zoo » pour « view », « ill » pour « hill », « shipper » pour « cheaper ») est très probablement une erreur de reconnaissance, PAS une faute de Marvin. Ne compte jamais ces mots dans les erreurs ; signale-les à part dans « misheard ». Parle-lui en français, simple, tutoiement, sans blabla, sans jugement.";
 function claudeFail(e, fallback){
   if (e && e.code === 'not_granted') { document.getElementById('app').classList.remove('has-claude'); return 'Claude n\'est pas autorisé sur cette page. Rouvre-la depuis l\'app Claude et accepte.'; }
   if (e && e.code === 'rate_limited') return 'Trop de demandes pour le moment. Réessaie dans quelques minutes.';
@@ -1225,9 +1228,9 @@ async function correctSpeech(){
   const p = state.parle; const pr = promptOf(p.pid); if (!sampleFn || !p.text.trim()) return;
   ui.busy = 'parle'; render();
   try {
-    const r = await sampleFn.json(`${LEVEL}\nConsigne donnée à Marvin (en français) : "${pr.fr}"\nCe que Marvin a dit en anglais (transcription brute) : "${p.text.trim().slice(0, 3000)}"\nRéponds UNIQUEMENT avec un objet JSON :\n{"corrected": "sa version corrigée, naturelle à l'oral, en gardant ses idées et à peu près sa longueur, niveau A2-B1 (pas de vocabulaire compliqué)",\n "gaps": [{"said": "ce qu'il a dit ou tenté (vide s'il a contourné ou sauté)", "better": "le mot ou l'expression juste, court", "fr": "sens en français", "why": "1 phrase courte en français", "ex": "une phrase courte et simple en anglais qui l'utilise"}],\n "good": "1 phrase en français sur ce qu'il a bien fait",\n "tip": "1 conseil concret en français pour la prochaine fois",\n "errors_per_100": nombre entier d'erreurs pour 100 mots (grammaire, mot manquant ou faux ; pas l'accent ni la ponctuation),\n "words": nombre de mots qu'il a produits,\n "task_done": true si la consigne est accomplie de façon compréhensible même avec des fautes}\n"gaps" : 3 maximum, les plus utiles pour lui au quotidien. Si son texte est trop court (moins de 8 mots) ou hors sujet, mets task_done à false et explique dans "tip".`, { modelTier: 'default', cache: false });
+    const r = await sampleFn.json(`${LEVEL}\nConsigne donnée à Marvin (en français) : "${pr.fr}"\nCe que Marvin a dit en anglais (transcription brute) : "${p.text.trim().slice(0, 3000)}"\nRéponds UNIQUEMENT avec un objet JSON :\n{"corrected": "sa version corrigée, naturelle à l'oral, en gardant ses idées et à peu près sa longueur, niveau A2-B1 (pas de vocabulaire compliqué)",\n "gaps": [{"said": "ce qu'il a dit ou tenté (vide s'il a contourné ou sauté)", "better": "le mot ou l'expression juste, court", "fr": "sens en français", "why": "1 phrase courte en français", "ex": "une phrase courte et simple en anglais qui l'utilise"}],\n "good": "1 phrase en français sur ce qu'il a bien fait",\n "tip": "1 conseil concret en français pour la prochaine fois",\n "errors_per_100": nombre entier d'erreurs pour 100 mots (grammaire, mot manquant ou faux ; pas l'accent ni la ponctuation),\n "words": nombre de mots qu'il a produits,\n "task_done": true si la consigne est accomplie de façon compréhensible même avec des fautes,\n "misheard": [{"heard": "mot tel que transcrit", "maybe": "ce qu'il a probablement dit"}]}\n"misheard" : 3 maximum, seulement les erreurs probables de dictée (vide si aucune). "gaps" : 3 maximum, les plus utiles pour lui au quotidien. Si son texte est trop court (moins de 8 mots) ou hors sujet, mets task_done à false et explique dans "tip".`, { modelTier: 'default', cache: false });
     if (!r || !r.corrected) throw { code: 'invalid_json' };
-    const res = { corrected: String(r.corrected).slice(0, 1500), gaps: cleanGaps(r.gaps, 3), good: String(r.good || '').slice(0, 300), tip: String(r.tip || '').slice(0, 300), errors: Math.max(0, Math.min(60, Math.round(Number(r.errors_per_100) || 0))), words: Math.max(0, Math.round(Number(r.words) || p.text.trim().split(/\s+/).length)), ok: !!r.task_done };
+    const res = { corrected: String(r.corrected).slice(0, 1500), gaps: cleanGaps(r.gaps, 3), good: String(r.good || '').slice(0, 300), tip: String(r.tip || '').slice(0, 300), errors: Math.max(0, Math.min(60, Math.round(Number(r.errors_per_100) || 0))), words: Math.max(0, Math.round(Number(r.words) || p.text.trim().split(/\s+/).length)), ok: !!r.task_done, misheard: (Array.isArray(r.misheard) ? r.misheard : []).filter(x => x && x.heard).slice(0, 3).map(x => ({ heard: String(x.heard).slice(0, 40), maybe: String(x.maybe || '').slice(0, 40) })) };
     p.result = res; p.doneAt = Date.now();
     const n = keepGaps(res.gaps, 'parle');
     markDay(p.date, 'parle', { pid: p.pid, g: pr.g, errors: res.errors, words: res.words, ok: res.ok });
@@ -1240,10 +1243,10 @@ async function assess(text, kind){
   if (!sampleFn || !text.trim()) return;
   ui.busy = kind; render();
   try {
-    const r = await sampleFn.json(`${LEVEL}\n${kind === 'placement' ? 'Évaluation de départ.' : 'Bilan hebdomadaire.'} Consigne : "${kind === 'placement' ? PLACEMENT : WEEKLY}"\nCe que Marvin a dit en anglais (transcription brute) : "${text.trim().slice(0, 4000)}"\nRéponds UNIQUEMENT avec un objet JSON :\n{"cefr": "A1" | "A1+" | "A2" | "A2+" | "B1" | "B1+" | "B2", "summary": "2 phrases en français, encourageantes et honnêtes, sur son niveau à l'oral", "strengths": ["3 points forts courts en français"], "gaps": [{"better": "mot ou expression qu'il lui manquait", "fr": "sens", "ex": "phrase simple en anglais qui l'utilise"}], "errors_per_100": nombre entier, "words": nombre de mots produits}\n"gaps" : 5 maximum, les plus utiles.`, { modelTier: 'default', cache: false });
+    const r = await sampleFn.json(`${LEVEL}\n${kind === 'placement' ? 'Évaluation de départ.' : 'Bilan hebdomadaire.'} Consigne : "${kind === 'placement' ? PLACEMENT : WEEKLY}"\nCe que Marvin a dit en anglais (transcription brute) : "${text.trim().slice(0, 4000)}"\nRéponds UNIQUEMENT avec un objet JSON :\n{"cefr": "A1" | "A1+" | "A2" | "A2+" | "B1" | "B1+" | "B2", "summary": "2 phrases en français, encourageantes et honnêtes, sur son niveau à l'oral", "strengths": ["3 points forts courts en français"], "gaps": [{"better": "mot ou expression qu'il lui manquait", "fr": "sens", "ex": "phrase simple en anglais qui l'utilise"}], "errors_per_100": nombre entier (sans compter les erreurs probables de dictée), "words": nombre de mots produits}\n"gaps" : 5 maximum, les plus utiles. Sois juste : évalue ce qu'il sait FAIRE à l'oral (se faire comprendre, donner des raisons, enchaîner), pas seulement la grammaire.`, { modelTier: 'default', cache: false });
     if (!r || !r.cefr) throw { code: 'invalid_json' };
     const m = { date: todayKey(), cefr: String(r.cefr).slice(0, 4), summary: String(r.summary || '').slice(0, 400), strengths: (Array.isArray(r.strengths) ? r.strengths : []).map(String).slice(0, 3), gaps: cleanGaps(r.gaps, 5), errors: Math.max(0, Math.min(60, Math.round(Number(r.errors_per_100) || 0))), words: Math.max(0, Math.round(Number(r.words) || text.trim().split(/\s+/).length)) };
-    if (kind === 'placement') { state.baseline = m; state.level = m.cefr; ui.placeText = ''; } else { state.measures.push(m); state.level = m.cefr; ui.weeklyOpen = false; ui.weeklyText = ''; }
+    if (kind === 'placement') { state.baseline = m; state.level = m.cefr; ui.placeText = ''; ui.redo = false; } else { state.measures.push(m); state.level = m.cefr; ui.weeklyOpen = false; ui.weeklyText = ''; }
     const n = keepGaps(m.gaps, kind);
     ui.busy = null; save(); ui.tab = 'progres'; render(); toast('Niveau estimé : ' + m.cefr + (n ? ' · ' + n + ' mots gardés' : ''));
   } catch (e) { ui.busy = null; render(); toast(claudeFail(e, 'Claude n\'a pas réussi. Réessaie avec un peu plus de texte.')); }
@@ -1293,7 +1296,8 @@ document.addEventListener('click', e => {
     case 'parle-repeated': state.parle.repeated = true; save(); render(); toast('Bien. À demain, ou continue avec Écouter.'); break;
     case 'parle-again': { const k = todayKey(); const used = state.parle.pid; let p = pickPrompt(k + 'x' + Date.now()); if (p.id === used) p = PROMPTS[(PROMPTS.findIndex(x => x.id === used) + 1) % PROMPTS.length]; state.parle = { date: k, pid: p.id, text: '', result: null, repeated: false, extra: true }; save(); render(); break; }
     case 'placement-send': { const v = ($('#placeIn') || {}).value || ''; ui.placeText = v; if (v.trim().split(/\s+/).length < 15) { toast('Parle un peu plus longtemps, 2 minutes environ'); break; } TTS.unlock(); assess(v, 'placement'); break; }
-    case 'placement-skip': ui.skipPlacement = true; render(); break;
+    case 'placement-skip': ui.skipPlacement = true; ui.redo = false; render(); break;
+    case 'redo-placement': ui.redo = true; ui.skipPlacement = false; ui.tab = 'parle'; render(); break;
     case 'goto-parle-placement': ui.skipPlacement = false; ui.tab = 'parle'; render(); break;
     case 'weekly-open': ui.weeklyOpen = true; render(); break;
     case 'weekly-close': ui.weeklyOpen = false; render(); break;
