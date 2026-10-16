@@ -32,3 +32,9 @@ Primaire : artifact claude.ai (capacités sample + db). Miroir public GitHub Pag
 ## Ajout v3.1 (2026-10-12) : QCM rapides
 - Écouter → « Dialogue du jour » : 12 dialogues à deux voix (TTS, deux voix si dispo), écoute sans texte, 3 QCM en français (sujet, détail chiffré, réplique clé), puis texte + réécoute. Séquence écouter → vérifier → lire → réécouter (approche métacognitive, Vandergrift).
 - Mots → « Quiz éclair » : 10 QCM, 4 choix, moitié EN→FR moitié FR→EN, mélange de ses mots et de la banque ; un raté sur un mot perso remet sa boîte à 1, un raté sur la banque l'ajoute à ses mots.
+
+## Ajout v3.2 (2026-10-16) : anglais pro
+- Banque pro : 4 thèmes (SEO, SEO local et fiche Google, Claude Code et dev, parler à un client), ~80 termes avec exemple en contexte, rappel actif et quiz comme le reste.
+- 3 dialogues pro (fiche suspendue, script planté, chute de positions) + bouton « Dialogue pro ».
+- Objectif can-do « Expliquer mon métier » : 6 consignes de parole, bouton « Plutôt une consigne pro ».
+- « Depuis un texte » : coller un texte anglais lu au travail, Claude extrait 6 termes utiles (sens + exemple), à garder dans ses mots. Principe : vocabulaire issu de l'input authentique dont il a besoin, puis répétition espacée et réemploi en production.

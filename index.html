@@ -47,9 +47,10 @@ p{margin:0}
 #app{height:100%;display:flex;flex-direction:column;max-width:560px;margin:0 auto}
 .top{display:flex;align-items:center;justify-content:space-between;padding:10px 20px 8px;gap:10px}
 .top .l{display:flex;flex-direction:column;gap:2px;min-width:0}
+.top .l .mono{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mono{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .brand{font-size:20px;font-weight:600;letter-spacing:-.01em}
-.streak{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;border-radius:8px;background:var(--card);border:1px solid var(--line);font-family:var(--mono);font-size:13px;font-weight:600;color:var(--muted)}
+.streak{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;white-space:nowrap;border-radius:8px;background:var(--card);border:1px solid var(--line);font-family:var(--mono);font-size:13px;font-weight:600;color:var(--muted)}
 .streak i{width:8px;height:8px;border-radius:50%;background:var(--dim);display:inline-block}
 .streak.on{color:var(--amber)}.streak.on i{background:var(--amber)}
 .iconbtn{width:36px;height:36px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);border:1px solid var(--line);background:var(--card)}
@@ -451,6 +452,18 @@ const VOCAB = [
 ]},
 {id:'work',title:"Business et boulot",ico:'💼',items:[
 ["run a business","diriger une entreprise","I run a business."],["client","client","a new client"],["deadline","date limite","The deadline is Friday."],["invoice","facture","Send me the invoice."],["quote","devis","Can I get a quote?"],["remote","à distance","I work remote."],["freelance","indépendant","I'm freelance."],["a call","un appel, une visio","I have a call at 3."],["follow up","relancer","I'll follow up tomorrow."],["launch","lancer","We launch next week."],["lead","prospect","a hot lead"],["budget","budget","What's your budget?"],["hire","embaucher","We're hiring."],["outsource","sous-traiter","We outsource that."],["side hustle","activité à côté","It's my side hustle."],["revenue","chiffre d'affaires","Revenue is up."],["grow","faire grandir","grow the business"],["get things done","faire avancer les choses","Let's get things done."]
+]},
+{id:'seo',pro:true,title:"SEO",items:[
+["ranking","classement, position dans Google","Our ranking dropped last week."],["keyword","mot-clé","a high-volume keyword"],["search intent","intention de recherche","Match the search intent."],["backlink","lien entrant","We need more quality backlinks."],["to crawl","explorer un site (robot Google)","Google crawls the site daily."],["indexed","indexé","The page isn't indexed yet."],["organic traffic","trafic naturel","Organic traffic is up 20%."],["impressions","impressions, affichages","Impressions went up, clicks didn't."],["click-through rate","taux de clic (CTR)","The CTR is low on that page."],["bounce rate","taux de rebond","a high bounce rate"],["landing page","page d'atterrissage","Build one landing page per city."],["meta description","méta description","Rewrite the meta description."],["title tag","balise titre","The title tag is too long."],["internal linking","maillage interne","Fix the internal linking."],["duplicate content","contenu dupliqué","Google flags duplicate content."],["canonical","URL canonique, de référence","Set the canonical URL."],["sitemap","plan du site","Submit the sitemap."],["schema markup","données structurées","Add schema markup for reviews."],["core update","mise à jour majeure de Google","We got hit by the core update."],["to rank for","se positionner sur","We rank for 'plumber Paris'."]
+]},
+{id:'local',pro:true,title:"SEO local et fiche Google",items:[
+["listing","fiche (Google Business Profile)","The listing got suspended."],["Google Business Profile","fiche Google, ex Google My Business","Claim your Google Business Profile."],["to verify","valider, vérifier (une fiche)","You need to verify the listing."],["suspended","suspendue","The listing was suspended."],["reinstated","rétablie","The listing was reinstated."],["map pack","le pack local, les 3 fiches sur la carte","We're in the map pack for 'roofer'."],["reviews","avis","Get more reviews, and reply to them."],["review velocity","rythme des avis","Review velocity matters."],["citations","citations, mentions nom-adresse-téléphone","Build citations on directories."],["NAP","nom, adresse, téléphone","Keep NAP consistent."],["service area business","entreprise sans adresse visible, zone de service","Set it up as a service area business."],["primary category","catégorie principale","Change the primary category."],["Google post","post, publication sur la fiche","Publish a Google post weekly."],["proximity","proximité (distance de l'internaute)","Proximity is the strongest factor."],["prominence","notoriété (facteur de classement)","Prominence comes from reviews and links."],["spam listing","fausse fiche","Report the spam listings."],["redressal form","formulaire de signalement de fiche","File a redressal form."],["video verification","validation par vidéo","They asked for video verification."],["geo-grid","grille de positions par point GPS","Run a geo-grid report."],["call tracking","suivi des appels","Set up call tracking."]
+]},
+{id:'dev',pro:true,title:"Claude Code et dev",items:[
+["prompt","consigne donnée à l'IA","Write a clearer prompt."],["repo","dépôt de code","Clone the repo."],["to commit","enregistrer une version (git)","Commit your changes."],["to push","envoyer sur le dépôt (git)","Push to main."],["branch","branche (git)","Create a new branch."],["to merge","fusionner","Merge it into main."],["pull request","demande de fusion (PR)","Open a pull request."],["to deploy","mettre en ligne","Deploy to production."],["build","construction, compilation","The build failed."],["fix","correction","Quick fix for the bug."],["to run","lancer, exécuter","Run the script."],["dependency","dépendance, librairie","Update the dependencies."],["endpoint","point d'accès d'une API","Call the API endpoint."],["API key","clé API","Don't commit your API key."],["rate limit","limite de requêtes","We hit the rate limit."],["logs","journaux, ce qui s'est passé","Check the logs."],["to crash","planter","The app crashed."],["rollback","retour en arrière","Let's roll back."],["environment variable","variable d'environnement","Set the environment variable."],["to scrape","extraire des données d'un site","Scrape the listings."],["headless browser","navigateur sans interface","Use a headless browser."]
+]},
+{id:'client',pro:true,title:"Parler à un client",items:[
+["I'll get back to you","je reviens vers vous","I'll get back to you by Friday."],["scope","périmètre de la mission","That's out of scope."],["deliverable","livrable","The deliverables are listed here."],["timeline","calendrier, délais","What's the timeline?"],["milestone","étape clé","First milestone next week."],["retainer","forfait mensuel","a monthly retainer"],["upfront","d'avance","Fifty percent upfront."],["invoice","facture","I'll send the invoice."],["quote","devis","Here's the quote."],["results","résultats","Results take two to three months."],["expectations","attentes","Let's set expectations."],["to follow up","relancer","I'll follow up on Monday."],["to onboard","intégrer un nouveau client","We onboard clients in a week."],["churn","clients qui partent","Churn is low."],["ROI","retour sur investissement","The ROI is clear."],["case study","étude de cas","Here's a case study."],["to pitch","présenter une offre","Let me pitch the idea."],["touch base","faire un point","Let's touch base next week."],["heads-up","prévenir à l'avance","Just a heads-up: the site is down."],["no-brainer","une évidence","It's a no-brainer."]
 ]}
 ];
 
@@ -466,7 +479,8 @@ const CANDO = [
  {id:'opinion',t:'Donner mon avis et dire pourquoi'},
  {id:'souvenir',t:'Raconter un souvenir'},
  {id:'clarifier',t:'Demander de répéter, clarifier'},
- {id:'projets',t:'Parler de mes projets'}
+ {id:'projets',t:'Parler de mes projets'},
+ {id:'pro',t:'Expliquer mon métier : SEO local, fiches Google, mes outils'}
 ];
 const PROMPTS = [
  {id:'pr1',g:'presenter',sit:'people',fr:"Présente-toi en 5 phrases : ton prénom, d'où tu viens, depuis combien de temps tu es en Thaïlande, ce que tu fais.",hints:["I've been here for…","I'm from…","I run a…"]},
@@ -508,7 +522,13 @@ const PROMPTS = [
  {id:'cl3',g:'clarifier',sit:'people',fr:"Explique à quelqu'un que ton anglais est limité mais que tu veux parler.",hints:["my English is still basic","I'm learning","bear with me"]},
  {id:'pj1',g:'projets',sit:'visa',fr:"Explique ce que tu comptes faire dans les six prochains mois.",hints:["I'm planning to…","I'd like to…","hopefully by…"]},
  {id:'pj2',g:'projets',sit:'cafe',fr:"Dis ce que tu veux améliorer en anglais et pourquoi.",hints:["I want to be able to…","my goal is…","so that I can…"]},
- {id:'pj3',g:'projets',sit:'airport',fr:"Décris le voyage que tu aimerais faire après la Thaïlande.",hints:["next, I'd love to…","I've always wanted to…","probably in…"]}
+ {id:'pj3',g:'projets',sit:'airport',fr:"Décris le voyage que tu aimerais faire après la Thaïlande.",hints:["next, I'd love to…","I've always wanted to…","probably in…"]},
+ {id:'pro1',g:'pro',sit:'cafe',fr:"Explique à un client anglophone ce qu'est une fiche Google Business Profile et pourquoi les avis comptent.",hints:["your Google listing","reviews build trust","show up in the map pack"]},
+ {id:'pro2',g:'pro',sit:'phone',fr:"Un client te demande pourquoi sa fiche a été suspendue. Explique les causes fréquentes et ce que tu vas faire.",hints:["it got suspended because…","I'll file a reinstatement request","it usually takes one to two weeks"]},
+ {id:'pro3',g:'pro',sit:'cafe',fr:"Explique en 4 phrases ce que fait ton outil Claude Code pour créer des fiches en masse.",hints:["it's a script that…","it creates the listings automatically","then I check the logs"]},
+ {id:'pro4',g:'pro',sit:'phone',fr:"Un prospect demande tes tarifs et le délai pour voir des résultats. Réponds.",hints:["a monthly retainer of…","results take two to three months","fifty percent upfront"]},
+ {id:'pro5',g:'pro',sit:'cafe',fr:"Explique à un partenaire pourquoi les positions ont baissé après une mise à jour Google, et ce que tu proposes.",hints:["there was a core update","the pages look like duplicate content","we'll rewrite them with local details"]},
+ {id:'pro6',g:'pro',sit:'phone',fr:"Point rapide avec un dev : le script a planté. Dis-lui ce que tu veux qu'il fasse.",hints:["check the logs","add a delay between calls","open a pull request"]}
 ];
 const PLACEMENT = "Raconte-moi en anglais, pendant 2 minutes : qui tu es, ta vie en Thaïlande, ce que tu fais dans une journée, ce que tu aimes. Pas besoin que ce soit parfait. Dicte avec le micro du clavier, en anglais.";
 const WEEKLY = "Bilan de la semaine : raconte en anglais ce que tu as fait cette semaine, un bon moment, un truc qui t'a énervé, et ce que tu prévois pour la suite. 2 minutes.";
@@ -640,7 +660,38 @@ const DIALOGUES = [
  {s:0,en:"Fair enough. Cheers!",fr:"Je comprends. Santé !"}],
  qs:[{q:"Que propose Jake ?",o:["D'aller dans un rooftop plus tard","De rentrer","De manger","De jouer au billard"],a:0,ref:4},
      {q:"Pourquoi Marvin refuse ?",o:["Il n'a pas d'argent","Il doit se lever tôt","Il n'aime pas Jake","Il est malade"],a:1,ref:5},
-     {q:"« It's my round next » veut dire…",o:["Je paie la prochaine tournée","Je rentre bientôt","C'est mon tour de parler","Je suis fatigué"],a:0,ref:1}]}
+     {q:"« It's my round next » veut dire…",o:["Je paie la prochaine tournée","Je rentre bientôt","C'est mon tour de parler","Je suis fatigué"],a:0,ref:1}]},
+{id:'d-client',pro:true,sit:'phone',title:'Un client dont la fiche est suspendue',who:['Client','Toi'],lines:[
+ {s:0,en:"Hi Marvin, our Google listing disappeared this morning.",fr:"Salut Marvin, notre fiche Google a disparu ce matin."},
+ {s:1,en:"Okay. It's probably suspended. Did you change anything on the profile?",fr:"Ok. Elle est sûrement suspendue. Vous avez changé quelque chose sur la fiche ?"},
+ {s:0,en:"We updated the address and added a second category.",fr:"On a mis à jour l'adresse et ajouté une deuxième catégorie."},
+ {s:1,en:"That's usually what triggers it. I'll file a reinstatement request today.",fr:"C'est souvent ça qui déclenche. Je fais une demande de rétablissement aujourd'hui."},
+ {s:0,en:"How long does it take?",fr:"Ça prend combien de temps ?"},
+ {s:1,en:"Usually one to two weeks. In the meantime, keep collecting reviews.",fr:"En général une à deux semaines. En attendant, continuez à collecter des avis."},
+ {s:0,en:"Alright. Keep me posted.",fr:"Très bien. Tenez-moi au courant."}],
+ qs:[{q:"Quel est le problème du client ?",o:["Sa fiche Google a disparu","Son site est lent","Il a perdu un mot de passe","Ses avis sont négatifs"],a:0,ref:0},
+     {q:"Qu'est-ce qui a probablement causé la suspension ?",o:["Un changement d'adresse et de catégorie","Trop d'avis","Un nouveau logo","Une facture impayée"],a:0,ref:2},
+     {q:"Combien de temps pour le rétablissement ?",o:["Une à deux semaines","Un jour","Deux mois","Une heure"],a:0,ref:5}]},
+{id:'d-dev',pro:true,sit:'phone',title:'Le script a planté',who:['Tom','Toi'],lines:[
+ {s:0,en:"Hey, the scraping script crashed overnight.",fr:"Salut, le script de scraping a planté cette nuit."},
+ {s:1,en:"What do the logs say?",fr:"Qu'est-ce que disent les logs ?"},
+ {s:0,en:"Rate limit. We sent too many requests to the API.",fr:"Limite de requêtes. On a envoyé trop de requêtes à l'API."},
+ {s:1,en:"Okay, let's add a delay between calls and retry on errors.",fr:"Ok, on ajoute un délai entre les appels et on réessaie en cas d'erreur."},
+ {s:0,en:"I'll push a fix to a new branch this afternoon.",fr:"Je pousse un correctif sur une nouvelle branche cet après-midi."},
+ {s:1,en:"Great. Open a pull request and I'll review it tonight.",fr:"Super. Ouvre une pull request et je la relis ce soir."}],
+ qs:[{q:"Pourquoi le script a planté ?",o:["Il a dépassé la limite de requêtes de l'API","Le serveur a brûlé","Un mot de passe faux","Plus de place sur le disque"],a:0,ref:2},
+     {q:"Quelle solution est proposée ?",o:["Un délai entre les appels et des réessais","Changer d'ordinateur","Supprimer le script","Appeler Google"],a:0,ref:3},
+     {q:"Que va faire Tom cet après-midi ?",o:["Pousser un correctif sur une branche","Partir en vacances","Supprimer les logs","Appeler le client"],a:0,ref:4}]},
+{id:'d-seo',pro:true,sit:'cafe',title:'Pourquoi on a perdu des positions',who:['Anna','Toi'],lines:[
+ {s:0,en:"Did you see the rankings this week? We dropped for most city pages.",fr:"T'as vu les positions cette semaine ? On a chuté sur la plupart des pages villes."},
+ {s:1,en:"Yes. Impressions are down but the CTR is the same.",fr:"Oui. Les impressions baissent mais le taux de clic est pareil."},
+ {s:0,en:"There was a core update on Tuesday. The city pages look like duplicate content.",fr:"Il y a eu une core update mardi. Les pages villes ressemblent à du contenu dupliqué."},
+ {s:1,en:"So we rewrite them with local details and real reviews?",fr:"Donc on les réécrit avec des détails locaux et de vrais avis ?"},
+ {s:0,en:"Exactly. And fix the internal linking from the home page.",fr:"Exactement. Et on corrige le maillage interne depuis la page d'accueil."},
+ {s:1,en:"Okay, I'll start with the ten biggest cities.",fr:"Ok, je commence par les dix plus grandes villes."}],
+ qs:[{q:"Qu'est-ce qui a changé cette semaine ?",o:["Les positions ont chuté sur les pages villes","Le site est hors ligne","Le CTR a doublé","Le client est parti"],a:0,ref:0},
+     {q:"Quelle est la cause probable ?",o:["Une core update et du contenu dupliqué","Une attaque","Un changement de nom de domaine","Trop de backlinks"],a:0,ref:2},
+     {q:"Par quoi Marvin commence ?",o:["Les dix plus grandes villes","La page d'accueil","Les avis","Le sitemap"],a:0,ref:5}]}
 ];
 /*DATA-END*/
 
@@ -657,6 +708,8 @@ const todayKey = () => fmtDate(new Date());
 function addDays(key, n){ const [y, m, d] = key.split('-').map(Number); return fmtDate(new Date(y, m - 1, d + n)); }
 function daysBetween(a, b){ const [y1, m1, d1] = a.split('-').map(Number); const [y2, m2, d2] = b.split('-').map(Number); return Math.round((new Date(y2, m2 - 1, d2) - new Date(y1, m1 - 1, d1)) / 86400000); }
 const DAYS_FR = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+const DAYS_SHORT = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
+function shortDate(key){ const [y, m, d] = key.split('-').map(Number); const dt = new Date(y, m - 1, d); return DAYS_SHORT[dt.getDay()] + ' ' + d + ' ' + MONTHS_FR[m - 1]; }
 const MONTHS_FR = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
 function prettyDate(key){ const [y, m, d] = key.split('-').map(Number); const dt = new Date(y, m - 1, d); return DAYS_FR[dt.getDay()] + ' ' + d + ' ' + MONTHS_FR[m - 1]; }
 const INTERVALS = [0, 1, 3, 7, 14, 30];
@@ -806,7 +859,7 @@ function quizNext(){ const q = ui.quiz; if (!q) return; q.i++; q.answered = fals
 
 // ---------- render ----------
 function renderTop(){
-  $('#dateLine').textContent = prettyDate(todayKey()) + ' · jour ' + dayNumber();
+  $('#dateLine').textContent = shortDate(todayKey()) + ' · jour ' + dayNumber();
   const s = streakNow(); $('#streakN').textContent = s + (s > 1 ? ' jours' : ' jour'); $('#streakChip').classList.toggle('on', s > 0);
 }
 function render(){
@@ -847,6 +900,7 @@ function renderParle(){
       <textarea id="parleIn" placeholder="Dis-le en anglais. Appuie sur le micro du clavier et parle, sans chercher la perfection.">${esc(p.text || '')}</textarea>
       <button class="btn amber needs-claude" data-action="parle-send">${ICON.mic} Envoyer à Claude</button>
       <p class="note no-claude">Sans compte Claude, pas de correction. Ton texte est gardé quand même.</p>
+      ${pr.g !== 'pro' ? `<button class="btn line small" data-action="parle-pro">Plutôt une consigne pro</button>` : ''}
       <p class="note">Dictée : appuie sur le micro du clavier, parle en anglais. Si ça écrit en français, change la langue du clavier (touche globe).</p>
     </div>`;
   } else {
@@ -965,7 +1019,7 @@ function dialogueCard(){
   return `<div class="card soft"><div class="head"><span class="mono acc">Dialogue du jour</span><span class="pill">${d.lines.length} répliques · 3 questions</span></div>
     <h2 class="h2">${esc(d.title)}</h2><p class="note">Écoute une fois sans lire. Réponds à 3 questions. Puis lis le texte et réécoute : c'est là que ça rentre.</p>
     <button class="btn ${done ? '' : 'amber'}" data-action="dial-start" data-id="${d.id}">${done ? 'Refaire · ' + done.ok + '/' + done.total : 'Écouter le dialogue'}</button>
-    ${done ? `<button class="btn line small" data-action="dial-other">Un autre dialogue</button>` : ''}</div>`;
+    <div class="row2">${done ? `<button class="btn line small" data-action="dial-other">Un autre dialogue</button>` : '<span></span>'}<button class="btn line small" data-action="dial-pro">Dialogue pro</button></div></div>`;
 }
 function renderDialogue(){
   const u = ui.dial; const d = DIALOGUES.find(x => x.id === u.id); if (!d) { ui.dial = null; return renderEcoute(); }
@@ -987,6 +1041,15 @@ function renderDialogue(){
     <button class="btn amber" data-action="dial-finish">Terminer</button></div>`;
 }
 // ---------- Quiz éclair ----------
+function extractCard(){
+  const x = ui.extract || {};
+  let out = '';
+  if (x.busy) out = `<p class="note"><span class="spin"></span>&nbsp; Claude lit ton texte…</p>`;
+  else if (x.res) out = `<div class="chips">${x.res.map((w, i) => `<button class="chipw ${w.kept ? 'on' : ''}" data-action="extract-keep" data-i="${i}">${w.kept ? '✓ ' : '+ '}${esc(w.w)} <span class="note">${esc(w.fr)}</span></button>`).join('')}</div>${x.res.some(w => !w.kept) ? `<button class="btn" data-action="extract-keep-all">Tout garder</button>` : '<p class="note">Tout est dans tes mots.</p>'}`;
+  return `<div class="card"><div class="head"><span class="mono acc">Depuis un texte</span><span class="pill">pro</span></div><p class="note">Colle un bout de doc, d'article SEO ou de sortie Claude Code en anglais. Claude en sort les mots utiles pour toi, tu gardes ceux que tu veux.</p>
+    <textarea id="extractIn" placeholder="Colle ici…" style="min-height:90px">${esc(x.text || '')}</textarea>
+    <button class="btn amber needs-claude" data-action="extract-send">Extraire les mots utiles</button><p class="note no-claude">Il faut être connecté à Claude pour cette fonction.</p>${out}</div>`;
+}
 function quizCard(){ return `<div class="card"><div class="head"><span class="mono acc">Quiz éclair</span><span class="pill">10 questions · 1 min</span></div><p class="note">QCM rapide : tes mots et la banque, moitié anglais vers français, moitié l'inverse. Les ratés reviennent en rappel.</p><button class="btn" data-action="quiz-start">Lancer le quiz</button></div>`; }
 function renderQuiz(){
   const q = ui.quiz;
@@ -1017,11 +1080,14 @@ function renderMots(){
       <p class="note">Tes mots reviennent à J+1, J+3, J+7, J+14, J+30. Tu les dis en anglais avant de vérifier.</p>
       ${due.length ? `<button class="btn amber" data-action="review-start">Commencer le rappel</button>` : `<p class="note">Rien à revoir aujourd'hui${all.length ? '. Prochain : ' + esc(all[0].due) : ''}.</p>`}</div>
     ${quizCard()}
+    ${extractCard()}
     <div class="head" style="padding:4px 2px"><span class="h2">Mes mots</span><span class="mono">${all.length}</span></div>
     ${all.length ? `<div class="list">${all.map(w => `<div class="item"><button class="mini acc" data-action="say-play" data-t="${esc(w.w)}" aria-label="Écouter">${ICON.speaker}</button>
         <div class="txt"><div class="w">${esc(w.w)}</div><div class="sub">${esc(w.fr || w.ex)}</div></div><span class="badge ${w.due <= todayKey() ? 'due' : ''}">${w.due <= todayKey() ? 'à revoir' : 'J+' + INTERVALS[w.box]}</span><button class="mini" data-action="del-word" data-k="${esc(w.key)}" aria-label="Supprimer">${ICON.x}</button></div>`).join('')}</div>` : `<div class="empty">Encore vide. Tes manques arrivent ici automatiquement après chaque session de parole. Tu peux aussi garder des mots de la banque.</div>`}
-    <div class="head" style="padding:4px 2px"><span class="h2">Banque de mots</span><span class="mono">${VOCAB_ALL.length}</span></div>
-    <div class="themes">${VOCAB.map(th => { const n = themeSeen(th); return `<button class="theme" data-action="vocab-theme" data-theme="${th.id}"><b>${esc(th.title)}</b><span>${n}/${th.items.length} vus</span><div class="pb"><i style="width:${Math.round(100 * n / th.items.length)}%"></i></div></button>`; }).join('')}</div></div>`;
+    <div class="head" style="padding:4px 2px"><span class="h2">Banque pro</span><span class="mono">SEO · fiches Google · dev</span></div>
+    <div class="themes">${VOCAB.filter(t => t.pro).map(th => { const n = themeSeen(th); return `<button class="theme" data-action="vocab-theme" data-theme="${th.id}"><b>${esc(th.title)}</b><span>${n}/${th.items.length} vus</span><div class="pb"><i style="width:${Math.round(100 * n / th.items.length)}%"></i></div></button>`; }).join('')}</div>
+    <div class="head" style="padding:4px 2px"><span class="h2">Banque de mots</span><span class="mono">${VOCAB.filter(t => !t.pro).reduce((n, t) => n + t.items.length, 0)}</span></div>
+    <div class="themes">${VOCAB.filter(t => !t.pro).map(th => { const n = themeSeen(th); return `<button class="theme" data-action="vocab-theme" data-theme="${th.id}"><b>${esc(th.title)}</b><span>${n}/${th.items.length} vus</span><div class="pb"><i style="width:${Math.round(100 * n / th.items.length)}%"></i></div></button>`; }).join('')}</div></div>`;
 }
 function themeSeen(th){ return th.items.filter((_, i) => state.seen[th.id + ':' + i]).length; }
 function renderDrill(){
@@ -1072,7 +1138,7 @@ function renderSheet(){
 }
 
 // ---------- Claude ----------
-const LEVEL = "Marvin est français, niveau A2 environ, il vit en Thaïlande et veut parler anglais au quotidien (expliquer ce qu'il veut, raconter sa journée, parler de ce qu'il aime). Il dicte ses réponses avec le micro du clavier : la transcription peut contenir des fautes de reconnaissance, ignore-les. Parle-lui en français, simple, tutoiement, sans blabla, sans jugement.";
+const LEVEL = "Marvin est français, niveau A2 environ, il vit en Thaïlande et veut parler anglais au quotidien (expliquer ce qu'il veut, raconter sa journée, parler de ce qu'il aime). Son métier : SEO local, fiches Google Business Profile, scripts avec Claude Code ; utilise les vrais termes anglais du métier quand c'est le sujet. Il dicte ses réponses avec le micro du clavier : la transcription peut contenir des fautes de reconnaissance, ignore-les. Parle-lui en français, simple, tutoiement, sans blabla, sans jugement.";
 function claudeFail(e, fallback){
   if (e && e.code === 'not_granted') { document.getElementById('app').classList.remove('has-claude'); return 'Claude n\'est pas autorisé sur cette page. Rouvre-la depuis l\'app Claude et accepte.'; }
   if (e && e.code === 'rate_limited') return 'Trop de demandes pour le moment. Réessaie dans quelques minutes.';
@@ -1114,6 +1180,16 @@ async function assess(text, kind){
     ui.busy = null; save(); ui.tab = 'progres'; render(); toast('Niveau estimé : ' + m.cefr + (n ? ' · ' + n + ' mots gardés' : ''));
   } catch (e) { ui.busy = null; render(); toast(claudeFail(e, 'Claude n\'a pas réussi. Réessaie avec un peu plus de texte.')); }
 }
+async function extractWords(text){
+  if (!sampleFn || !text.trim()) return;
+  ui.extract = { text, busy: true }; render();
+  try {
+    const arr = await sampleFn.json(`${LEVEL}\nVoici un texte en anglais que Marvin a lu pour son travail :\n"""${text.trim().slice(0, 6000)}"""\nChoisis les 6 mots ou expressions les plus utiles pour lui (techniques ou courants, qu'un francophone A2 ne connaît probablement pas, et dont il aura besoin à l'oral ou à l'écrit). Réponds UNIQUEMENT avec un JSON array : [{"w": "mot ou expression tel qu'écrit", "fr": "sens court en français dans ce contexte", "ex": "une phrase courte et simple en anglais qui l'utilise"}]`, { modelTier: 'quick' });
+    const res = (Array.isArray(arr) ? arr : []).filter(x => x && x.w).slice(0, 8).map(x => ({ w: String(x.w).slice(0, 60), fr: String(x.fr || '').slice(0, 80), ex: String(x.ex || '').slice(0, 140), kept: !!state.words[wordKey(x.w)] }));
+    if (!res.length) throw { code: 'invalid_json' };
+    ui.extract = { text, res }; render();
+  } catch (e) { ui.extract = { text }; render(); toast(claudeFail(e, 'Claude n\'a pas réussi. Essaie avec un texte plus court.')); }
+}
 async function fillMeanings(line, words){
   if (!sampleFn || !words.length) return;
   try { const arr = await sampleFn.json(`Dans la phrase anglaise "${line.en}" (en français : "${line.fr}"), donne le sens en français de ces mots : ${JSON.stringify(words)}. Réponds UNIQUEMENT avec un JSON array [{"w":"mot","fr":"sens court en français"}].`, { modelTier: 'quick' });
@@ -1127,6 +1203,7 @@ document.addEventListener('input', e => {
   if (t.id === 'parleIn') { state.parle.text = t.value; save(); }
   else if (t.id === 'placeIn') ui.placeText = t.value;
   else if (t.id === 'weeklyIn') ui.weeklyText = t.value;
+  else if (t.id === 'extractIn') { ui.extract = ui.extract || {}; ui.extract.text = t.value; }
 });
 document.addEventListener('click', e => {
   const tab = e.target.closest('[data-tab]');
@@ -1191,6 +1268,11 @@ document.addEventListener('click', e => {
     case 'quiz-quit': ui.quiz = null; render(); break;
     case 'quiz-answer': { const q = ui.quiz; if (!q || q.answered) break; const cur = q.qs[q.i]; const ok = el.dataset.id === cur.v.id; q.answered = true; q.ok = ok; q.chosen = el.dataset.id; if (cur.v.theme !== 'mine') state.seen[cur.v.id] = 1; if (ok) q.score++; else { if (cur.v.theme === 'mine') gradeWord(cur.v.key, false); else if (addWord(cur.v.en, cur.v.fr, cur.v.ex, '', 'quiz')) toast('Gardé dans tes mots'); } if (cur.dir === 'fr') TTS.speak(cur.v.en, state.settings.rate || 1); save(); render(); if (ok) setTimeout(() => { if (ui.quiz === q && q.answered) quizNext(); }, 800); break; }
     case 'quiz-next': quizNext(); break;
+    case 'dial-pro': { const pros = DIALOGUES.filter(d => d.pro); TTS.unlock(); startDialogue(pros[hash(String(Date.now())) % pros.length].id); break; }
+    case 'parle-pro': { const used = {}; Object.values(state.days).forEach(d => { if (d.parle && d.parle.pid) used[d.parle.pid] = (used[d.parle.pid] || 0) + 1; }); const ps = PROMPTS.filter(p => p.g === 'pro'); const min = Math.min(...ps.map(p => used[p.id] || 0)); const c = ps.filter(p => (used[p.id] || 0) === min); const p = c[hash(String(Date.now())) % c.length]; state.parle = { date: todayKey(), pid: p.id, text: '', result: null, repeated: false, extra: !!(state.days[todayKey()] && state.days[todayKey()].parle) }; save(); render(); break; }
+    case 'extract-send': { const v = ($('#extractIn') || {}).value || ''; if (v.trim().split(/\s+/).length < 5) { toast('Colle un texte un peu plus long'); break; } extractWords(v); break; }
+    case 'extract-keep': { const w = ui.extract.res[Number(el.dataset.i)]; if (!w) break; if (addWord(w.w, w.fr, w.ex, '', 'texte')) { w.kept = true; save(); toast('Gardé'); } else { w.kept = true; toast('Déjà dans tes mots'); } render(); break; }
+    case 'extract-keep-all': { let n = 0; ui.extract.res.forEach(w => { if (!w.kept) { if (addWord(w.w, w.fr, w.ex, '', 'texte')) n++; w.kept = true; } }); save(); render(); toast(n + ' mot' + (n > 1 ? 's gardés' : ' gardé')); break; }
     // Mots
     case 'review-start': ui.review = { queue: dueWords().map(w => w.key), i: 0 }; ui.step = {}; render(); break;
     case 'review-stop': ui.review = null; ui.step = {}; render(); break;
