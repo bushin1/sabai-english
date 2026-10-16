@@ -1048,7 +1048,8 @@ function renderListenDone(){
 // ---------- Mots ----------
 function recallCard(w, s, label){
   const q = w.fr || w.exfr || '';
-  let body = `<p class="note">${label}</p><p class="lead">${q ? esc(q) : '<span class="note">(pas de traduction enregistrée)</span>'}</p>`;
+  if (!q) { let b = `<p class="note">Ce mot, il veut dire quoi ?</p><p class="en">${esc(w.w)}</p>${playRow(w.w)}`; if (!s.revealed) b += `<button class="btn amber" data-action="reveal">Voir</button>`; else b += `${w.ex ? `<div class="say"><span class="lbl">Dans une phrase</span>${esc(w.ex)}</div>` : '<p class="note">Pas de sens enregistré. Dis-le dans ta tête, puis juge.</p>'}<div class="row2"><button class="btn green" data-action="know" data-ok="1" data-k="${esc(w.key)}">${ICON.check} Je sais</button><button class="btn red" data-action="know" data-ok="0" data-k="${esc(w.key)}">Pas encore</button></div>`; return b; }
+  let body = `<p class="note">${label}</p><p class="lead">${esc(q)}</p>`;
   if (!s.revealed) body += `<p class="note">Dis-le en anglais, à voix haute. Puis vérifie.</p><button class="btn amber" data-action="reveal">Voir</button>`;
   else body += `<p class="en">${esc(w.w)}</p>${playRow(w.w)}${w.ex ? `<div class="say"><span class="lbl">Dans une phrase</span>${esc(w.ex)}${w.exfr && w.exfr !== q ? `<br><span class="note">${esc(w.exfr)}</span>` : ''}</div>` : ''}
     <div class="row2"><button class="btn green" data-action="know" data-ok="1" data-k="${esc(w.key)}">${ICON.check} Je l'avais</button><button class="btn red" data-action="know" data-ok="0" data-k="${esc(w.key)}">Pas encore</button></div>`;
@@ -1083,6 +1084,12 @@ function renderDialogue(){
     <button class="btn amber" data-action="dial-finish">Terminer</button></div>`;
 }
 // ---------- Quiz éclair ----------
+function addCard(){
+  const x = ui.addw || {};
+  return `<div class="card"><div class="head"><span class="mono acc">Ajouter des mots</span><span class="pill">depuis tes notes</span></div><p class="note">Un mot ou une expression par ligne, en anglais, comme tu les notes dans la journée. Claude met le sens et un exemple, et ils passent dans le Rappel dès demain.</p>
+    <textarea id="addIn" placeholder="figure out&#10;retainer&#10;worth it" style="min-height:84px">${esc(x.text || '')}</textarea>
+    ${x.busy ? `<p class="note"><span class="spin"></span>&nbsp; Claude cherche le sens…</p>` : `<button class="btn amber needs-claude" data-action="addw-send">Ajouter avec le sens</button><button class="btn line small no-claude" data-action="addw-plain">Ajouter sans le sens</button>`}</div>`;
+}
 function extractCard(){
   const x = ui.extract || {};
   let out = '';
@@ -1135,6 +1142,7 @@ function renderMots(){
       <p class="note">Tes mots reviennent à J+1, J+3, J+7, J+14, J+30. Tu les dis en anglais avant de vérifier.</p>
       ${due.length ? `<button class="btn amber" data-action="review-start">Commencer le rappel</button>` : `<p class="note">Rien à revoir aujourd'hui${all.length ? '. Prochain : ' + esc(all[0].due) : ''}.</p>`}</div>
     ${quizCard()}
+    ${addCard()}
     ${extractCard()}
     <div class="head" style="padding:4px 2px"><span class="h2">Mes mots</span><span class="mono">${all.length}</span></div>
     ${all.length ? `<div class="list">${all.map(w => `<div class="item"><button class="mini acc" data-action="say-play" data-t="${esc(w.w)}" aria-label="Écouter">${ICON.speaker}</button>
@@ -1235,6 +1243,18 @@ async function assess(text, kind){
     ui.busy = null; save(); ui.tab = 'progres'; render(); toast('Niveau estimé : ' + m.cefr + (n ? ' · ' + n + ' mots gardés' : ''));
   } catch (e) { ui.busy = null; render(); toast(claudeFail(e, 'Claude n\'a pas réussi. Réessaie avec un peu plus de texte.')); }
 }
+function splitWords(text){ return [...new Set(String(text).split(/[\n,;]+/).map(w => w.trim().replace(/^[-•*\d.)\s]+/, '')).filter(w => w && w.length <= 60))].slice(0, 20); }
+async function addWordsWithMeaning(text){
+  const list = splitWords(text); if (!list.length) return;
+  if (!sampleFn) { let n = 0; list.forEach(w => { if (addWord(w, '', '', '', 'note')) n++; }); save(); ui.addw = {}; render(); toast(n + ' mot' + (n > 1 ? 's ajoutés' : ' ajouté') + ', sans le sens'); return; }
+  ui.addw = { text, busy: true }; render();
+  try {
+    const arr = await sampleFn.json(`${LEVEL}\nMarvin a noté ces mots ou expressions en anglais qu'il ne connaissait pas : ${JSON.stringify(list)}. Pour chacun, donne le sens le plus courant à l'oral et une phrase courte et simple en anglais qui l'utilise. Si un mot est mal orthographié, garde-le tel quel dans "w" mais donne le sens du mot visé. Réponds UNIQUEMENT avec un JSON array : [{"w": "le mot tel que donné", "fr": "sens court en français", "ex": "phrase simple en anglais"}]`, { modelTier: 'quick' });
+    const map = {}; (Array.isArray(arr) ? arr : []).forEach(x => { if (x && x.w) map[String(x.w).trim().toLowerCase()] = x; });
+    let n = 0; list.forEach(w => { const m = map[w.toLowerCase()] || Object.values(map).find(x => String(x.w).toLowerCase().includes(w.toLowerCase())) || {}; if (addWord(w, String(m.fr || '').slice(0, 80), String(m.ex || '').slice(0, 140), '', 'note')) n++; });
+    save(); ui.addw = {}; render(); toast(n ? n + ' mot' + (n > 1 ? 's ajoutés' : ' ajouté') + ' au Rappel' : 'Déjà tous dans tes mots');
+  } catch (e) { let n = 0; list.forEach(w => { if (addWord(w, '', '', '', 'note')) n++; }); save(); ui.addw = {}; render(); toast(claudeFail(e, 'Sens indisponible, ' + n + ' mot(s) ajouté(s) sans le sens.')); }
+}
 async function extractWords(text){
   if (!sampleFn || !text.trim()) return;
   ui.extract = { text, busy: true }; render();
@@ -1259,6 +1279,7 @@ document.addEventListener('input', e => {
   else if (t.id === 'placeIn') ui.placeText = t.value;
   else if (t.id === 'weeklyIn') ui.weeklyText = t.value;
   else if (t.id === 'extractIn') { ui.extract = ui.extract || {}; ui.extract.text = t.value; }
+  else if (t.id === 'addIn') { ui.addw = ui.addw || {}; ui.addw.text = t.value; }
 });
 document.addEventListener('click', e => {
   const tab = e.target.closest('[data-tab]');
@@ -1329,6 +1350,8 @@ document.addEventListener('click', e => {
     case 'quiz-next': quizNext(); break;
     case 'dial-pro': { const pros = DIALOGUES.filter(d => d.pro); TTS.unlock(); startDialogue(pros[hash(String(Date.now())) % pros.length].id); break; }
     case 'parle-pro': { const used = {}; Object.values(state.days).forEach(d => { if (d.parle && d.parle.pid) used[d.parle.pid] = (used[d.parle.pid] || 0) + 1; }); const ps = PROMPTS.filter(p => p.g === 'pro'); const min = Math.min(...ps.map(p => used[p.id] || 0)); const c = ps.filter(p => (used[p.id] || 0) === min); const p = c[hash(String(Date.now())) % c.length]; state.parle = { date: todayKey(), pid: p.id, text: '', result: null, repeated: false, extra: !!(state.days[todayKey()] && state.days[todayKey()].parle) }; save(); render(); break; }
+    case 'addw-send': { const v = ($('#addIn') || {}).value || ''; if (!splitWords(v).length) { toast('Écris au moins un mot'); break; } addWordsWithMeaning(v); break; }
+    case 'addw-plain': { const v = ($('#addIn') || {}).value || ''; const list = splitWords(v); if (!list.length) { toast('Écris au moins un mot'); break; } let n = 0; list.forEach(w => { if (addWord(w, '', '', '', 'note')) n++; }); save(); ui.addw = {}; render(); toast(n + ' mot' + (n > 1 ? 's ajoutés' : ' ajouté')); break; }
     case 'extract-send': { const v = ($('#extractIn') || {}).value || ''; if (v.trim().split(/\s+/).length < 5) { toast('Colle un texte un peu plus long'); break; } extractWords(v); break; }
     case 'extract-keep': { const w = ui.extract.res[Number(el.dataset.i)]; if (!w) break; if (addWord(w.w, w.fr, w.ex, '', 'texte')) { w.kept = true; save(); toast('Gardé'); } else { w.kept = true; toast('Déjà dans tes mots'); } render(); break; }
     case 'extract-keep-all': { let n = 0; ui.extract.res.forEach(w => { if (!w.kept) { if (addWord(w.w, w.fr, w.ex, '', 'texte')) n++; w.kept = true; } }); save(); render(); toast(n + ' mot' + (n > 1 ? 's gardés' : ' gardé')); break; }
