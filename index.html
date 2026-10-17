@@ -1395,6 +1395,12 @@ async function initCaps(){
     dbRef = ref; if (!remoteNewer) save();
   }).catch(() => {});
 }
+let lastDay = todayKey();
+function dayTick(){ const k = todayKey(); if (k !== lastDay) { lastDay = k; ui.step = {}; ui.dial = null; ui.quiz = null; ui.review = null; ui.drill = null; TTS.stop(); render(); toast('Nouveau jour : nouvelle consigne, nouveau dialogue'); } }
+document.addEventListener('visibilitychange', () => { if (!document.hidden) dayTick(); });
+window.addEventListener('focus', dayTick);
+window.addEventListener('pageshow', dayTick);
+setInterval(dayTick, 60000);
 ensureParle(); ensureListen(); render(); initCaps();
 </script>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script>
